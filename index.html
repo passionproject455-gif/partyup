@@ -249,22 +249,113 @@ td:first-child{color:var(--ink);font-weight:700;white-space:nowrap}
 .hot[hidden]{display:none}
 footer{color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padding:22px 0}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}.card:hover,.tile:hover,.btn:hover{transform:none}}
+
+/* ===== v5 additions ===== */
+nav{overflow-x:auto;scrollbar-width:none} nav::-webkit-scrollbar{display:none}
+nav a{white-space:nowrap}
+@media (max-width:760px){nav{margin-left:0;width:100%;justify-content:flex-start}nav a{flex:none;padding:7px 12px;font-size:13px}}
+.tile::after{display:none}
+.tile .motif{position:absolute;right:-16px;top:30px;width:92px;height:92px;opacity:.32;z-index:0;color:#fff;transform:rotate(-8deg)}
+.tile:hover .motif{opacity:.45}
+
+/* Ticker */
+.hot{padding-bottom:54px}
+.ticker{position:absolute;left:0;right:0;bottom:0;height:34px;overflow:hidden;background:#1a1300;color:#ffd23f;display:flex;align-items:center;white-space:nowrap}
+.ticker-track{display:inline-flex;gap:40px;padding-left:40px;font-family:var(--display);font-weight:800;font-size:12.5px;letter-spacing:.14em;animation:tick 28s linear infinite}
+.ticker-track span::after{content:"◆";margin-left:40px;color:#ff9152}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.ticker-track{animation:none}}
+
+/* Avatars, banners, ranks, online */
+.av-wrap{position:relative;flex:none}
+.avatar svg{width:58%;height:58%}
+.avatar.lg svg{width:56%;height:56%}
+.dot{position:absolute;right:-3px;bottom:-3px;width:13px;height:13px;border-radius:50%;background:var(--lime);border:2.5px solid var(--surface);box-shadow:0 0 10px rgba(166,242,92,.9)}
+.card{position:relative;overflow:hidden;padding-top:22px}
+.card .strip{position:absolute;left:0;right:0;top:0;height:5px}
+.rank{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:800}
+.rank svg{width:14px;height:14px}
+.star-btn{position:absolute;top:12px;right:12px;z-index:2;width:30px;height:30px;border-radius:50%;border:1px solid var(--line-2);background:var(--surface-2);cursor:pointer;display:grid;place-items:center;color:var(--faint);padding:0}
+.star-btn svg{width:15px;height:15px}
+.star-btn[aria-pressed="true"]{color:var(--sun);border-color:rgba(255,210,63,.5);background:rgba(255,210,63,.12)}
+.card .card-top{padding-right:36px}
+.pill.online{color:var(--lime);background:rgba(166,242,92,.12)}
+.prof-banner{height:96px;margin:-26px -26px 0;border-radius:22px 22px 0 0;position:relative;overflow:hidden}
+.prof-banner::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(-45deg,rgba(255,255,255,.08) 0 12px,transparent 12px 24px)}
+.prof-head.over{position:relative;z-index:1;margin-top:-40px;flex-direction:column;align-items:flex-start;gap:10px}
+.btn svg{width:16px;height:16px;flex:none}
+.prof-head.over .avatar{border:4px solid var(--surface)}
+.endorse{display:flex;flex-wrap:wrap;gap:8px}
+.endorse button{cursor:pointer;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line-2);background:var(--surface-2);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700;color:var(--soft)}
+.endorse button b{font-variant-numeric:tabular-nums;color:var(--ink)}
+.endorse button[aria-pressed="true"]{border-color:rgba(166,242,92,.5);background:rgba(166,242,92,.12);color:var(--lime)}
+.top-endorse{font-size:12px;color:var(--muted)}
+.top-endorse b{color:var(--lime)}
+.pickers{display:grid;gap:14px}
+.swatches{display:flex;gap:10px;flex-wrap:wrap}
+.swatch{cursor:pointer;width:44px;height:30px;border-radius:9px;border:2px solid transparent;padding:0}
+.swatch[aria-pressed="true"]{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.15)}
+.av-pick{cursor:pointer;width:46px;height:46px;border-radius:13px;border:2px solid transparent;display:grid;place-items:center;color:#0b0d14;font-family:var(--display);font-weight:800;padding:0}
+.av-pick svg{width:24px;height:24px}
+.av-pick[aria-pressed="true"]{border-color:#fff}
+.toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--surface-2);border-radius:14px;padding:12px 14px}
+.toggle b{font-family:var(--display)}
+.switch{position:relative;width:46px;height:26px;border-radius:999px;background:var(--raise);border:1px solid var(--line-2);cursor:pointer;flex:none;padding:0}
+.switch::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:var(--muted);transition:left .15s,background .15s}
+.switch[aria-checked="true"]{background:rgba(166,242,92,.25);border-color:rgba(166,242,92,.6)}
+.switch[aria-checked="true"]::after{left:22px;background:var(--lime)}
+
+/* LFG */
+.lfg-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;align-items:end}
+.lfg-form .wide{grid-column:1/-1}
+.lfg-list{display:grid;gap:12px}
+.post{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.post::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--gc)}
+.post .need{width:62px;height:62px;border-radius:16px;display:grid;place-items:center;text-align:center;background:var(--surface-2);font-family:var(--display);line-height:1}
+.post .need b{font-size:24px;display:block}
+.post .need small{font-size:10px;font-weight:800;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.post h3{font-size:16px}
+.post p{margin:4px 0 6px;color:var(--soft);font-size:14px}
+.post .by{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.post .by .avatar{width:24px;height:24px;border-radius:7px;font-size:11px}
+.post .by .dot{width:9px;height:9px;border-width:2px;right:-2px;bottom:-2px}
+.post .side{display:grid;gap:8px;justify-items:end}
+.timeleft{font-size:12px;font-weight:800;color:var(--lime)}
+@media (max-width:620px){.post{grid-template-columns:auto 1fr}.post .side{grid-column:1/-1;justify-items:start;grid-auto-flow:column;align-items:center;justify-content:space-between}}
+
+/* Events */
+.events{display:grid;gap:12px}
+.event{display:grid;grid-template-columns:76px 1fr auto;gap:16px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
+.cal{border-radius:14px;overflow:hidden;text-align:center;background:var(--surface-2);font-family:var(--display)}
+.cal small{display:block;background:linear-gradient(135deg,var(--coral),var(--pink));color:var(--ink-dark);font-size:11px;font-weight:800;letter-spacing:.1em;padding:3px 0}
+.cal b{display:block;font-size:26px;padding:4px 0 6px}
+.event h3{font-size:16.5px}
+.event .meta{margin-top:2px}
+.event p{margin:6px 0 0;font-size:14px;color:var(--soft)}
+@media (max-width:620px){.event{grid-template-columns:64px 1fr}.event .side{grid-column:1/-1}}
+
+/* Weekly changes */
+.changes{border:1px solid rgba(255,210,63,.25);background:linear-gradient(135deg,rgba(255,210,63,.08),rgba(255,95,58,.05))}
+.changes .tips li::marker{color:var(--sun)}
 </style>
 </head>
 <body>
 <div class="beta">Beta · Party Up is still being built. New games and features are added often.</div>
 <header>
   <div class="wrap bar">
-    <a class="logo" href="#squads"><i aria-hidden="true"></i>Party Up</a>
+    <a class="logo" href="#menu"><i aria-hidden="true"></i>Party Up</a>
     <nav aria-label="Sections">
+      <a href="#menu" id="nav-menu">Menu</a>
       <a href="#squads" id="nav-squads">Squads</a>
+      <a href="#lfg" id="nav-lfg">Looking for Group</a>
       <a href="#intel" id="nav-intel">Game Intel</a>
+      <a href="#events" id="nav-events">Events</a>
       <a href="#profile" id="nav-profile">Profile</a>
     </nav>
   </div>
 </header>
-
 <div class="wrap"><aside class="hot" id="hot" hidden aria-label="Hot right now"></aside></div>
+
 <main class="wrap">
   <!-- MENU -->
   <section class="view" id="view-menu" hidden>
@@ -272,17 +363,14 @@ footer{color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padd
       <div class="title-block">
         <span class="kicker">Press start</span>
         <h1>PARTY <span>UP</span></h1>
-        <p>Pick your games, add your handles, set your vibe. We'll line you up with players who match.</p>
+        <p id="menu-sub">Pick your games, add your handles, set your vibe. We'll line you up with players who match.</p>
       </div>
-      <div class="steps" id="step-dots"><span class="step-dot">1 · Games</span><span class="step-dot">2 · Handles</span><span class="step-dot">3 · Play style</span></div>
+      <div class="steps" id="step-dots"><span class="step-dot">1 · Games</span><span class="step-dot">2 · Handles</span><span class="step-dot">3 · Play style</span><span class="step-dot">4 · Your look</span></div>
 
       <div class="menu-panel" data-step="1">
         <h2>What do you play?</h2>
-        <p class="sub">Pick every game you'd queue up for. You can change this any time from your profile.</p>
-        <div class="tile-tools">
-          <input type="search" id="m-search" placeholder="Search games" aria-label="Search games">
-          <span class="picked" id="m-picked"></span>
-        </div>
+        <p class="sub">Pick every game you'd queue up for. You can change this any time.</p>
+        <div class="tile-tools"><input type="search" id="m-search" placeholder="Search games" aria-label="Search games"><span class="picked" id="m-picked"></span></div>
         <div class="tiles" id="m-games"></div>
         <div class="err" id="m-err-1" role="alert"></div>
         <div class="menu-nav"><a href="#squads" class="meta">Skip and just browse</a><button class="btn" data-next="2">Next</button></div>
@@ -296,8 +384,7 @@ footer{color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padd
           <div class="handle"><label for="m-discord">Discord</label><input type="text" id="m-discord" maxlength="40" placeholder="yourname"></div>
           <div class="handle"><label for="m-psn">PSN</label><input type="text" id="m-psn" maxlength="40" placeholder="Your PSN ID"></div>
           <div class="handle"><label for="m-xbox">Xbox</label><input type="text" id="m-xbox" maxlength="40" placeholder="Your Xbox gamertag"></div>
-          <div class="handle"><label for="m-platform">Main platform</label>
-            <select id="m-platform"><option>PC</option><option>PS5</option><option>Xbox</option><option>Switch</option><option>Mobile</option></select></div>
+          <div class="handle"><label for="m-platform">Main platform</label><select id="m-platform"><option>PC</option><option>PS5</option><option>Xbox</option><option>Switch</option><option>Mobile</option></select></div>
         </div>
         <div class="err" id="m-err-2" role="alert"></div>
         <div class="menu-nav"><button class="btn ghost" data-next="1">Back</button><button class="btn" data-next="3">Next</button></div>
@@ -308,7 +395,7 @@ footer{color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padd
         <p class="sub">We use this to find players who are most like you.</p>
         <div class="row2" style="margin-bottom:14px">
           <div class="field"><label for="m-mic">Mic</label><select id="m-mic"><option value="yes">Mic on</option><option value="no">No mic / text only</option></select></div>
-          <div class="field"><label for="m-skill">Skill level</label><select id="m-skill"><option>New</option><option selected>Casual</option><option>Experienced</option><option>Competitive</option></select></div>
+          <div class="field"><label for="m-skill">Skill level</label><select id="m-skill"><option value="New">New (Bronze)</option><option value="Casual" selected>Casual (Silver)</option><option value="Experienced">Experienced (Gold)</option><option value="Competitive">Competitive (Diamond)</option></select></div>
         </div>
         <div class="field" style="margin-bottom:14px"><label>Your vibe</label><div class="chips" id="m-vibes"></div></div>
         <div class="row2">
@@ -316,21 +403,34 @@ footer{color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padd
           <div class="field"><label for="m-bio">Short bio</label><input type="text" id="m-bio" maxlength="140" placeholder="What you're grinding right now"></div>
         </div>
         <div class="err" id="m-err-3" role="alert"></div>
-        <div class="menu-nav"><button class="btn ghost" data-next="2">Back</button><button class="btn" id="m-finish">Enter the lobby</button></div>
+        <div class="menu-nav"><button class="btn ghost" data-next="2">Back</button><button class="btn" data-next="4">Next</button></div>
+      </div>
+
+      <div class="menu-panel" data-step="4" hidden>
+        <h2>Pick your look</h2>
+        <p class="sub">This is how your card and profile show up to other players.</p>
+        <div class="pickers">
+          <div><span class="flabel">Banner</span><div class="swatches" id="m-banners"></div></div>
+          <div><span class="flabel">Avatar</span><div class="swatches" id="m-avatars"></div></div>
+          <div class="toggle"><div><b>Looking for a group right now</b><div class="meta">Shows a green "online" dot on your card for the next 3 hours.</div></div><button type="button" class="switch" role="switch" id="m-online" aria-checked="false" aria-label="Looking for a group right now"></button></div>
+          <div><span class="flabel">Preview</span><div id="m-preview" style="max-width:340px"></div></div>
+        </div>
+        <div class="err" id="m-err-4" role="alert"></div>
+        <div class="menu-nav"><button class="btn ghost" data-next="3">Back</button><button class="btn" id="m-finish">Enter the lobby</button></div>
       </div>
     </div>
   </section>
 
   <!-- SQUADS -->
   <section class="view" id="view-squads">
-    <div class="lede">
-      <div><h1>Find your <span class="grad">squad</span></h1>
-        <p>Players are ranked by how much they have in common with you: games, platform, mic, play style and skill. Click anyone to see their profile and handles.</p></div>
-    </div>
+    <div class="lede"><div><h1>Find your <span class="grad">squad</span></h1>
+      <p>Players are ranked by how much they have in common with you. Click anyone to see their profile, endorse them, or save them to your favorites.</p></div></div>
     <div class="you-bar" id="you-bar"></div>
     <div class="filters">
       <div class="field"><label for="f-game">Game</label><select id="f-game"></select></div>
       <div class="field"><label for="f-platform">Platform</label><select id="f-platform"><option value="">Any</option><option>PC</option><option>PS5</option><option>Xbox</option><option>Switch</option><option>Mobile</option></select></div>
+      <label class="check"><input type="checkbox" id="f-online">Online now</label>
+      <label class="check"><input type="checkbox" id="f-fav">Favorites only</label>
       <label class="check"><input type="checkbox" id="f-mic">Mic required</label>
       <label class="check"><input type="checkbox" id="f-examples" checked>Show example profiles</label>
       <div class="wide"><span class="flabel">Only show these vibes</span><div class="chips" id="f-vibes"></div></div>
@@ -339,17 +439,35 @@ footer{color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padd
     <div class="grid" id="cards"></div>
   </section>
 
+  <!-- LFG -->
+  <section class="view" id="view-lfg" hidden>
+    <div class="lede"><div><h1>Looking for <span class="grad">group</span></h1>
+      <p>Need players right now? Post what you need, and it disappears automatically when time's up. Tap "Join" on someone's post to get their handles.</p></div></div>
+    <div class="panel" id="lfg-post"></div>
+    <div class="filters" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+      <div class="field"><label for="lfg-filter">Game</label><select id="lfg-filter"></select></div>
+      <label class="check"><input type="checkbox" id="lfg-examples" checked>Show example posts</label>
+    </div>
+    <div class="lfg-list" id="lfg-list"></div>
+  </section>
+
   <!-- INTEL -->
   <section class="view" id="view-intel" hidden>
     <div class="lede"><div><h1>Game <span class="grad">intel</span></h1>
-      <p>Boss guides with locations, weaknesses, attack patterns and drops. Season news, essentials and patch notes for multiplayer games.</p></div></div>
+      <p>Boss guides with locations, weaknesses, attack patterns and drops. Season news, weekly changes, essentials and patch notes for multiplayer games.</p></div></div>
     <div class="intel-layout">
-      <aside class="game-list" aria-label="Games">
-        <input type="search" id="gl-search" placeholder="Search games" aria-label="Search games">
-        <div id="gl-items" class="gl-items"></div>
-      </aside>
+      <aside class="game-list" aria-label="Games"><input type="search" id="gl-search" placeholder="Search games" aria-label="Search games"><div id="gl-items" class="gl-items"></div></aside>
       <div id="intel-body"></div>
     </div>
+  </section>
+
+  <!-- EVENTS -->
+  <section class="view" id="view-events" hidden>
+    <div class="lede"><div><h1>Upcoming <span class="grad">events</span></h1>
+      <p>LAN nights, tournaments and meetups. Add your own so others can join.</p></div>
+      <button class="btn" type="button" id="add-event">Add an event</button></div>
+    <label class="check" style="margin-bottom:16px"><input type="checkbox" id="ev-examples" checked>Show example events</label>
+    <div class="events" id="events"></div>
   </section>
 
   <!-- PROFILE -->
@@ -364,7 +482,8 @@ footer{color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padd
 /* ---------- Hot right now ----------
  Change this to feature a different game in the yellow poster at the top. Set to null to hide it. */
 const HOT = { game:"fortnite", title:"Fortnite: Treasure Hunters",
-  text:"Everyone's squadding up to hunt treasure on Crossbones Isle. Find a crew before the mini-season ends." };
+  text:"Everyone's squadding up to hunt treasure on Crossbones Isle. Find a crew before the mini-season ends.",
+  ticker:["HOT · FORTNITE TREASURE HUNTERS","CROSSBONES ISLE IS LIVE","DEVIL FRUIT MYTHICS","SQUAD UP NOW","POST IN LOOKING FOR GROUP"] };
 
 /* ---------- Games ----------
  type: "boss" (boss-focused guide), "multi" (multiplayer intel), "fight" (fighting game)
@@ -470,6 +589,8 @@ const GAMES = [
 { id:"fortnite", name:"Fortnite", genre:"Battle royale", type:"multi", color:["#4fd1ff","#5b2ad6"],
   squad:"Solo, duo, trio or squads of 4", platforms:["PC","PS","Xbox","Switch","Mobile"], mic:4, difficulty:3,
   roles:[["Fragger","Takes fights and pushes."],["Builder / support","Boxes up teammates and builds cover."],["IGL","Calls rotations and drop spots."]],
+  changes:{ asof:"November 9, 2026", source:"https://www.fortnite.com/news",
+    points:["Update v43.00 (Nov 1) swapped the Override map for Crossbones Isle.","Lobbies on the new island are 80 players.","One Piece Devil Fruit Mythics joined the loot pool, with new crews added weekly."] },
   season:{ title:"Treasure Hunters mini-season", asof:"November 9, 2026", source:"https://www.fortnite.com/news",
     points:["Live since November 1, 2026 (update v43.00). It's a One Piece crossover.","New map: Crossbones Isle, a skull-and-crossbones island with 12 new POIs and 80-player lobbies.","Devil Fruit Mythics like Luffy's Gum-Gum Fruit and Ace's Flame-Flame Fruit, plus Zoro's Three Sword Style.","New pirate crews and Mythics rotate in each week.","Chapter 8 is rumored for late November or early December. Not confirmed by Epic yet."] },
   essentials:[["Drop smart","Pick a quieter POI if your squad is new; hot drops are high risk, high loot."],["Rotate early","Move toward the next storm circle before it closes so you're not caught in fights at the edge."],["Mythics first","Mythic items change fights. Know which ones are in this season's loot pool."],["Revive fast","Downed teammates can be reboot-carded back if you grab their card in time."]],
@@ -573,252 +694,400 @@ const GAMES = [
 const TYPE_LABEL = { boss:"Boss guide", multi:"Multiplayer", fight:"Fighting" };
 
 const EXAMPLES = [
-  {id:"ex1",tag:"TarnishedTom",platform:"PC",games:["elden","nightreign","souls3"],mic:true,skill:"Experienced",vibes:["Chill","Newbie-friendly"],times:"Weeknights after 9",bio:"Happy to help with Malenia. I've died to her more times than I can count.",handles:{discord:"tarnishedtom"}},
-  {id:"ex2",tag:"FlashPodQueen",platform:"PS5",games:["mhw","elden"],mic:true,skill:"Casual",vibes:["Funny","Strategic"],times:"Weekend afternoons",bio:"Hunting Horn main. I'll keep you buffed.",handles:{psn:"flashpodqueen",discord:"flashpodqueen"}},
-  {id:"ex3",tag:"DemocracyDan",platform:"PC",games:["hd2","drg"],mic:true,skill:"Competitive",vibes:["Tryhard","Funny"],times:"Late nights",bio:"Anti-tank only. Point me at the Bile Titan.",handles:{discord:"democracydan"}},
-  {id:"ex4",tag:"QuietSmokes",platform:"PC",games:["val","cs2"],mic:false,skill:"Experienced",vibes:["Strategic","No toxicity"],times:"Evenings",bio:"Controller main. I type callouts fast if you don't mind no mic.",handles:{discord:"quietsmokes"}},
-  {id:"ex5",tag:"NewbieNova",platform:"Xbox",games:["fortnite","minecraft","hd2"],mic:true,skill:"New",vibes:["Chill","Newbie-friendly","Night owl"],times:"After midnight",bio:"Just started, looking for patient people to learn with.",handles:{xbox:"NewbieNova"}},
-  {id:"ex6",tag:"EcoRoundEnjoyer",platform:"PS5",games:["val","apex"],mic:true,skill:"Competitive",vibes:["Competitive","No toxicity"],times:"Weeknights 7–11",bio:"Grinding ranked. Looking for a consistent duo.",handles:{psn:"EcoRoundEnjoyer",discord:"ecoround"}},
-  {id:"ex7",tag:"CrossbonesCaptain",platform:"PC",games:["fortnite","warzone"],mic:true,skill:"Experienced",vibes:["Funny","Competitive"],times:"Every night 8–12",bio:"Need a squad for the new Crossbones Isle map. I call drops.",handles:{discord:"crossbonescap",psn:"CrossbonesCap"}},
-  {id:"ex8",tag:"SupportSoraka",platform:"PC",games:["lol","overwatch","rivals"],mic:true,skill:"Casual",vibes:["Chill","No toxicity"],times:"Weekends",bio:"Support main in every game. You do damage, I keep you alive.",handles:{discord:"supportsoraka"}},
-  {id:"ex9",tag:"AerialAce",platform:"Switch",games:["rl","smash","minecraft"],mic:false,skill:"Experienced",vibes:["Strategic","Chill"],times:"After class",bio:"Diamond in 2s. I play third man so you can go for the flashy goals.",handles:{discord:"aerialace"}},
-  {id:"ex10",tag:"KameKameHa",platform:"PS5",games:["dbsz","tekken8","sf6"],mic:true,skill:"Casual",vibes:["Funny","Newbie-friendly"],times:"Late nights",bio:"Anime fighter fan. Down for long casual sets.",handles:{psn:"KameKameHa"}},
-  {id:"ex11",tag:"ScrapGoblin",platform:"PC",games:["lethal","drg"],mic:true,skill:"Casual",vibes:["Funny","Night owl"],times:"Fridays",bio:"I will absolutely die first and scream on mic.",handles:{discord:"scrapgoblin"}},
-  {id:"ex12",tag:"ResinHoarder",platform:"PC",games:["genshin","hollow"],mic:false,skill:"Experienced",vibes:["Chill","No toxicity"],times:"Mornings",bio:"Happy to help with world bosses and domains.",handles:{discord:"resinhoarder"}}
+  {id:"ex1",banner:"gold",avatar:"moon",online:true,endorse:{"Good comms":14,"Chill":9,"Carried me":6},tag:"TarnishedTom",platform:"PC",games:["elden","nightreign","souls3"],mic:true,skill:"Experienced",vibes:["Chill","Newbie-friendly"],times:"Weeknights after 9",bio:"Happy to help with Malenia. I've died to her more times than I can count.",handles:{discord:"tarnishedtom"}},
+  {id:"ex2",banner:"sunset",avatar:"star",online:false,endorse:{"Funny":11,"Good comms":7},tag:"FlashPodQueen",platform:"PS5",games:["mhw","elden"],mic:true,skill:"Casual",vibes:["Funny","Strategic"],times:"Weekend afternoons",bio:"Hunting Horn main. I'll keep you buffed.",handles:{psn:"flashpodqueen",discord:"flashpodqueen"}},
+  {id:"ex3",banner:"toxic",avatar:"skull",online:true,endorse:{"Carried me":12,"Funny":8},tag:"DemocracyDan",platform:"PC",games:["hd2","drg"],mic:true,skill:"Competitive",vibes:["Tryhard","Funny"],times:"Late nights",bio:"Anti-tank only. Point me at the Bile Titan.",handles:{discord:"democracydan"}},
+  {id:"ex4",banner:"ocean",avatar:"blade",online:false,endorse:{"Good comms":10,"Chill":5},tag:"QuietSmokes",platform:"PC",games:["val","cs2"],mic:false,skill:"Experienced",vibes:["Strategic","No toxicity"],times:"Evenings",bio:"Controller main. I type callouts fast if you don't mind no mic.",handles:{discord:"quietsmokes"}},
+  {id:"ex5",banner:"violet",avatar:"controller",online:true,endorse:{"Chill":4},tag:"NewbieNova",platform:"Xbox",games:["fortnite","minecraft","hd2"],mic:true,skill:"New",vibes:["Chill","Newbie-friendly","Night owl"],times:"After midnight",bio:"Just started, looking for patient people to learn with.",handles:{xbox:"NewbieNova"}},
+  {id:"ex6",banner:"ocean",avatar:"initial",online:false,endorse:{"Good comms":6,"Carried me":3},tag:"EcoRoundEnjoyer",platform:"PS5",games:["val","apex"],mic:true,skill:"Competitive",vibes:["Competitive","No toxicity"],times:"Weeknights 7–11",bio:"Grinding ranked. Looking for a consistent duo.",handles:{psn:"EcoRoundEnjoyer",discord:"ecoround"}},
+  {id:"ex7",banner:"sunset",avatar:"skull",online:true,endorse:{"Funny":9,"Good comms":8,"Carried me":4},tag:"CrossbonesCaptain",platform:"PC",games:["fortnite","warzone"],mic:true,skill:"Experienced",vibes:["Funny","Competitive"],times:"Every night 8–12",bio:"Need a squad for the new Crossbones Isle map. I call drops.",handles:{discord:"crossbonescap",psn:"CrossbonesCap"}},
+  {id:"ex8",banner:"violet",avatar:"star",online:false,endorse:{"Chill":15,"Good comms":11},tag:"SupportSoraka",platform:"PC",games:["lol","overwatch","rivals"],mic:true,skill:"Casual",vibes:["Chill","No toxicity"],times:"Weekends",bio:"Support main in every game. You do damage, I keep you alive.",handles:{discord:"supportsoraka"}},
+  {id:"ex9",banner:"gold",avatar:"flame",online:true,endorse:{"Carried me":7},tag:"AerialAce",platform:"Switch",games:["rl","smash","minecraft"],mic:false,skill:"Experienced",vibes:["Strategic","Chill"],times:"After class",bio:"Diamond in 2s. I play third man so you can go for the flashy goals.",handles:{discord:"aerialace"}},
+  {id:"ex10",banner:"sunset",avatar:"flame",online:false,endorse:{"Funny":6},tag:"KameKameHa",platform:"PS5",games:["dbsz","tekken8","sf6"],mic:true,skill:"Casual",vibes:["Funny","Newbie-friendly"],times:"Late nights",bio:"Anime fighter fan. Down for long casual sets.",handles:{psn:"KameKameHa"}},
+  {id:"ex11",banner:"toxic",avatar:"controller",online:true,endorse:{"Funny":13},tag:"ScrapGoblin",platform:"PC",games:["lethal","drg"],mic:true,skill:"Casual",vibes:["Funny","Night owl"],times:"Fridays",bio:"I will absolutely die first and scream on mic.",handles:{discord:"scrapgoblin"}},
+  {id:"ex12",banner:"ocean",avatar:"moon",online:false,endorse:{"Chill":8,"Good comms":4},tag:"ResinHoarder",platform:"PC",games:["genshin","hollow"],mic:false,skill:"Experienced",vibes:["Chill","No toxicity"],times:"Mornings",bio:"Happy to help with world bosses and domains.",handles:{discord:"resinhoarder"}}
 ];
 EXAMPLES.forEach(e=>e.example=true);
 const HANDLE_LABELS = {discord:"Discord",psn:"PSN",xbox:"Xbox"};
+
+/* ---------- Looks ---------- */
+const BANNERS = { sunset:["#ff5f3a","#ff4fb8"], ocean:["#38e1f5","#4f7bff"], toxic:["#a6f25c","#1fbf8f"], gold:["#ffd23f","#ff7a3d"], violet:["#c49bff","#ff4fb8"], mono:["#4a5068","#1d2131"] };
+const AVATARS = ["initial","controller","skull","star","flame","moon","blade"];
+const ENDORSE_TAGS = ["Good comms","Chill","Funny","Carried me"];
+const RANKS = { New:["Bronze","#d08a55"], Casual:["Silver","#cfd6e4"], Experienced:["Gold","#ffd23f"], Competitive:["Diamond","#38e1f5"] };
+/* Simple original icons (24x24) used on game tiles and avatars */
+const ICONS = {
+  skull:{d:"M12 2a8 8 0 0 0-8 8c0 3 1.6 5.4 4 6.7V21h8v-4.3c2.4-1.3 4-3.7 4-6.7a8 8 0 0 0-8-8zM9 14a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm6 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"},
+  tree:{d:"M12 2l5 7h-3l4 6h-5v7h-2v-7H6l4-6H7z"},
+  moon:{d:"M15 2a10 10 0 1 0 7 16.5A8.5 8.5 0 0 1 15 2z"},
+  blade:{d:"M4 20L19 5l1.5-1.5M7 14l3 3M5 19l-1 1",stroke:true},
+  sword:{d:"M14 3h7v7L10 21l-3-3L18 7M5 15l4 4M3 21l3-3",stroke:true},
+  crosshair:{d:"M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16zM12 1v6M12 17v6M1 12h6M17 12h6",stroke:true},
+  flame:{d:"M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 2-5 3-6 0 2 1 3 2 3-1-3 0-6 1-9z"},
+  controller:{d:"M7 7h10a5 5 0 0 1 5 5v2a3 3 0 0 1-5.4 1.8L15 14H9l-1.6 1.8A3 3 0 0 1 2 14v-2a5 5 0 0 1 5-5zM7 10v4M5 12h4M16 11h.01M18 13h.01",stroke:true},
+  ball:{d:"M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM12 7l4 3-1.5 5h-5L8 10z"},
+  block:{d:"M12 2l9 5v10l-9 5-9-5V7zM12 12l9-5M12 12v10M12 12L3 7",stroke:true},
+  star:{d:"M12 2l2.6 6.6L21 9l-5 4.5L17.6 21 12 17.3 6.4 21 8 13.5 3 9l6.4-.4z"},
+  pick:{d:"M3 21L14 10M9 4c5-1 9 1 12 6-4-2-7-3-11-2z",stroke:true},
+  leaf:{d:"M12 2c6 4 8 11 0 20C4 13 6 6 12 2z"},
+  ghost:{d:"M6 22V10a6 6 0 0 1 12 0v12l-3-2-3 2-3-2zM10 10h.01M14 10h.01",stroke:true}
+};
+const GAME_ICON = { elden:"tree", nightreign:"moon", souls3:"flame", bloodborne:"moon", sekiro:"blade", hollow:"leaf", mhw:"sword", wukong:"star", liesofp:"blade", gowr:"sword", cuphead:"star",
+  fortnite:"skull", val:"crosshair", apex:"crosshair", warzone:"crosshair", overwatch:"star", rivals:"star", lol:"sword", cs2:"crosshair", rl:"ball", hd2:"skull", destiny2:"moon", drg:"pick", lethal:"ghost", minecraft:"block", genshin:"leaf",
+  sf6:"flame", tekken8:"star", dbsz:"flame", smash:"star" };
+
+/* ---------- Example Looking for Group posts and events (minutes are relative to now) ---------- */
+const EXAMPLE_LFG = [
+  {id:"lfg1",by:"ex7",game:"fortnite",need:2,mic:true,note:"Trios on Crossbones Isle, chasing Devil Fruit Mythics. Chill but we want wins.",hours:2,ago:12},
+  {id:"lfg2",by:"ex3",game:"hd2",need:3,mic:true,note:"Diff 7 Terminids. Bring anti-tank.",hours:3,ago:35},
+  {id:"lfg3",by:"ex1",game:"elden",need:1,mic:false,note:"Helping with Malenia. Drop your sign at Haligtree Roots.",hours:2,ago:50},
+  {id:"lfg4",by:"ex11",game:"lethal",need:3,mic:true,note:"Fresh save, need screamers.",hours:2,ago:70}
+];
+const EXAMPLE_EVENTS = [
+  {id:"ev1",title:"Friday LAN night",game:"",place:"Student center, room TBD",inDays:4,hour:19,note:"Bring your own setup. Snacks provided."},
+  {id:"ev2",title:"Smash doubles bracket",game:"smash",place:"Esports club room",inDays:6,hour:15,note:"Sign up with a partner."},
+  {id:"ev3",title:"Fortnite Treasure Hunters squad scrims",game:"fortnite",place:"Online (Discord)",inDays:2,hour:21,note:"Trios. Find a squad on Party Up first."}
+];
 
 </script>
 <script>
 const $=s=>document.querySelector(s);
 const gameById=id=>GAMES.find(g=>g.id===id);
 const gameName=id=>(gameById(id)||{}).name||id;
-function el(tag,attrs={},...kids){const n=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(v==null)continue;if(k==="class")n.className=v;else if(k==="text")n.textContent=v;else if(k.startsWith("on"))n[k]=v;else n.setAttribute(k,v);}kids.flat().forEach(k=>k!=null&&k!==false&&n.append(k));return n;}
+function el(tag,attrs={},...kids){const n=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(v==null||v===false)continue;if(k==="class")n.className=v;else if(k==="text")n.textContent=v;else if(k.startsWith("on"))n[k]=v;else n.setAttribute(k,v);}kids.flat().forEach(k=>k!=null&&k!==false&&n.append(k));return n;}
+const SVGNS="http://www.w3.org/2000/svg";
+function icon(name){const ic=ICONS[name]||ICONS.star;const s=document.createElementNS(SVGNS,"svg");s.setAttribute("viewBox","0 0 24 24");s.setAttribute("aria-hidden","true");const p=document.createElementNS(SVGNS,"path");p.setAttribute("d",ic.d);if(ic.stroke){p.setAttribute("fill","none");p.setAttribute("stroke","currentColor");p.setAttribute("stroke-width","2");p.setAttribute("stroke-linecap","round");p.setAttribute("stroke-linejoin","round");}else{p.setAttribute("fill","currentColor");p.setAttribute("fill-rule","evenodd");}s.append(p);return s;}
+function rankIcon(color){const s=document.createElementNS(SVGNS,"svg");s.setAttribute("viewBox","0 0 24 24");s.setAttribute("aria-hidden","true");const p=document.createElementNS(SVGNS,"path");p.setAttribute("d","M12 2l8 5v10l-8 5-8-5V7z");p.setAttribute("fill",color);const q=document.createElementNS(SVGNS,"path");q.setAttribute("d","M12 6l4 2.5v5L12 16l-4-2.5v-5z");q.setAttribute("fill","rgba(0,0,0,.25)");s.append(p,q);return s;}
+function starIcon(){const s=icon("star");return s;}
 function store(k,v){try{localStorage.setItem("partyup."+k,JSON.stringify(v));}catch(e){}}
-function load(k){try{return JSON.parse(localStorage.getItem("partyup."+k));}catch(e){return null;}}
+function load(k,def){try{const v=JSON.parse(localStorage.getItem("partyup."+k));return v==null?def:v;}catch(e){return def;}}
 const tileBg=g=>`linear-gradient(135deg,${g.color[0]},${g.color[1]})`;
+const bannerBg=b=>{const c=BANNERS[b]||BANNERS.sunset;return `linear-gradient(135deg,${c[0]},${c[1]})`;};
 const SKILLS=["New","Casual","Experienced","Competitive"];
+const now=()=>Date.now();
+const HOUR=3600e3;
 
 /* ---------- State ---------- */
-const state={ me:load("profile"), real:[], myId:null, db:null, canWrite:null,
-  filter:{game:"",platform:"",mic:false,examples:true,vibes:new Set()}, intelGame:"elden", boss:0 };
+const state={ me:load("profile",null), real:[], myId:null, db:null, canWrite:null,
+  favs:new Set(load("favs",[])), endorsed:load("endorsed",{}), myPosts:load("lfg",[]), myEvents:load("events",[]), going:new Set(load("going",[])),
+  filter:{game:"",platform:"",mic:false,examples:true,online:false,fav:false,vibes:new Set()}, intelGame:"elden", boss:0 };
+const isOnline=p=>p.example?!!p.online:(p.onlineUntil&&p.onlineUntil>now());
 
-/* ---------- Matching ---------- */
+/* ---------- Shared bits ---------- */
+function avatar(p,lg){
+  const style=p.avatar||"initial";
+  const a=el("div",{class:"avatar"+(lg?" lg":""),"aria-hidden":"true",style:"background:"+bannerBg(p.banner||"sunset")});
+  if(style==="initial"||!ICONS[style]) a.textContent=(p.tag||"?").trim().charAt(0).toUpperCase(); else a.append(icon(style));
+  return el("div",{class:"av-wrap"},a,isOnline(p)?el("span",{class:"dot",title:"Looking for a group now"}):null);
+}
+function rankBadge(skill){const r=RANKS[skill];if(!r)return null;return el("span",{class:"rank",style:"color:"+r[1]},rankIcon(r[1]),r[0]);}
+function endorseCounts(p){const base={...(p.endorse||{})};(state.endorsed[p.id]||[]).forEach(t=>base[t]=(base[t]||0)+1);return base;}
+function topEndorse(p){const c=endorseCounts(p);const e=Object.entries(c).sort((a,b)=>b[1]-a[1])[0];return e?el("div",{class:"top-endorse"},"Top endorsement: ",el("b",{text:e[0]+" ×"+e[1]})):null;}
 function similarity(p,me){
-  if(!me) return null;
-  const mg=me.games||[], pg=p.games||[];
-  const shared=pg.filter(g=>mg.includes(g)).length;
-  const gameScore = mg.length? Math.min(1, shared/Math.min(mg.length,3)) : 0;
-  const plat = p.platform===me.platform?1:0;
-  const mic = (!!p.mic)===(!!me.mic)?1:0;
-  const mv=me.vibes||[], pv=p.vibes||[];
-  const vib = mv.length? pv.filter(v=>mv.includes(v)).length/mv.length : .5;
-  const sk = 1-Math.abs(SKILLS.indexOf(p.skill)-SKILLS.indexOf(me.skill))/3;
+  if(!me)return null;const mg=me.games||[],pg=p.games||[];const shared=pg.filter(g=>mg.includes(g)).length;
+  const gameScore=mg.length?Math.min(1,shared/Math.min(mg.length,3)):0;const plat=p.platform===me.platform?1:0;const mic=(!!p.mic)===(!!me.mic)?1:0;
+  const mv=me.vibes||[],pv=p.vibes||[];const vib=mv.length?pv.filter(v=>mv.includes(v)).length/mv.length:.5;
+  const sk=1-Math.abs(SKILLS.indexOf(p.skill)-SKILLS.indexOf(me.skill))/3;
   return Math.round((gameScore*.45+plat*.15+mic*.12+vib*.18+(isNaN(sk)?.5:sk)*.10)*100);
+}
+function profileById(id){if(id==="local"||id===state.myId)return state.me?{...state.me,id:"local",mine:true}:null;return EXAMPLES.find(e=>e.id===id)||state.real.find(r=>r.id===id)||null;}
+function toggleFav(id){state.favs.has(id)?state.favs.delete(id):state.favs.add(id);store("favs",[...state.favs]);}
+
+/* ---------- Hot poster ---------- */
+function renderHot(view){
+  const box=$("#hot");const g=HOT&&gameById(HOT.game);
+  if(!g||view==="menu"){box.hidden=true;return;}
+  const items=(HOT.ticker||[HOT.title]);const track=el("div",{class:"ticker-track"},[...items,...items].map(t=>el("span",{text:t})));
+  box.replaceChildren(el("div",{class:"hot-stamp",text:"HOT"}),
+    el("div",{class:"hot-copy"},el("small",{text:"Hot right now"}),el("b",{text:HOT.title}),el("p",{text:HOT.text})),
+    el("div",{class:"hot-actions"},
+      el("button",{type:"button",class:"btn",text:"Find a squad",onclick:()=>{state.filter.game=g.id;$("#f-game").value=g.id;if(location.hash==="#squads"){renderCards();$("#cards").scrollIntoView({behavior:"smooth"});}else location.hash="squads";}}),
+      el("a",{class:"btn ghost",href:"#lfg",text:"Post in LFG"}),
+      el("a",{class:"btn ghost",href:"#intel-"+g.id,text:"See the intel"})),
+    el("div",{class:"ticker","aria-hidden":"true"},track));
+  box.hidden=false;
 }
 
 /* ---------- Squads ---------- */
+function gameOptions(sel,withMine){sel.append(el("option",{value:"",text:"All games"}));if(withMine)sel.append(el("option",{value:"mine",text:"My games"}));for(const t of ["boss","multi","fight"]){const og=el("optgroup",{label:TYPE_LABEL[t]});GAMES.filter(g=>g.type===t).forEach(g=>og.append(el("option",{value:g.id,text:g.name})));sel.append(og);}}
 function buildFilters(){
-  const gs=$("#f-game"); gs.append(el("option",{value:"",text:"All games"}),el("option",{value:"mine",text:"My games"}));
-  for(const t of ["boss","multi","fight"]){const og=el("optgroup",{label:TYPE_LABEL[t]});GAMES.filter(g=>g.type===t).forEach(g=>og.append(el("option",{value:g.id,text:g.name})));gs.append(og);}
+  gameOptions($("#f-game"),true);
   VIBES.forEach(v=>{const b=el("button",{type:"button",class:"chip","aria-pressed":"false",text:v});b.onclick=()=>{state.filter.vibes.has(v)?state.filter.vibes.delete(v):state.filter.vibes.add(v);b.setAttribute("aria-pressed",String(state.filter.vibes.has(v)));renderCards();};$("#f-vibes").append(b);});
-  gs.onchange=e=>{state.filter.game=e.target.value;renderCards();};
+  $("#f-game").onchange=e=>{state.filter.game=e.target.value;renderCards();};
   $("#f-platform").onchange=e=>{state.filter.platform=e.target.value;renderCards();};
-  $("#f-mic").onchange=e=>{state.filter.mic=e.target.checked;renderCards();};
-  $("#f-examples").onchange=e=>{state.filter.examples=e.target.checked;renderCards();};
+  ["mic","examples","online","fav"].forEach(k=>$("#f-"+k).onchange=e=>{state.filter[k]=e.target.checked;renderCards();});
 }
-function avatar(p,lg){const hue=[...(p.tag||"?")].reduce((a,c)=>a+c.charCodeAt(0),0)%360;return el("div",{class:"avatar"+(lg?" lg":""),"aria-hidden":"true",style:`background:linear-gradient(135deg,hsl(${hue} 90% 70%),hsl(${(hue+50)%360} 85% 58%))`,text:(p.tag||"?").trim().charAt(0).toUpperCase()});}
 function allProfiles(){
-  const me=state.me, mineReal=state.myId&&state.real.find(p=>p.id===state.myId);
+  const me=state.me,mineReal=state.myId&&state.real.find(p=>p.id===state.myId);
   const list=[...state.real.map(p=>({...p,mine:p.id===state.myId}))];
-  if(me && !mineReal) list.unshift({...me,id:"local",mine:true,localOnly:true});
-  if(state.filter.examples) list.push(...EXAMPLES);
+  if(me&&!mineReal)list.unshift({...me,id:"local",mine:true,localOnly:true});
+  if(state.filter.examples)list.push(...EXAMPLES);
   return list;
 }
 function renderYouBar(){
-  const bar=$("#you-bar"); bar.replaceChildren(); const me=state.me;
-  if(!me){ bar.append(el("div",{class:"meta"},el("b",{text:"Get matched with players like you. "}),"Set up your profile in three quick steps."),el("a",{class:"btn",href:"#menu",text:"Set up my profile"})); return; }
-  bar.append(avatar(me),el("div",{class:"meta"},el("b",{text:"Matching you as "+me.tag+". "}),(me.games||[]).map(gameName).slice(0,4).join(", ")+((me.games||[]).length>4?" +"+((me.games.length)-4)+" more":"")),el("a",{class:"btn ghost sm",href:"#profile",text:"Edit preferences"}));
+  const bar=$("#you-bar");bar.replaceChildren();const me=state.me;
+  if(!me){bar.append(el("div",{class:"meta"},el("b",{text:"Get matched with players like you. "}),"Set up your profile in four quick steps."),el("a",{class:"btn",href:"#menu",text:"Set up my profile"}));return;}
+  const on=isOnline(me);
+  bar.append(avatar(me),el("div",{class:"meta"},el("b",{text:"Matching you as "+me.tag+". "}),(me.games||[]).map(gameName).slice(0,4).join(", ")+((me.games||[]).length>4?" +"+(me.games.length-4)+" more":"")),
+    el("button",{type:"button",class:"btn ghost sm",text:on?"● Online now":"Go online",style:on?"color:var(--lime)":null,onclick:()=>{setOnline(!on);renderCards();}}),
+    el("a",{class:"btn ghost sm",href:"#profile",text:"Edit profile"}));
 }
+function setOnline(on){if(!state.me)return;state.me.onlineUntil=on?now()+3*HOUR:0;store("profile",state.me);}
 function renderCards(){
   renderYouBar();
-  const f=state.filter, me=state.me, box=$("#cards"); box.replaceChildren();
-  let list=allProfiles();
-  list=list.filter(p=>{
-    if(f.game==="mine"){ if(me&&me.games?.length&&!(p.games||[]).some(g=>me.games.includes(g))) return false; }
-    else if(f.game && !(p.games||[]).includes(f.game)) return false;
-    if(f.platform && p.platform!==f.platform) return false;
-    if(f.mic && !p.mic) return false;
-    if(f.vibes.size && !(p.vibes||[]).some(v=>f.vibes.has(v))) return false;
-    return true;
-  });
+  const f=state.filter,me=state.me,box=$("#cards");box.replaceChildren();
+  let list=allProfiles().filter(p=>{
+    if(f.game==="mine"){if(me&&me.games?.length&&!(p.games||[]).some(g=>me.games.includes(g)))return false;}
+    else if(f.game&&!(p.games||[]).includes(f.game))return false;
+    if(f.platform&&p.platform!==f.platform)return false;
+    if(f.mic&&!p.mic)return false;
+    if(f.online&&!isOnline(p))return false;
+    if(f.fav&&!state.favs.has(p.id))return false;
+    if(f.vibes.size&&!(p.vibes||[]).some(v=>f.vibes.has(v)))return false;
+    return true;});
   list.forEach(p=>p._score=p.mine?null:similarity(p,me));
-  list.sort((a,b)=>(b.mine?1:0)-(a.mine?1:0)||(b._score??-1)-(a._score??-1)||(a.example?1:0)-(b.example?1:0));
-  if(!list.length){box.append(el("div",{class:"empty",text:"No one matches those filters yet. Try loosening them."}));return;}
+  list.sort((a,b)=>(b.mine?1:0)-(a.mine?1:0)||(isOnline(b)?1:0)-(isOnline(a)?1:0)||(b._score??-1)-(a._score??-1));
+  if(!list.length){box.append(el("div",{class:"empty",text:f.fav?"No favorites yet. Open a profile and tap the star to save someone.":"No one matches those filters yet. Try loosening them."}));return;}
   list.forEach(p=>box.append(card(p)));
 }
 function card(p){
-  const me=state.me; const shared=me?(p.games||[]).filter(g=>(me.games||[]).includes(g)):[];
-  const ring = p._score==null?null:el("div",{class:"match",style:`--p:${p._score};--ring:${p._score>=70?"var(--lime)":p._score>=45?"var(--sun)":"var(--coral)"}`,title:p._score+"% similar to you"},el("span",{text:p._score+"%"}));
+  const me=state.me;const shared=me?(p.games||[]).filter(g=>(me.games||[]).includes(g)):[];
+  const ring=p._score==null?null:el("div",{class:"match",style:`--p:${p._score};--ring:${p._score>=70?"var(--lime)":p._score>=45?"var(--sun)":"var(--coral)"}`,title:p._score+"% similar to you"},el("span",{text:p._score+"%"}));
   const flags=el("div",{class:"pills"});
-  if(p.example) flags.append(el("span",{class:"pill ex",text:"Example"}));
-  if(p.mine) flags.append(el("span",{class:"pill you",text:"You"}));
-  if(p.localOnly) flags.append(el("span",{class:"pill nomic",text:"Saved on this device"}));
+  if(isOnline(p))flags.append(el("span",{class:"pill online",text:"● Online now"}));
+  if(p.example)flags.append(el("span",{class:"pill ex",text:"Example"}));
+  if(p.mine)flags.append(el("span",{class:"pill you",text:"You"}));
   shared.slice(0,3).forEach(g=>flags.append(el("span",{class:"pill shared",text:gameName(g)})));
-  const n=Object.keys(p.handles||{}).filter(k=>p.handles[k]).length;
-  return el("button",{type:"button",class:"card"+(p.mine?" mine":""),onclick:()=>openProfile(p),"aria-label":"View "+(p.tag||"player")+"'s profile"},
-    el("div",{class:"card-top"},el("div",{class:"who"},avatar(p),el("div",{style:"min-width:0"},el("div",{class:"tag",text:p.tag||"Unnamed"}),el("div",{class:"meta",text:[p.platform,p.skill].filter(Boolean).join(" · ")}))),ring),
+  const wrap=el("div",{style:"position:relative"});
+  const c=el("button",{type:"button",class:"card"+(p.mine?" mine":""),style:"width:100%;height:100%",onclick:()=>openProfile(p),"aria-label":"View "+(p.tag||"player")+"'s profile"},
+    el("div",{class:"strip",style:"background:"+bannerBg(p.banner)}),
+    el("div",{class:"card-top"},el("div",{class:"who"},avatar(p),el("div",{style:"min-width:0"},el("div",{class:"tag",text:p.tag||"Unnamed"}),el("div",{class:"meta",style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"},el("span",{text:p.platform||""}),rankBadge(p.skill)))),ring),
     flags.childElementCount?flags:null,
     el("div",{class:"pills"},el("span",{class:"pill "+(p.mic?"mic":"nomic"),text:p.mic?"Mic on":"No mic"}),...(p.vibes||[]).slice(0,3).map(v=>el("span",{class:"pill",text:v}))),
     p.bio?el("p",{class:"bio",text:p.bio}):null,
-    el("div",{class:"card-foot"},el("span",{text:(p.games||[]).length+" game"+((p.games||[]).length===1?"":"s")+" · "+n+" handle"+(n===1?"":"s")}),el("b",{text:"View profile →"})));
+    topEndorse(p),
+    el("div",{class:"card-foot"},el("span",{text:(p.games||[]).length+" game"+((p.games||[]).length===1?"":"s")}),el("b",{text:"View profile →"})));
+  wrap.append(c);
+  if(!p.mine){const sb=el("button",{type:"button",class:"star-btn","aria-pressed":String(state.favs.has(p.id)),"aria-label":(state.favs.has(p.id)?"Remove ":"Add ")+(p.tag||"player")+" "+(state.favs.has(p.id)?"from":"to")+" favorites",onclick:e=>{e.stopPropagation();toggleFav(p.id);renderCards();}},starIcon());wrap.append(sb);}
+  return wrap;
 }
 
 /* ---------- Modal ---------- */
 let lastFocus=null;
 function openModal(build){lastFocus=document.activeElement;const d=$("#dialog");d.replaceChildren(el("button",{class:"x",type:"button","aria-label":"Close",onclick:closeModal,text:"×"}),...build());$("#overlay").hidden=false;d.querySelector(".x").focus();}
-function closeModal(){$("#overlay").hidden=true;if(lastFocus)lastFocus.focus();}
+function closeModal(){$("#overlay").hidden=true;if(lastFocus&&document.body.contains(lastFocus))lastFocus.focus();}
 $("#overlay").addEventListener("click",e=>{if(e.target.id==="overlay")closeModal();});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#overlay").hidden)closeModal();});
 function copyBtn(text,label){const b=el("button",{type:"button",class:"btn ghost sm",text:"Copy","aria-label":"Copy "+label});b.onclick=async()=>{try{await navigator.clipboard.writeText(text);b.textContent="Copied!";}catch(e){b.textContent="Select it";}setTimeout(()=>b.textContent="Copy",1500);};return b;}
 function openProfile(p){
-  const h=p.handles||{}; const me=state.me;
+  if(p._score===undefined&&!p.mine)p._score=similarity(p,state.me);
+  const h=p.handles||{},me=state.me;
   const rows=Object.keys(HANDLE_LABELS).filter(k=>h[k]).map(k=>el("div",{class:"handle-row"},el("span",{text:HANDLE_LABELS[k]}),el("code",{text:h[k]}),copyBtn(h[k],HANDLE_LABELS[k])));
+  const counts=endorseCounts(p),mine=new Set(state.endorsed[p.id]||[]);
+  const endorseRow=el("div",{class:"endorse"},ENDORSE_TAGS.map(t=>el("button",{type:"button","aria-pressed":String(mine.has(t)),disabled:p.mine?"":null,onclick:()=>{const arr=new Set(state.endorsed[p.id]||[]);arr.has(t)?arr.delete(t):arr.add(t);state.endorsed[p.id]=[...arr];store("endorsed",state.endorsed);openProfile(p);renderCards();}},t,el("b",{text:String(counts[t]||0)}))));
   openModal(()=>[
-    el("div",{class:"prof-head"},avatar(p,true),el("div",{},el("h2",{id:"dlg-title",text:p.tag||"Player"}),el("div",{class:"meta",text:[p.platform,p.skill,p.mic?"Mic on":"No mic"].filter(Boolean).join(" · ")}),p._score!=null?el("div",{class:"meta",style:"color:var(--lime);font-weight:700",text:p._score+"% similar to you"}):null)),
-    p.example?el("div",{class:"note",text:"This is an example profile to show how Party Up works. These handles aren't real people."}):null,
+    el("div",{class:"prof-banner",style:"background:"+bannerBg(p.banner)}),
+    el("div",{class:"prof-head over"},avatar(p,true),el("div",{style:"padding-bottom:4px"},el("h2",{id:"dlg-title",text:p.tag||"Player"}),el("div",{class:"meta",style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"},el("span",{text:[p.platform,p.mic?"Mic on":"No mic"].filter(Boolean).join(" · ")}),rankBadge(p.skill)))),
+    el("div",{class:"pills"},isOnline(p)?el("span",{class:"pill online",text:"● Looking for a group now"}):null,p._score!=null?el("span",{class:"pill shared",text:p._score+"% similar to you"}):null,p.example?el("span",{class:"pill ex",text:"Example profile"}):null),
+    p.example?el("div",{class:"note",style:"margin-top:0",text:"This is an example profile to show how Party Up works. These handles aren't real people."}):null,
     p.bio?el("p",{class:"bio",text:p.bio}):null,
     el("div",{},el("span",{class:"flabel",text:"Add them on"}),rows.length?el("div",{class:"handle-list"},rows):el("div",{class:"meta",text:"No handles listed."})),
+    el("div",{},el("span",{class:"flabel",text:p.mine?"Your endorsements":"Played with them? Endorse them"}),endorseRow),
     el("dl",{class:"kv"},el("dt",{text:"Plays"}),el("dd",{},el("div",{class:"pills"},(p.games||[]).map(g=>el("span",{class:"pill"+(me&&(me.games||[]).includes(g)?" shared":""),text:gameName(g)})))),
       p.vibes?.length?el("dt",{text:"Vibe"}):null,p.vibes?.length?el("dd",{text:p.vibes.join(", ")}):null,
-      p.times?el("dt",{text:"Usually on"}):null,p.times?el("dd",{text:p.times}):null)
+      p.times?el("dt",{text:"Usually on"}):null,p.times?el("dd",{text:p.times}):null),
+    p.mine?el("a",{class:"btn ghost",href:"#profile",onclick:closeModal,text:"Edit my profile"}):el("button",{type:"button",class:"btn"+(state.favs.has(p.id)?" ghost":""),onclick:()=>{toggleFav(p.id);openProfile(p);renderCards();}},starIcon(),state.favs.has(p.id)?"Saved to favorites":"Add to favorites")
   ]);
 }
 
+/* ---------- LFG ---------- */
+function examplePosts(){return EXAMPLE_LFG.map(x=>({...x,created:now()-x.ago*60e3,example:true,author:EXAMPLES.find(e=>e.id===x.by)}));}
+function activePosts(){
+  state.myPosts=state.myPosts.filter(p=>p.created+p.hours*HOUR>now());store("lfg",state.myPosts);
+  const mine=state.myPosts.map(p=>({...p,mine:true,author:state.me?{...state.me,id:"local",mine:true}:p.author}));
+  return [...mine,...($("#lfg-examples").checked?examplePosts():[])].filter(p=>p.created+p.hours*HOUR>now());
+}
+function timeLeft(p){const ms=p.created+p.hours*HOUR-now();const m=Math.max(0,Math.round(ms/60e3));return m>=60?Math.floor(m/60)+"h "+(m%60)+"m left":m+"m left";}
+function ago(t){const m=Math.round((now()-t)/60e3);return m<1?"just now":m<60?m+"m ago":Math.floor(m/60)+"h ago";}
+function renderLfgForm(){
+  const box=$("#lfg-post");box.replaceChildren();
+  if(!state.me){box.append(el("h3",{text:"Post a group"}),el("p",{class:"meta",style:"margin:0 0 12px",text:"Set up your profile first so people know who they're joining."}),el("a",{class:"btn",href:"#menu",text:"Set up my profile"}));return;}
+  const gsel=el("select",{id:"lfg-game"});(state.me.games||[]).forEach(id=>gsel.append(el("option",{value:id,text:gameName(id)})));gsel.append(el("option",{value:"",text:"──────────",disabled:""}));GAMES.filter(g=>!(state.me.games||[]).includes(g.id)).forEach(g=>gsel.append(el("option",{value:g.id,text:g.name})));
+  if(HOT&&(state.me.games||[]).includes(HOT.game))gsel.value=HOT.game;
+  const need=el("select",{id:"lfg-need"},[1,2,3,4,5].map(n=>el("option",{value:n,text:n+" player"+(n>1?"s":"")})));need.value="2";
+  const hrs=el("select",{id:"lfg-hours"},[["1","1 hour"],["2","2 hours"],["3","3 hours"],["4","4 hours"]].map(([v,t])=>el("option",{value:v,text:t})));hrs.value="2";
+  const mic=el("select",{id:"lfg-mic"},el("option",{value:"yes",text:"Mic required"}),el("option",{value:"no",text:"Mic optional"}));
+  const note=el("input",{type:"text",id:"lfg-note",maxlength:"120",placeholder:"Trios, chill vibes, want to hit Diamond…"});
+  const err=el("div",{class:"err",role:"alert"});
+  box.append(el("h3",{text:"Post a group"}),el("div",{class:"lfg-form"},
+    el("div",{class:"field"},el("label",{for:"lfg-game",text:"Game"}),gsel),el("div",{class:"field"},el("label",{for:"lfg-need",text:"Need"}),need),
+    el("div",{class:"field"},el("label",{for:"lfg-mic",text:"Mic"}),mic),el("div",{class:"field"},el("label",{for:"lfg-hours",text:"Keep it up for"}),hrs),
+    el("div",{class:"field wide"},el("label",{for:"lfg-note",text:"What are you looking for?"}),note),
+    el("div",{class:"wide",style:"display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"},el("span",{class:"meta",text:"Posting as "+state.me.tag+". Your handles show when someone taps Join."}),el("button",{type:"button",class:"btn",text:"Post it",onclick:()=>{
+      if(!gsel.value){err.textContent="Pick a game.";return;}
+      state.myPosts.unshift({id:"p"+now(),game:gsel.value,need:+need.value,mic:mic.value==="yes",note:note.value.trim(),hours:+hrs.value,created:now()});store("lfg",state.myPosts);
+      if(state.me&&!isOnline(state.me))setOnline(true);
+      note.value="";renderLfg();}}))),err);
+}
+function renderLfg(){
+  renderLfgForm();
+  const f=$("#lfg-filter").value,list=$("#lfg-list");list.replaceChildren();
+  const posts=activePosts().filter(p=>!f||p.game===f).sort((a,b)=>(b.mine?1:0)-(a.mine?1:0)||b.created-a.created);
+  if(!posts.length){list.append(el("div",{class:"empty",text:"No open groups right now. Be the first to post one."}));return;}
+  posts.forEach(p=>{const g=gameById(p.game)||GAMES[0],a=p.author||{};
+    list.append(el("article",{class:"post",style:"--gc:"+tileBg(g)},
+      el("div",{class:"need"},el("div",{},el("b",{text:"+"+p.need}),el("small",{text:"needed"}))),
+      el("div",{style:"min-width:0"},el("h3",{text:g.name+" · "+(p.mic?"Mic required":"Mic optional")}),p.note?el("p",{text:p.note}):null,
+        el("div",{class:"by"},avatar(a),el("span",{text:(a.tag||"Player")+" · posted "+ago(p.created)}),p.example?el("span",{class:"pill ex",text:"Example"}):null,p.mine?el("span",{class:"pill you",text:"You"}):null)),
+      el("div",{class:"side"},el("span",{class:"timeleft",text:timeLeft(p)}),p.mine?el("button",{type:"button",class:"btn ghost sm",text:"Remove",onclick:()=>{state.myPosts=state.myPosts.filter(x=>x.id!==p.id);store("lfg",state.myPosts);renderLfg();}}):el("button",{type:"button",class:"btn sm",text:"Join →",onclick:()=>openProfile(a)}))));
+  });
+}
+
+/* ---------- Events ---------- */
+function exampleEvents(){return EXAMPLE_EVENTS.map(e=>{const d=new Date();d.setDate(d.getDate()+e.inDays);d.setHours(e.hour,0,0,0);return {...e,when:d.getTime(),example:true};});}
+function renderEvents(){
+  const box=$("#events");box.replaceChildren();
+  state.myEvents=state.myEvents.filter(e=>e.when>now()-6*HOUR);store("events",state.myEvents);
+  const list=[...state.myEvents.map(e=>({...e,mine:true})),...($("#ev-examples").checked?exampleEvents():[])].sort((a,b)=>a.when-b.when);
+  if(!list.length){box.append(el("div",{class:"empty",text:"No upcoming events yet. Add one!"}));return;}
+  list.forEach(e=>{const d=new Date(e.when),g=e.game&&gameById(e.game);const going=state.going.has(e.id);
+    box.append(el("article",{class:"event"},
+      el("div",{class:"cal"},el("small",{text:d.toLocaleDateString(undefined,{month:"short"}).toUpperCase()}),el("b",{text:String(d.getDate())})),
+      el("div",{style:"min-width:0"},el("h3",{text:e.title}),el("div",{class:"meta",text:[d.toLocaleDateString(undefined,{weekday:"long"})+" at "+d.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"}),e.place,g?g.name:null].filter(Boolean).join(" · ")}),e.note?el("p",{text:e.note}):null,
+        el("div",{class:"pills",style:"margin-top:8px"},e.example?el("span",{class:"pill ex",text:"Example"}):null,e.mine?el("span",{class:"pill you",text:"Your event"}):null,going?el("span",{class:"pill online",text:"You're going"}):null)),
+      el("div",{class:"side",style:"display:flex;gap:8px"},el("button",{type:"button",class:"btn sm"+(going?" ghost":""),text:going?"Not going":"I'm going",onclick:()=>{going?state.going.delete(e.id):state.going.add(e.id);store("going",[...state.going]);renderEvents();}}),
+        e.mine?el("button",{type:"button",class:"btn ghost sm",text:"Delete",onclick:()=>{state.myEvents=state.myEvents.filter(x=>x.id!==e.id);store("events",state.myEvents);renderEvents();}}):null)));
+  });
+}
+$("#add-event").onclick=()=>{
+  const title=el("input",{type:"text",id:"ev-title",maxlength:"60",placeholder:"Friday LAN night"});
+  const when=el("input",{type:"datetime-local",id:"ev-when",style:"width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;color-scheme:dark"});
+  const place=el("input",{type:"text",id:"ev-place",maxlength:"60",placeholder:"Student center / Discord"});
+  const game=el("select",{id:"ev-game"});gameOptions(game,false);game.options[0].textContent="Any / not game-specific";
+  const note=el("input",{type:"text",id:"ev-note",maxlength:"120",placeholder:"Bring your own controller"});const err=el("div",{class:"err",role:"alert"});
+  openModal(()=>[el("h2",{id:"dlg-title",text:"Add an event"}),
+    el("div",{class:"field"},el("label",{for:"ev-title",text:"Event name"}),title),
+    el("div",{class:"row2"},el("div",{class:"field"},el("label",{for:"ev-when",text:"Date and time"}),when),el("div",{class:"field"},el("label",{for:"ev-game",text:"Game"}),game)),
+    el("div",{class:"field"},el("label",{for:"ev-place",text:"Where"}),place),el("div",{class:"field"},el("label",{for:"ev-note",text:"Details"}),note),err,
+    el("div",{class:"actions",style:"display:flex;gap:10px;justify-content:flex-end"},el("button",{type:"button",class:"btn ghost",text:"Cancel",onclick:closeModal}),el("button",{type:"button",class:"btn",text:"Add event",onclick:()=>{
+      if(!title.value.trim()){err.textContent="Give your event a name.";return;}const t=new Date(when.value).getTime();if(!when.value||isNaN(t)||t<now()){err.textContent="Pick a date and time in the future.";return;}
+      state.myEvents.push({id:"e"+now(),title:title.value.trim(),when:t,place:place.value.trim(),game:game.value,note:note.value.trim()});store("events",state.myEvents);closeModal();renderEvents();}}))]);
+};
+$("#ev-examples").onchange=renderEvents;
+
 /* ---------- Intel ---------- */
 function renderGameList(){
-  const q=($("#gl-search").value||"").toLowerCase(), box=$("#gl-items"); box.replaceChildren();
-  const colors={boss:"var(--pink)",multi:"var(--cyan)",fight:"var(--sun)"};
-  for(const t of ["boss","multi","fight"]){
-    const gs=GAMES.filter(g=>g.type===t&&g.name.toLowerCase().includes(q)); if(!gs.length) continue;
-    box.append(el("div",{class:"gl-group",style:"color:"+colors[t],text:{boss:"Boss guides",multi:"Multiplayer",fight:"Fighting games"}[t]}));
-    gs.forEach(g=>box.append(el("button",{type:"button",class:"gl-item","aria-current":String(g.id===state.intelGame),onclick:()=>{location.hash="intel-"+g.id;}},el("span",{class:"gl-dot",style:"background:"+tileBg(g)}),g.name)));
-  }
+  const q=($("#gl-search").value||"").toLowerCase(),box=$("#gl-items");box.replaceChildren();
+  const colors={boss:"var(--pink)",multi:"var(--cyan)",fight:"var(--sun)"},labels={boss:"Boss guides",multi:"Multiplayer",fight:"Fighting games"};
+  for(const t of ["boss","multi","fight"]){const gs=GAMES.filter(g=>g.type===t&&g.name.toLowerCase().includes(q));if(!gs.length)continue;
+    box.append(el("div",{class:"gl-group",style:"color:"+colors[t],text:labels[t]}));
+    gs.forEach(g=>box.append(el("button",{type:"button",class:"gl-item","aria-current":String(g.id===state.intelGame),onclick:()=>{location.hash="intel-"+g.id;}},el("span",{class:"gl-dot",style:"background:"+tileBg(g)}),g.name)));}
 }
 function pips(n,cls){const d=el("div",{class:"pips "+(cls||"")});for(let i=1;i<=5;i++)d.append(el("i",{class:i<=n?"on":""}));return d;}
 function renderIntel(){
-  const g=gameById(state.intelGame)||GAMES[0], body=$("#intel-body"); body.replaceChildren();
+  const g=gameById(state.intelGame)||GAMES[0],body=$("#intel-body");body.replaceChildren();
   const findBtn=el("button",{class:"btn",type:"button",text:"Find "+g.name+" teammates",onclick:()=>{state.filter.game=g.id;$("#f-game").value=g.id;location.hash="squads";}});
-  body.append(el("div",{class:"g-hero",style:"background:"+tileBg(g)},el("span",{class:"type-badge t-"+g.type,text:TYPE_LABEL[g.type]}),el("h2",{text:g.name}),el("div",{class:"meta",text:g.genre+" · "+g.platforms.join(" · ")}),el("div",{class:"actions"},g.squad!=="Single-player"?findBtn:null,g.news?el("a",{class:"btn ghost",href:g.news,target:"_blank",rel:"noopener",text:"Official patch notes ↗"}):null)));
-  // squad sheet
-  const sheet=el("div",{class:"panel"},el("h3",{text:"Squad sheet"}),el("div",{class:"sheet"},
-    el("div",{class:"stat"},el("b",{text:g.squad}),el("span",{text:"Squad size"})),
-    el("div",{class:"stat"},el("b",{text:g.genre}),el("span",{text:"Genre"})),
-    el("div",{class:"stat"},el("span",{text:"Mic importance"}),pips(g.mic,"cyan")),
-    el("div",{class:"stat"},el("span",{text:"Difficulty"}),pips(g.difficulty))),
-    g.roles?.length?el("ul",{class:"roles"},g.roles.map(([r,d])=>el("li",{},el("b",{text:r+". "}),d))):null);
-  body.append(sheet);
-  // season
+  const hero=el("div",{class:"g-hero",style:"background:"+tileBg(g)},el("span",{class:"type-badge t-"+g.type,text:TYPE_LABEL[g.type]}),el("h2",{text:g.name}),el("div",{class:"meta",text:g.genre+" · "+g.platforms.join(" · ")}),el("div",{class:"actions"},g.squad!=="Single-player"?findBtn:null,g.news?el("a",{class:"btn ghost",href:g.news,target:"_blank",rel:"noopener",text:"Official patch notes ↗"}):null));
+  const m=el("span",{class:"motif",style:"position:absolute;right:20px;top:50%;transform:translateY(-50%) rotate(-8deg);width:140px;height:140px;opacity:.25;color:#fff;z-index:1"});m.append(icon(GAME_ICON[g.id]));hero.append(m);
+  body.append(hero);
+  body.append(el("div",{class:"panel"},el("h3",{text:"Squad sheet"}),el("div",{class:"sheet"},
+    el("div",{class:"stat"},el("b",{text:g.squad}),el("span",{text:"Squad size"})),el("div",{class:"stat"},el("b",{text:g.genre}),el("span",{text:"Genre"})),
+    el("div",{class:"stat"},el("span",{text:"Mic importance"}),pips(g.mic,"cyan")),el("div",{class:"stat"},el("span",{text:"Difficulty"}),pips(g.difficulty))),
+    g.roles?.length?el("ul",{class:"roles"},g.roles.map(([r,d])=>el("li",{},el("b",{text:r+". "}),d))):null));
+  if(g.type!=="boss"||g.changes){
+    if(g.changes){const c=g.changes;body.append(el("div",{class:"panel changes"},el("h3",{text:"What changed this week"}),el("div",{class:"asof",text:"Updated "+c.asof}),el("ul",{class:"tips"},c.points.map(t=>el("li",{text:t}))),el("div",{style:"margin-top:12px"},el("a",{href:c.source,target:"_blank",rel:"noopener",text:"Full patch notes ↗"}))));}
+    else if(g.news){body.append(el("div",{class:"panel changes"},el("h3",{text:"What changed this week"}),el("p",{class:"meta",style:"margin:0 0 10px",text:"We haven't summarized this week's "+g.name+" update yet. The official patch notes have every change."}),el("a",{href:g.news,target:"_blank",rel:"noopener",text:"Official patch notes ↗"})));}
+  }
   if(g.season){const s=g.season;body.append(el("div",{class:"panel season"},el("h3",{text:"This season"}),el("h2",{text:s.title}),el("div",{class:"asof",text:"Updated "+s.asof+" · Seasons change fast, so check the official news for the latest"}),el("ul",{class:"tips"},s.points.map(t=>el("li",{text:t}))),el("div",{style:"margin-top:14px"},el("a",{href:s.source,target:"_blank",rel:"noopener",text:"Official news ↗"}))));}
-  // bosses
-  if(g.bosses?.length){
-    if(state.boss>=g.bosses.length) state.boss=0;
-    const b=g.bosses[state.boss];
+  if(g.bosses?.length){if(state.boss>=g.bosses.length)state.boss=0;const b=g.bosses[state.boss];
     const tabs=g.bosses.length>1?el("div",{class:"boss-tabs"},g.bosses.map((x,i)=>el("button",{type:"button",class:"chip pinkc","aria-pressed":String(i===state.boss),text:x.name,onclick:()=>{state.boss=i;renderIntel();}}))):null;
-    body.append(el("div",{class:"panel"},el("h3",{text:g.type==="boss"?"Boss guide":"Boss & big-threat guide"}),tabs,
-      el("div",{class:"boss-head"},el("h2",{text:b.name})),
+    body.append(el("div",{class:"panel"},el("h3",{text:g.type==="boss"?"Boss guide":"Boss & big-threat guide"}),tabs,el("div",{class:"boss-head"},el("h2",{text:b.name})),
       el("div",{class:"locate"},el("div",{class:"pin",text:"⌖","aria-hidden":"true"}),el("div",{},el("b",{text:b.where}),el("p",{text:b.how}))),
       el("span",{class:"flabel",text:"Weak to"}),el("div",{class:"weak"},b.weak.map(w=>el("span",{class:"pill good",text:w})),...(b.resist||[]).map(w=>el("span",{class:"pill bad",text:"Resists "+w}))),
-      b.phases?el("span",{class:"flabel",text:"How the fight flows"}):null,
-      b.phases?el("div",{class:"timeline"},b.phases.map(([n,d,w])=>el("div",{class:"seg",style:"flex:"+w},el("b",{text:n}),el("span",{text:d})))):null,
-      el("span",{class:"flabel",text:"Attack patterns"}),
-      el("div",{class:"tbl-wrap"},el("table",{},el("thead",{},el("tr",{},el("th",{text:"Attack"}),el("th",{text:"What it looks like"}),el("th",{text:"How to beat it"}))),el("tbody",{},b.attacks.map(a=>el("tr",{},a.map(c=>el("td",{text:c}))))))),
-      el("div",{class:"two"},el("div",{},el("span",{class:"flabel",text:"Drops & rewards"}),el("ul",{class:"tips"},b.drops.map(d=>el("li",{text:d})))),el("div",{},el("span",{class:"flabel",text:"Tips"}),el("ul",{class:"tips"},b.tips.map(t=>el("li",{text:t})))))
-    ));
-  }
-  if(g.items?.length){body.append(el("div",{class:"panel"},el("h3",{text:"Rare items & where to find them"}),el("div",{class:"items"},g.items.map(([n,w,where])=>el("div",{class:"item"},el("b",{text:n}),el("div",{class:"what",text:w}),el("div",{class:"where",text:where}))))));}
-  if(g.essentials?.length){body.append(el("div",{class:"panel"},el("h3",{text:"Essentials"}),el("div",{class:"ess"},g.essentials.map(([t,d])=>el("div",{},el("b",{text:t}),d)))));}
-  if(!g.bosses&&!g.essentials&&!g.season){body.append(el("div",{class:"panel soon"},el("b",{text:"Full guide coming soon"}),g.type==="boss"?"Boss locations, attack patterns, weaknesses and rare drops for "+g.name+" are on the way.":"More intel for "+g.name+" is on the way."));}
+      b.phases?el("span",{class:"flabel",text:"How the fight flows"}):null,b.phases?el("div",{class:"timeline"},b.phases.map(([n,d,w])=>el("div",{class:"seg",style:"flex:"+w},el("b",{text:n}),el("span",{text:d})))):null,
+      el("span",{class:"flabel",text:"Attack patterns"}),el("div",{class:"tbl-wrap"},el("table",{},el("thead",{},el("tr",{},el("th",{text:"Attack"}),el("th",{text:"What it looks like"}),el("th",{text:"How to beat it"}))),el("tbody",{},b.attacks.map(a=>el("tr",{},a.map(c=>el("td",{text:c}))))))),
+      el("div",{class:"two"},el("div",{},el("span",{class:"flabel",text:"Drops & rewards"}),el("ul",{class:"tips"},b.drops.map(d=>el("li",{text:d})))),el("div",{},el("span",{class:"flabel",text:"Tips"}),el("ul",{class:"tips"},b.tips.map(t=>el("li",{text:t})))))));}
+  if(g.items?.length)body.append(el("div",{class:"panel"},el("h3",{text:"Rare items & where to find them"}),el("div",{class:"items"},g.items.map(([n,w,where])=>el("div",{class:"item"},el("b",{text:n}),el("div",{class:"what",text:w}),el("div",{class:"where",text:where}))))));
+  if(g.essentials?.length)body.append(el("div",{class:"panel"},el("h3",{text:"Essentials"}),el("div",{class:"ess"},g.essentials.map(([t,d])=>el("div",{},el("b",{text:t}),d)))));
+  if(!g.bosses&&!g.essentials&&!g.season)body.append(el("div",{class:"panel soon"},el("b",{text:"Full guide coming soon"}),g.type==="boss"?"Boss locations, attack patterns, weaknesses and rare drops for "+g.name+" are on the way.":"More intel for "+g.name+" is on the way."));
   renderGameList();
 }
 
 /* ---------- Menu ---------- */
-const menuSel={games:new Set(),vibes:new Set()};
+const menuSel={games:new Set(),vibes:new Set(),banner:"sunset",avatar:"initial",online:false};
 function readHandles(){const o={};["discord","psn","xbox"].forEach(k=>{const v=$("#m-"+k).value.trim();if(v)o[k]=v;});return o;}
 function buildTiles(){
-  const q=($("#m-search").value||"").toLowerCase(), box=$("#m-games"); box.replaceChildren();
-  GAMES.filter(g=>g.name.toLowerCase().includes(q)).forEach(g=>{
-    const on=menuSel.games.has(g.id);
-    box.append(el("button",{type:"button",class:"tile","aria-pressed":String(on),style:"--tile:"+tileBg(g),onclick:()=>{menuSel.games.has(g.id)?menuSel.games.delete(g.id):menuSel.games.add(g.id);buildTiles();}},
-      el("span",{class:"tick","aria-hidden":"true",text:on?"✓":""}),el("b",{text:g.name}),el("small",{text:g.genre})));
-  });
+  const q=($("#m-search").value||"").toLowerCase(),box=$("#m-games");box.replaceChildren();
+  GAMES.filter(g=>g.name.toLowerCase().includes(q)).forEach(g=>{const on=menuSel.games.has(g.id);const mo=el("span",{class:"motif"});mo.append(icon(GAME_ICON[g.id]));
+    box.append(el("button",{type:"button",class:"tile","aria-pressed":String(on),style:"--tile:"+tileBg(g),onclick:()=>{menuSel.games.has(g.id)?menuSel.games.delete(g.id):menuSel.games.add(g.id);buildTiles();}},mo,el("span",{class:"tick","aria-hidden":"true",text:on?"✓":""}),el("b",{text:g.name}),el("small",{text:g.genre})));});
   $("#m-picked").textContent=menuSel.games.size?menuSel.games.size+" picked":"";
 }
 function chipGroup(c,items,set){c.replaceChildren();items.forEach(it=>{const b=el("button",{type:"button",class:"chip","aria-pressed":String(set.has(it)),text:it});b.onclick=()=>{set.has(it)?set.delete(it):set.add(it);b.setAttribute("aria-pressed",String(set.has(it)));};c.append(b);});}
-function showStep(n){document.querySelectorAll(".menu-panel").forEach(p=>p.hidden=p.dataset.step!==String(n));document.querySelectorAll("#step-dots .step-dot").forEach((d,i)=>d.className="step-dot"+(i+1===n?" active":i+1<n?" done":""));[1,2,3].forEach(i=>$("#m-err-"+i).textContent="");}
+function draftProfile(){return {tag:$("#m-tag").value.trim()||"You",platform:$("#m-platform").value,games:[...menuSel.games],mic:$("#m-mic").value==="yes",skill:$("#m-skill").value,vibes:[...menuSel.vibes],handles:readHandles(),times:$("#m-times").value.trim(),bio:$("#m-bio").value.trim(),banner:menuSel.banner,avatar:menuSel.avatar,onlineUntil:menuSel.online?now()+3*HOUR:0};}
+function buildLook(){
+  const bs=$("#m-banners");bs.replaceChildren();Object.keys(BANNERS).forEach(k=>bs.append(el("button",{type:"button",class:"swatch","aria-pressed":String(menuSel.banner===k),"aria-label":k+" banner",style:"background:"+bannerBg(k),onclick:()=>{menuSel.banner=k;buildLook();}})));
+  const av=$("#m-avatars");av.replaceChildren();AVATARS.forEach(k=>{const b=el("button",{type:"button",class:"av-pick","aria-pressed":String(menuSel.avatar===k),"aria-label":k+" avatar",style:"background:"+bannerBg(menuSel.banner),onclick:()=>{menuSel.avatar=k;buildLook();}});if(k==="initial")b.textContent=($("#m-tag").value.trim()||"?").charAt(0).toUpperCase();else b.append(icon(k));av.append(b);});
+  $("#m-online").setAttribute("aria-checked",String(menuSel.online));
+  const pv=$("#m-preview");pv.replaceChildren();const c=card({...draftProfile(),id:"preview",mine:true});c.querySelector(".card").onclick=null;pv.append(c);
+}
+$("#m-online").onclick=()=>{menuSel.online=!menuSel.online;buildLook();};
+function showStep(n){document.querySelectorAll(".menu-panel").forEach(p=>p.hidden=p.dataset.step!==String(n));document.querySelectorAll("#step-dots .step-dot").forEach((d,i)=>d.className="step-dot"+(i+1===n?" active":i+1<n?" done":""));[1,2,3,4].forEach(i=>$("#m-err-"+i).textContent="");if(n===4)buildLook();}
 function validStep(n){
   if(n===1&&!menuSel.games.size){$("#m-err-1").textContent="Pick at least one game.";return false;}
   if(n===2){if(!$("#m-tag").value.trim()){$("#m-err-2").textContent="Add a gamertag so people know who you are.";return false;}if(!Object.keys(readHandles()).length){$("#m-err-2").textContent="Add at least one of Discord, PSN or Xbox.";return false;}}
   return true;
 }
 function prefillMenu(){
-  const p=state.me||{}; menuSel.games=new Set(p.games||[]); menuSel.vibes=new Set(p.vibes||[]); const h=p.handles||{};
+  const p=state.me||{};menuSel.games=new Set(p.games||[]);menuSel.vibes=new Set(p.vibes||[]);menuSel.banner=p.banner||"sunset";menuSel.avatar=p.avatar||"initial";menuSel.online=!!(p.onlineUntil&&p.onlineUntil>now());const h=p.handles||{};
   $("#m-tag").value=p.tag||"";$("#m-discord").value=h.discord||"";$("#m-psn").value=h.psn||"";$("#m-xbox").value=h.xbox||"";
   $("#m-platform").value=p.platform||"PC";$("#m-mic").value=p.mic===false?"no":"yes";$("#m-skill").value=p.skill||"Casual";$("#m-times").value=p.times||"";$("#m-bio").value=p.bio||"";
+  $("#menu-sub").textContent=state.me?"Welcome back, "+state.me.tag+". Change anything you like, or jump straight back in.":"Pick your games, add your handles, set your vibe. We'll line you up with players who match.";
   $("#m-search").value="";buildTiles();chipGroup($("#m-vibes"),VIBES,menuSel.vibes);showStep(1);
 }
 $("#m-search").addEventListener("input",buildTiles);
 document.querySelectorAll("[data-next]").forEach(b=>b.addEventListener("click",()=>{const to=+b.dataset.next,from=+b.closest(".menu-panel").dataset.step;if(to>from&&!validStep(from))return;showStep(to);window.scrollTo(0,0);}));
 $("#m-finish").onclick=async()=>{
-  const body={tag:$("#m-tag").value.trim(),platform:$("#m-platform").value,games:[...menuSel.games],mic:$("#m-mic").value==="yes",skill:$("#m-skill").value,vibes:[...menuSel.vibes],handles:readHandles(),times:$("#m-times").value.trim(),bio:$("#m-bio").value.trim(),updated:new Date().toISOString()};
-  state.me=body; store("profile",body);
-  let msg="Saved! Your preferences are remembered on this device, so you won't have to set them up again.";
+  const body={...draftProfile(),updated:new Date().toISOString()};state.me=body;store("profile",body);
+  let msg="Saved! Your profile is remembered on this device.";
   if(state.db&&state.myId&&state.canWrite!==false){try{await state.db.doc("squads/"+state.myId).set(body);msg="Saved and posted! Other players can now find you.";}catch(e){if(e&&e.code==="invalid_argument")state.canWrite=false;}}
   state.filter.game="";$("#f-game").value="";location.hash="squads";$("#status").textContent=msg;
 };
 
 /* ---------- Profile page ---------- */
 function renderProfile(){
-  const v=$("#view-profile"); v.replaceChildren(); const me=state.me;
+  const v=$("#view-profile");v.replaceChildren();const me=state.me;
   v.append(el("div",{class:"lede"},el("div",{},el("h1",{},"Your ",el("span",{class:"grad",text:"profile"})),el("p",{text:"This is what other players see when they click your card."}))));
   if(!me){v.append(el("div",{class:"panel soon"},el("b",{text:"You haven't set up a profile yet"}),el("p",{text:"It takes about a minute."}),el("a",{class:"btn",href:"#menu",text:"Set up my profile"})));return;}
-  const h=me.handles||{};
-  v.append(el("div",{class:"panel"},
-    el("div",{class:"prof-head"},avatar(me,true),el("div",{},el("h2",{text:me.tag}),el("div",{class:"meta",text:[me.platform,me.skill,me.mic?"Mic on":"No mic"].join(" · ")}))),
+  const h=me.handles||{},on=isOnline(me);
+  const sw=el("button",{type:"button",class:"switch",role:"switch","aria-checked":String(on),"aria-label":"Looking for a group right now",onclick:()=>{setOnline(!on);renderProfile();}});
+  const favs=[...state.favs].map(profileById).filter(Boolean);
+  v.append(el("div",{class:"panel",style:"padding-top:0;overflow:hidden"},
+    el("div",{class:"prof-banner",style:"margin:0 -22px;border-radius:0;background:"+bannerBg(me.banner)}),
+    el("div",{class:"prof-head over"},avatar(me,true),el("div",{style:"padding-bottom:4px"},el("h2",{text:me.tag}),el("div",{class:"meta",style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"},el("span",{text:[me.platform,me.mic?"Mic on":"No mic"].join(" · ")}),rankBadge(me.skill)))),
     me.bio?el("p",{class:"bio",style:"margin-top:14px",text:me.bio}):null,
+    el("div",{class:"toggle",style:"margin-top:16px"},el("div",{},el("b",{text:on?"You're online":"Looking for a group right now?"}),el("div",{class:"meta",text:on?"Your green dot shows for "+Math.max(1,Math.round((me.onlineUntil-now())/60e3))+" more minutes.":"Turn this on to show a green dot on your card for 3 hours."})),sw),
     el("dl",{class:"kv",style:"margin-top:16px"},
       el("dt",{text:"Games"}),el("dd",{},el("div",{class:"pills"},(me.games||[]).map(g=>el("span",{class:"pill",text:gameName(g)})))),
-      el("dt",{text:"Vibe"}),el("dd",{text:(me.vibes||[]).join(", ")||"Not set"}),
-      el("dt",{text:"Usually on"}),el("dd",{text:me.times||"Not set"}),
+      el("dt",{text:"Vibe"}),el("dd",{text:(me.vibes||[]).join(", ")||"Not set"}),el("dt",{text:"Usually on"}),el("dd",{text:me.times||"Not set"}),
       ...Object.keys(HANDLE_LABELS).filter(k=>h[k]).flatMap(k=>[el("dt",{text:HANDLE_LABELS[k]}),el("dd",{text:h[k]})])),
-    el("div",{style:"display:flex;gap:10px;margin-top:18px;flex-wrap:wrap"},el("a",{class:"btn",href:"#menu",text:"Edit preferences"}),el("button",{type:"button",class:"btn ghost",text:"Clear my profile",onclick:()=>{state.me=null;store("profile",null);renderProfile();}})),
-    el("div",{class:"note",text:"Your profile is saved in this browser, so it's remembered every time you come back on this device. Logging in with an account (so it follows you to any device and other players can see you) is coming soon."})));
-}
-
-/* ---------- Hot poster ---------- */
-function renderHot(view){
-  const box=$("#hot"); const g=HOT&&gameById(HOT.game);
-  if(!g||view==="menu"){box.hidden=true;return;}
-  box.replaceChildren(el("div",{class:"hot-stamp",text:"HOT"}),
-    el("div",{class:"hot-copy"},el("small",{text:"Hot right now"}),el("b",{text:HOT.title}),el("p",{text:HOT.text})),
-    el("div",{class:"hot-actions"},
-      el("button",{type:"button",class:"btn",text:"Find a squad",onclick:()=>{state.filter.game=g.id;$("#f-game").value=g.id;if(location.hash==="#squads"){renderCards();document.getElementById("cards").scrollIntoView({behavior:"smooth"});}else location.hash="squads";}}),
-      el("a",{class:"btn ghost",href:"#intel-"+g.id,text:"See the intel"})));
-  box.hidden=false;
+    el("div",{style:"display:flex;gap:10px;margin-top:18px;flex-wrap:wrap"},el("a",{class:"btn",href:"#menu",text:"Edit profile & look"}),el("button",{type:"button",class:"btn ghost",text:"Clear my profile",onclick:()=>{state.me=null;store("profile",null);renderProfile();}})),
+    el("div",{class:"note",text:"Your profile, favorites, posts and endorsements are saved in this browser for now. Accounts with login (so everything follows you to any device and other players see you live) are coming next."})));
+  v.append(el("div",{class:"panel"},el("h3",{text:"Favorites"}),favs.length?el("div",{class:"grid"},favs.map(p=>card({...p,_score:similarity(p,me)}))):el("p",{class:"meta",style:"margin:0",text:"No favorites yet. Tap the star on anyone's card to save them here."})));
 }
 
 /* ---------- Routing ---------- */
 function route(){
-  const h=location.hash.slice(1); let v="squads";
-  if(h==="menu")v="menu"; else if(h==="profile")v="profile"; else if(h.startsWith("intel")){v="intel";const id=h.slice(6);if(id&&gameById(id)&&id!==state.intelGame){state.intelGame=id;state.boss=0;}}
-  ["menu","squads","intel","profile"].forEach(x=>{$("#view-"+x).hidden=x!==v;const n=$("#nav-"+x);if(n){if(x===v)n.setAttribute("aria-current","page");else n.removeAttribute("aria-current");}});
+  const h=location.hash.slice(1);let v="squads";
+  if(["menu","profile","lfg","events"].includes(h))v=h;else if(h.startsWith("intel")){v="intel";const id=h.slice(6);if(id&&gameById(id)&&id!==state.intelGame){state.intelGame=id;state.boss=0;}}
+  ["menu","squads","lfg","intel","events","profile"].forEach(x=>{$("#view-"+x).hidden=x!==v;const n=$("#nav-"+x);if(n){if(x===v)n.setAttribute("aria-current","page");else n.removeAttribute("aria-current");}});
   renderHot(v);
-  if(v==="menu")prefillMenu(); if(v==="intel")renderIntel(); if(v==="profile")renderProfile(); if(v==="squads")renderCards();
+  if(v==="menu")prefillMenu();if(v==="intel")renderIntel();if(v==="profile")renderProfile();if(v==="squads")renderCards();if(v==="lfg")renderLfg();if(v==="events")renderEvents();
   window.scrollTo(0,0);
 }
 window.addEventListener("hashchange",route);
 $("#gl-search").addEventListener("input",renderGameList);
+gameOptions($("#lfg-filter"),false);$("#lfg-filter").onchange=renderLfg;$("#lfg-examples").onchange=renderLfg;
+setInterval(()=>{if(!$("#view-lfg").hidden)renderLfg();},60e3);
 
 /* ---------- Optional shared data (only inside Claude preview) ---------- */
 async function connect(){
@@ -830,8 +1099,8 @@ async function connect(){
 }
 
 buildFilters();
-if(!location.hash&&!state.me){location.hash="menu";}
-route(); connect();
+if(!location.hash)location.hash=state.me?"squads":"menu";
+route();connect();
 </script>
 </body>
 </html>
