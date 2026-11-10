@@ -387,6 +387,17 @@ nav a{white-space:nowrap}
 .stats-box{background:var(--surface-2);border-radius:14px;padding:14px;display:grid;gap:8px}
 .stats-box .stat{background:var(--surface)}
 #login-btn{flex:none}
+.acct-btn{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line-2);border-radius:999px;padding:4px 12px 4px 4px;cursor:pointer;color:var(--ink);font-weight:700;font-size:14px;position:relative}
+.acct-btn:hover{background:var(--raise)}
+.acct-btn .avatar{width:30px;height:30px;border-radius:50%;font-size:13px}
+.acct-btn .dot{width:9px;height:9px;border-width:2px;right:-1px;bottom:-1px}
+.acct-name{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.caret{color:var(--muted);font-size:11px}
+.acct-menu{position:fixed;z-index:30;min-width:200px;background:var(--surface);border:1px solid var(--line-2);border-radius:14px;padding:6px;box-shadow:0 20px 50px -15px rgba(0,0,0,.8);display:grid}
+.acct-menu a,.acct-menu button{display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;background:none;border:0;color:var(--ink);text-decoration:none;font-weight:600;font-size:14px;padding:10px 12px;border-radius:10px;cursor:pointer}
+.acct-menu a:hover,.acct-menu button:hover{background:var(--surface-2)}
+.acct-menu .danger{color:#ff8f85}
+@media (max-width:480px){.acct-name{max-width:70px}}
 @media (max-width:760px){.logo{order:1}#login-btn{order:2;margin-left:auto}nav{order:3}}
 
 /* ===== Messages ===== */
@@ -418,6 +429,9 @@ nav a{white-space:nowrap}
 .pick-list{display:grid;gap:6px;max-height:280px;overflow:auto}
 .pick{display:flex;align-items:center;gap:10px;background:var(--surface-2);border-radius:12px;padding:8px 10px;cursor:pointer}
 .pick input{accent-color:var(--coral);width:17px;height:17px}
+.steps[hidden]{display:none}
+.logo{white-space:nowrap;flex:none}
+@media (min-width:761px){.bar{flex-wrap:nowrap}nav{min-width:0;flex:0 1 auto}}
 </style>
 </head>
 <body>
@@ -435,7 +449,7 @@ nav a{white-space:nowrap}
       <a href="#clips" id="nav-clips">Clips</a>
       <a href="#events" id="nav-events">Events</a>
       <a href="#messages" id="nav-messages">Messages <span class="badge" id="msg-badge" hidden></span></a>
-      <a href="#profile" id="nav-profile">Profile</a>
+      <a href="#profile" id="nav-profile">Profile <span class="badge" id="fr-badge" hidden></span></a>
     </nav>
     <button type="button" class="btn sm" id="login-btn" hidden>Log in</button>
   </div>
@@ -451,6 +465,7 @@ nav a{white-space:nowrap}
         <h1>PARTY <span>UP</span></h1>
         <p id="menu-sub">Pick your games, add your handles, set your vibe. We'll line you up with players who match.</p>
       </div>
+      <div class="menu-panel" id="menu-login" hidden style="text-align:center"><h2>Log in to get started</h2><p class="sub">Your profile saves to your account so your friends can find you.</p><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button type="button" class="btn" id="ml-google">Continue with Google</button><button type="button" class="btn ghost" id="ml-discord">Continue with Discord</button></div><p class="meta" style="margin-top:14px;font-size:12.5px">Your email is never shown to other players.</p></div>
       <div class="steps" id="step-dots"><span class="step-dot">1 · Games</span><span class="step-dot">2 · Handles</span><span class="step-dot">3 · Play style</span><span class="step-dot">4 · Your look</span></div>
 
       <div class="menu-panel" data-step="1">
@@ -510,16 +525,15 @@ nav a{white-space:nowrap}
   <!-- SQUADS -->
   <section class="view" id="view-squads">
     <div class="lede"><div><h1>Find your <span class="grad">squad</span></h1>
-      <p>Players are ranked by how much they have in common with you. Click anyone to see their profile, endorse them, or save them to your favorites.</p></div></div>
+      <p>Players are ranked by how much they have in common with you. Click anyone to see their profile, message them, or add them as a friend.</p></div></div>
     <div class="you-bar" id="you-bar"></div>
     <div class="filters">
       <div class="field"><label for="f-game">Game</label><select id="f-game"></select></div>
       <div class="field"><label for="f-platform">Platform</label><select id="f-platform"><option value="">Any</option><option>PC</option><option>PS5</option><option>Xbox</option><option>Switch</option><option>Mobile</option></select></div>
       <label class="check"><input type="checkbox" id="f-online">Online now</label>
-      <label class="check"><input type="checkbox" id="f-fav">Favorites only</label>
+      <label class="check"><input type="checkbox" id="f-friends">Friends only</label>
       <label class="check"><input type="checkbox" id="f-trusted">Trusted players only</label>
       <label class="check"><input type="checkbox" id="f-mic">Mic required</label>
-      <label class="check"><input type="checkbox" id="f-examples" checked>Show example profiles</label>
       <div class="wide"><span class="flabel">Only show these vibes</span><div class="chips" id="f-vibes"></div></div>
     </div>
     <p class="status" id="status" role="status"></p>
@@ -533,7 +547,6 @@ nav a{white-space:nowrap}
     <div class="panel" id="lfg-post"></div>
     <div class="filters" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
       <div class="field"><label for="lfg-filter">Game</label><select id="lfg-filter"></select></div>
-      <label class="check"><input type="checkbox" id="lfg-examples" checked>Show example posts</label>
     </div>
     <div class="lfg-list" id="lfg-list"></div>
   </section>
@@ -555,7 +568,6 @@ nav a{white-space:nowrap}
     <div class="panel" id="bounty-post"></div>
     <div class="filters" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
       <div class="field"><label for="bounty-filter">Game</label><select id="bounty-filter"></select></div>
-      <label class="check"><input type="checkbox" id="bounty-examples" checked>Show example bounties</label>
     </div>
     <div class="lfg-list" id="bounty-list"></div>
   </section>
@@ -581,7 +593,6 @@ nav a{white-space:nowrap}
       <p>Share your best plays and vote for your favorites. The top clip each week gets featured here.</p></div>
       <button class="btn" type="button" id="add-clip">Share a clip</button></div>
     <div id="clip-feature"></div>
-    <label class="check" style="margin-bottom:16px"><input type="checkbox" id="clip-examples" checked>Show example clips</label>
     <div class="clips" id="clips"></div>
   </section>
 
@@ -590,7 +601,6 @@ nav a{white-space:nowrap}
     <div class="lede"><div><h1>Upcoming <span class="grad">events</span></h1>
       <p>LAN nights, tournaments and meetups. Add your own so others can join.</p></div>
       <button class="btn" type="button" id="add-event">Add an event</button></div>
-    <label class="check" style="margin-bottom:16px"><input type="checkbox" id="ev-examples" checked>Show example events</label>
     <div class="events" id="events"></div>
   </section>
 
@@ -826,20 +836,7 @@ const GAMES = [
 
 const TYPE_LABEL = { boss:"Boss guide", multi:"Multiplayer", fight:"Fighting" };
 
-const EXAMPLES = [
-  {id:"ex1",sherpa:["Malenia, Blade of Miquella","Margit, the Fell Omen","Iudex Gundyr"],banner:"gold",avatar:"moon",online:true,endorse:{"Good comms":14,"Chill":9,"Carried me":6},tag:"TarnishedTom",platform:"PC",games:["elden","nightreign","souls3"],mic:true,skill:"Experienced",vibes:["Chill","Newbie-friendly"],times:"Weeknights after 9",bio:"Happy to help with Malenia. I've died to her more times than I can count.",handles:{discord:"tarnishedtom"}},
-  {id:"ex2",sherpa:["Rathalos"],banner:"sunset",avatar:"star",online:false,endorse:{"Funny":11,"Good comms":7},tag:"FlashPodQueen",platform:"PS5",games:["mhw","elden"],mic:true,skill:"Casual",vibes:["Funny","Strategic"],times:"Weekend afternoons",bio:"Hunting Horn main. I'll keep you buffed.",handles:{psn:"flashpodqueen",discord:"flashpodqueen"}},
-  {id:"ex3",sherpa:["Bile Titan"],banner:"toxic",avatar:"skull",online:true,endorse:{"Carried me":12,"Funny":8},tag:"DemocracyDan",platform:"PC",games:["hd2","drg"],mic:true,skill:"Competitive",vibes:["Tryhard","Funny"],times:"Late nights",bio:"Anti-tank only. Point me at the Bile Titan.",handles:{discord:"democracydan"}},
-  {id:"ex4",banner:"ocean",avatar:"blade",online:false,endorse:{"Good comms":10,"Chill":5},tag:"QuietSmokes",platform:"PC",games:["val","cs2"],mic:false,skill:"Experienced",vibes:["Strategic","No toxicity"],times:"Evenings",bio:"Controller main. I type callouts fast if you don't mind no mic.",handles:{discord:"quietsmokes"}},
-  {id:"ex5",banner:"violet",avatar:"controller",online:true,endorse:{"Chill":4},tag:"NewbieNova",platform:"Xbox",games:["fortnite","minecraft","hd2"],mic:true,skill:"New",vibes:["Chill","Newbie-friendly","Night owl"],times:"After midnight",bio:"Just started, looking for patient people to learn with.",handles:{xbox:"NewbieNova"}},
-  {id:"ex6",banner:"ocean",avatar:"initial",online:false,endorse:{"Good comms":6,"Carried me":3},tag:"EcoRoundEnjoyer",platform:"PS5",games:["val","apex"],mic:true,skill:"Competitive",vibes:["Competitive","No toxicity"],times:"Weeknights 7–11",bio:"Grinding ranked. Looking for a consistent duo.",handles:{psn:"EcoRoundEnjoyer",discord:"ecoround"}},
-  {id:"ex7",banner:"sunset",avatar:"skull",online:true,endorse:{"Funny":9,"Good comms":8,"Carried me":4},tag:"CrossbonesCaptain",platform:"PC",games:["fortnite","warzone"],mic:true,skill:"Experienced",vibes:["Funny","Competitive"],times:"Every night 8–12",bio:"Need a squad for the new Crossbones Isle map. I call drops.",handles:{discord:"crossbonescap",psn:"CrossbonesCap"}},
-  {id:"ex8",banner:"violet",avatar:"star",online:false,endorse:{"Chill":15,"Good comms":11},tag:"SupportSoraka",platform:"PC",games:["lol","overwatch","rivals"],mic:true,skill:"Casual",vibes:["Chill","No toxicity"],times:"Weekends",bio:"Support main in every game. You do damage, I keep you alive.",handles:{discord:"supportsoraka"}},
-  {id:"ex9",sherpa:["Ender Dragon"],banner:"gold",avatar:"flame",online:true,endorse:{"Carried me":7},tag:"AerialAce",platform:"Switch",games:["rl","smash","minecraft"],mic:false,skill:"Experienced",vibes:["Strategic","Chill"],times:"After class",bio:"Diamond in 2s. I play third man so you can go for the flashy goals.",handles:{discord:"aerialace"}},
-  {id:"ex10",banner:"sunset",avatar:"flame",online:false,endorse:{"Funny":6},tag:"KameKameHa",platform:"PS5",games:["dbsz","tekken8","sf6"],mic:true,skill:"Casual",vibes:["Funny","Newbie-friendly"],times:"Late nights",bio:"Anime fighter fan. Down for long casual sets.",handles:{psn:"KameKameHa"}},
-  {id:"ex11",banner:"toxic",avatar:"controller",online:true,endorse:{"Funny":13},tag:"ScrapGoblin",platform:"PC",games:["lethal","drg"],mic:true,skill:"Casual",vibes:["Funny","Night owl"],times:"Fridays",bio:"I will absolutely die first and scream on mic.",handles:{discord:"scrapgoblin"}},
-  {id:"ex12",sherpa:["Hornet (Protector)"],banner:"ocean",avatar:"moon",online:false,endorse:{"Chill":8,"Good comms":4},tag:"ResinHoarder",platform:"PC",games:["genshin","hollow"],mic:false,skill:"Experienced",vibes:["Chill","No toxicity"],times:"Mornings",bio:"Happy to help with world bosses and domains.",handles:{discord:"resinhoarder"}}
-];
+const EXAMPLES = [];
 EXAMPLES.forEach(e=>e.example=true);
 const HANDLE_LABELS = {discord:"Discord",psn:"PSN",xbox:"Xbox"};
 
@@ -870,17 +867,8 @@ const GAME_ICON = { elden:"tree", nightreign:"moon", souls3:"flame", bloodborne:
   sf6:"flame", tekken8:"star", dbsz:"flame", smash:"star" };
 
 /* ---------- Example Looking for Group posts and events (minutes are relative to now) ---------- */
-const EXAMPLE_LFG = [
-  {id:"lfg1",by:"ex7",game:"fortnite",need:2,mic:true,note:"Trios on Crossbones Isle, chasing Devil Fruit Mythics. Chill but we want wins.",hours:2,ago:12},
-  {id:"lfg2",by:"ex3",game:"hd2",need:3,mic:true,note:"Diff 7 Terminids. Bring anti-tank.",hours:3,ago:35},
-  {id:"lfg3",by:"ex1",game:"elden",need:1,mic:false,note:"Helping with Malenia. Drop your sign at Haligtree Roots.",hours:2,ago:50},
-  {id:"lfg4",by:"ex11",game:"lethal",need:3,mic:true,note:"Fresh save, need screamers.",hours:2,ago:70}
-];
-const EXAMPLE_EVENTS = [
-  {id:"ev1",title:"Friday LAN night",game:"",place:"Student center, room TBD",inDays:4,hour:19,note:"Bring your own setup. Snacks provided."},
-  {id:"ev2",title:"Smash doubles bracket",game:"smash",place:"Esports club room",inDays:6,hour:15,note:"Sign up with a partner."},
-  {id:"ev3",title:"Fortnite Treasure Hunters squad scrims",game:"fortnite",place:"Online (Discord)",inDays:2,hour:21,note:"Trios. Find a squad on Party Up first."}
-];
+const EXAMPLE_LFG = [];
+const EXAMPLE_EVENTS = [];
 
 /* ---------- Radar: what's live, coming, and leaked ----------
  status: live (out now), confirmed (official), reported (multiple reliable outlets / known dataminers), rumor (single source or disputed)
@@ -917,17 +905,8 @@ const RADAR = [
 ];
 
 /* ---------- Example Boss Bounties and clips ---------- */
-const EXAMPLE_BOUNTIES = [
-  {id:"b1",by:"ex5",game:"elden",boss:"Margit, the Fell Omen",note:"Died 30 times. Level 22. Please send help.",platform:"Xbox",ago:20},
-  {id:"b2",by:"ex10",game:"mhw",boss:"Rathalos",note:"Need someone to farm Rathalos Plates with.",platform:"PS5",ago:65},
-  {id:"b3",by:"ex6",game:"hd2",boss:"Bile Titan",note:"Keep getting stomped on Diff 6. Teach me.",platform:"PS5",ago:140}
-];
-const EXAMPLE_CLIPS = [
-  {id:"c1",by:"ex7",game:"fortnite",title:"1v3 clutch with Gum-Gum Fruit on Crossbones Isle",votes:41,ago:300},
-  {id:"c2",by:"ex9",game:"rl",title:"Ceiling shot double tap in overtime",votes:33,ago:900},
-  {id:"c3",by:"ex1",game:"elden",title:"No-hit Malenia phase 2",votes:28,ago:1500},
-  {id:"c4",by:"ex11",game:"lethal",title:"Whole crew screaming at the same monster",votes:19,ago:600}
-];
+const EXAMPLE_BOUNTIES = [];
+const EXAMPLE_CLIPS = [];
 const TRUST = [ [25,"Elite","#ffd23f"], [10,"Trusted","#a6f25c"], [0,"New",null] ];
 
 /* ---------- Accounts config ----------
@@ -955,7 +934,7 @@ const HOUR=3600e3;
 /* ---------- State ---------- */
 const state={ me:load("profile",null), real:[], myId:null, db:null, canWrite:null,
   favs:new Set(load("favs",[])), reported:new Set(load("reported",[])), myBounties:load("bounties",[]), claims:new Set(load("claims",[])), mySherpa:load("sherpa",[]), myClips:load("clips",[]), votes:new Set(load("votes",[])), endorsed:load("endorsed",{}), myPosts:load("lfg",[]), myEvents:load("events",[]), going:new Set(load("going",[])),
-  filter:{game:"",platform:"",mic:false,examples:true,online:false,fav:false,trusted:false,vibes:new Set()}, intelGame:"elden", boss:0 };
+  filter:{game:"",platform:"",mic:false,online:false,fav:false,trusted:false,friends:false,vibes:new Set()}, intelGame:"elden", boss:0 };
 const isOnline=p=>p.example?!!p.online:(p.onlineUntil&&p.onlineUntil>now());
 
 /* ---------- Shared bits ---------- */
@@ -984,20 +963,21 @@ function profileById(id){if(id==="local"||(state.uid&&id===state.uid))return sta
 function toggleFav(id){const had=state.favs.has(id);had?state.favs.delete(id):state.favs.add(id);if(C.on&&state.uid){(had?C.sb.from("favorites").delete().match({user_id:state.uid,fav_id:id}):C.sb.from("favorites").insert({user_id:state.uid,fav_id:id})).then(r=>{if(r.error)toast("Couldn't save favorite.");});}else store("favs",[...state.favs]);}
 
 /* ---------- Cloud (Supabase) ---------- */
-const C={on:false,sb:null,convos:[],members:[],msgs:[],profiles:[],posts:[],bounties:[],claims:[],endorse:[],events:[],going:[],clips:[],votes:[],favs:[],reports:[]};
+const C={on:false,sb:null,friends:[],convos:[],members:[],msgs:[],profiles:[],posts:[],bounties:[],claims:[],endorse:[],events:[],going:[],clips:[],votes:[],favs:[],reports:[]};
 const fromRow=r=>r&&({id:r.id,uid:r.id,tag:r.tag,platform:r.platform,games:r.games||[],mic:r.mic,skill:r.skill,vibes:r.vibes||[],handles:r.handles||{},times:r.times||"",bio:r.bio||"",banner:r.banner,avatar:r.avatar,onlineUntil:r.online_until?Date.parse(r.online_until):0,sherpa:r.sherpa||[],epic:r.epic_name||""});
 const toRow=(p,uid)=>({id:uid,tag:p.tag,platform:p.platform,games:p.games||[],mic:!!p.mic,skill:p.skill,vibes:p.vibes||[],handles:p.handles||{},times:p.times||"",bio:p.bio||"",banner:p.banner||"sunset",avatar:p.avatar||"initial",online_until:p.onlineUntil?new Date(p.onlineUntil).toISOString():null,sherpa:p.sherpa||state.mySherpa||[],epic_name:p.epic||null,updated_at:new Date().toISOString()});
 const authorOf=uid=>{const p=C.profiles.find(x=>x.id===uid);return p?{...p,mine:uid===state.uid}:{tag:"Player"};};
+let lastLoad=0;
 async function cloudLoad(){
-  if(!C.on)return;
+  if(!C.on)return;lastLoad=Date.now();
   const q=t=>C.sb.from(t).select("*");
   const [pr,po,bo,cl,en,ev,go,cp,vo]=await Promise.all(["profiles","lfg_posts","bounties","bounty_claims","endorsements","events","event_going","clips","clip_votes"].map(t=>q(t)));
-  C.profiles=(pr.data||[]).map(fromRow);C.posts=po.data||[];C.bounties=bo.data||[];C.claims=cl.data||[];C.endorse=en.data||[];C.events=ev.data||[];C.going=go.data||[];C.clips=cp.data||[];C.votes=vo.data||[];
-  if(state.uid){const [f,r]=await Promise.all([q("favorites"),q("reports")]);C.favs=f.data||[];C.reports=r.data||[];
+  C.profiles=(pr.data||[]).map(fromRow);if(!state.uid)C.friends=[];C.posts=po.data||[];C.bounties=bo.data||[];C.claims=cl.data||[];C.endorse=en.data||[];C.events=ev.data||[];C.going=go.data||[];C.clips=cp.data||[];C.votes=vo.data||[];
+  if(state.uid){const [f,r,fr]=await Promise.all([q("favorites"),q("reports"),q("friendships")]);C.favs=f.data||[];C.reports=r.data||[];C.friends=(fr.data||[]).filter(x=>x.requester===state.uid||x.addressee===state.uid);
     state.favs=new Set(C.favs.map(x=>x.fav_id));state.reported=new Set(C.reports.map(x=>x.reported_id));
     const mine=C.profiles.find(p=>p.id===state.uid);if(mine){state.me=mine;state.mySherpa=mine.sherpa||[];}await loadMessages();}
 }
-function rerender(){const h=location.hash.slice(1)||"squads";route(true);}
+function rerender(){route(true);renderLogin();updateBadge();}
 async function cloudDo(promise){try{const r=await promise;if(r&&r.error)throw r.error;await cloudLoad();rerender();return true;}catch(e){toast("Couldn't save that. Check your connection and try again.");return false;}}
 function toast(msg){let t=$("#toast");if(!t){t=el("div",{id:"toast",role:"status",style:"position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--raise);border:1px solid var(--line-2);color:var(--ink);padding:10px 16px;border-radius:12px;z-index:20;font-weight:600;box-shadow:var(--shadow)"});document.body.append(t);}t.textContent=msg;t.hidden=false;clearTimeout(t._h);t._h=setTimeout(()=>t.hidden=true,3500);}
 function needLogin(){if(C.on&&!state.uid){openLogin();return true;}return false;}
@@ -1007,16 +987,32 @@ function openLogin(reason){
     el("button",{type:"button",class:"btn ghost",style:"justify-content:center",text:"Continue with Discord",onclick:()=>signIn("discord")}),
     el("p",{class:"meta",style:"margin:0;font-size:12.5px",text:"We only use your login to keep your account. Your email is never shown to other players."})]);
 }
-async function signIn(provider){const redirectTo=location.origin+location.pathname+"#squads";const {error}=await C.sb.auth.signInWithOAuth({provider,options:{redirectTo}});if(error)toast(provider==="google"?"Google login isn't available yet.":"Discord login isn't available yet.");}
-async function signOut(){await C.sb.auth.signOut();state.uid=null;state.me=load("profile",null);state.favs=new Set(load("favs",[]));state.reported=new Set(load("reported",[]));renderLogin();rerender();}
-function renderLogin(){const b=$("#login-btn");if(!C.on){b.hidden=true;return;}b.hidden=false;
-  if(state.uid){b.textContent=state.me?state.me.tag:"My account";b.className="btn ghost sm";b.onclick=()=>{location.hash="profile";};}
-  else{b.textContent="Log in";b.className="btn sm";b.onclick=()=>openLogin();}}
-async function saveProfileCloud(p){if(!state.uid)return false;const {error}=await C.sb.from("profiles").upsert(toRow(p,state.uid));if(error){toast("Couldn't save your profile. Try again.");return false;}await cloudLoad();return true;}
+async function signIn(provider){store("afterLogin",location.hash.slice(1)||"squads");const redirectTo=location.origin+location.pathname;const {error}=await C.sb.auth.signInWithOAuth({provider,options:{redirectTo}});if(error)toast(provider==="google"?"Google login isn't available yet.":"Discord login isn't available yet.");}
+async function signOut(){await C.sb.auth.signOut();state.uid=null;state.me=null;store("profile",null);C.friends=[];C.convos=[];C.members=[];C.msgs=[];updateBadge();state.favs=new Set(load("favs",[]));state.reported=new Set(load("reported",[]));renderLogin();rerender();}
+function renderLogin(){const b=$("#login-btn");if(!C.on){b.hidden=true;return;}b.hidden=false;b.replaceChildren();
+  if(state.uid){const me=state.me||{tag:"Me"};b.className="acct-btn";b.setAttribute("aria-label","Account menu");b.setAttribute("aria-haspopup","menu");
+    b.append(avatar(me),el("span",{class:"acct-name",text:state.me?state.me.tag:"Set up profile"}),el("span",{class:"caret","aria-hidden":"true",text:"▾"}));
+    const reqs=incomingRequests().length;if(reqs)b.append(el("span",{class:"badge",text:String(reqs)}));
+    b.onclick=e=>{e.stopPropagation();toggleAcctMenu();};}
+  else{b.className="btn sm";b.removeAttribute("aria-haspopup");b.textContent="Log in";b.onclick=()=>openLogin();}}
+function toggleAcctMenu(){let m=$("#acct-menu");if(m){m.remove();return;}
+  const reqs=incomingRequests().length;
+  m=el("div",{id:"acct-menu",class:"acct-menu",role:"menu"},
+    el("a",{href:"#profile",role:"menuitem",onclick:()=>m.remove()},state.me?"My profile":"Set up my profile",reqs?el("span",{class:"badge",text:String(reqs)}):null),
+    el("a",{href:"#messages",role:"menuitem",onclick:()=>m.remove()},"Messages"),
+    el("a",{href:"#menu",role:"menuitem",onclick:()=>m.remove()},"Edit games & look"),
+    el("button",{type:"button",role:"menuitem",onclick:()=>{m.remove();copyInvite();}},"Copy invite link"),
+    el("button",{type:"button",role:"menuitem",class:"danger",onclick:()=>{m.remove();signOut();}},"Log out"));
+  document.body.append(m);const r=$("#login-btn").getBoundingClientRect();m.style.top=(r.bottom+8)+"px";m.style.left=Math.max(12,Math.min(r.right-210,innerWidth-222))+"px";
+  setTimeout(()=>document.addEventListener("click",function h(ev){if(!m.contains(ev.target)){m.remove();document.removeEventListener("click",h);}}),0);}
+async function copyInvite(){const link=location.origin+"/";try{await navigator.clipboard.writeText(link);toast("Invite link copied! Send it to your friends.");}catch(e){toast("Your invite link: "+link);}}
+async function saveProfileCloud(p){if(!state.uid)return false;const {error}=await C.sb.from("profiles").upsert(toRow(p,state.uid));if(error){toast("Couldn't save your profile. Try again.");return false;}await cloudLoad();renderLogin();return true;}
 async function initCloud(){
   if(!CLOUD.url||!CLOUD.anonKey||!window.supabase)return;
-  try{C.sb=window.supabase.createClient(CLOUD.url,CLOUD.anonKey);C.on=true;}catch(e){return;}
+  try{C.sb=window.supabase.createClient(CLOUD.url,CLOUD.anonKey,{auth:{flowType:"pkce",detectSessionInUrl:true,persistSession:true,autoRefreshToken:true}});C.on=true;}catch(e){return;}
+  const qs=new URLSearchParams(location.search);const hadCode=qs.has("code");const authErr=qs.get("error_description");
   const {data}=await C.sb.auth.getSession();state.uid=data.session?data.session.user.id:null;
+  if(hadCode||authErr){const back=load("afterLogin","squads")||"squads";store("afterLogin",null);history.replaceState(null,"",location.pathname+"#"+back);if(authErr)toast("Login didn't finish: "+authErr);else if(state.uid)toast("You're logged in!");route(true);}
   C.sb.auth.onAuthStateChange(async(ev,session)=>{const uid=session?session.user.id:null;if(uid===state.uid&&ev!=="USER_UPDATED")return;state.uid=uid;await afterLogin(session);});
   await afterLogin(data.session);
 }
@@ -1024,12 +1020,38 @@ async function afterLogin(session){
   await cloudLoad();
   if(state.uid&&!C.profiles.find(p=>p.id===state.uid)){
     const local=load("profile",null);
-    if(local){await saveProfileCloud({...local,sherpa:state.mySherpa});toast("Your profile is now saved to your account.");}
+    if(local){await saveProfileCloud({...local,sherpa:state.mySherpa});store("profile",null);toast("Your profile is now saved to your account.");}
     else{state.me=null;}
   }
+  if(state.uid&&C.profiles.some(p=>p.id===state.uid))store("profile",null);
   if(state.uid&&session){const disc=(session.user.identities||[]).find(i=>i.provider==="discord");const dn=disc&&disc.identity_data&&(disc.identity_data.global_name||disc.identity_data.full_name||disc.identity_data.name||disc.identity_data.user_name);
     if(dn&&state.me&&!(state.me.handles||{}).discord){await saveProfileCloud({...state.me,handles:{...state.me.handles,discord:dn}});}}
   renderLogin();rerender();
+}
+
+/* ---------- Friends ---------- */
+function friendState(uid){if(!uid||!state.uid)return "none";const rows=C.friends.filter(x=>(x.requester===state.uid&&x.addressee===uid)||(x.addressee===state.uid&&x.requester===uid));if(!rows.length)return "none";if(rows.some(r=>r.status==="accepted"))return "friends";if(rows.some(r=>r.requester===uid))return "received";return "sent";}
+function friendIds(){return C.friends.filter(f=>f.status==="accepted").map(f=>f.requester===state.uid?f.addressee:f.requester);}
+function incomingRequests(){return C.friends.filter(f=>f.status==="pending"&&f.addressee===state.uid);}
+async function friendAction(uid,action){
+  if(needLogin())return;
+  if(!state.me||!C.profiles.some(p=>p.id===state.uid)){toast("Set up your profile first.");location.hash="menu";return;}
+  let q;
+  if(action==="add"&&friendState(uid)==="received")action="accept";
+  if(action==="add")q=C.sb.from("friendships").insert({requester:state.uid,addressee:uid,status:"pending"});
+  else if(action==="accept"){await C.sb.from("friendships").delete().match({requester:state.uid,addressee:uid,status:"pending"});q=C.sb.from("friendships").update({status:"accepted"}).match({requester:uid,addressee:state.uid});}
+  else if(action==="cancel")q=C.sb.from("friendships").delete().match({requester:state.uid,addressee:uid});
+  else if(action==="decline")q=C.sb.from("friendships").delete().match({requester:uid,addressee:state.uid});
+  else if(action==="remove"){await C.sb.from("friendships").delete().match({requester:state.uid,addressee:uid});q=C.sb.from("friendships").delete().match({requester:uid,addressee:state.uid});}
+  const ok=await cloudDo(q);if(ok)toast({add:"Friend request sent!",accept:"You're now friends!",cancel:"Request canceled.",decline:"Request declined.",remove:"Friend removed."}[action]);renderLogin();
+}
+function friendButton(p,refresh){
+  if(!p.uid||p.mine)return null;const st=friendState(p.uid);
+  const after=async a=>{await friendAction(p.uid,a);if(refresh)refresh();};
+  if(st==="friends")return el("div",{style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"},el("span",{class:"pill online",text:"✓ Friends"}),el("button",{type:"button",class:"btn ghost sm",text:"Remove friend",onclick:()=>after("remove")}));
+  if(st==="sent")return el("button",{type:"button",class:"btn ghost",text:"Request sent · Cancel",onclick:()=>after("cancel")});
+  if(st==="received")return el("div",{style:"display:flex;gap:8px;flex-wrap:wrap"},el("button",{type:"button",class:"btn",text:"Accept friend request",onclick:()=>after("accept")}),el("button",{type:"button",class:"btn ghost",text:"Decline",onclick:()=>after("decline")}));
+  return el("button",{type:"button",class:"btn ghost",text:"+ Add friend",onclick:()=>after("add")});
 }
 
 function confirmClear(){try{return window.confirm("Delete your profile from Party Up? This can\u2019t be undone.");}catch(e){return true;}}
@@ -1071,17 +1093,17 @@ function buildFilters(){
   VIBES.forEach(v=>{const b=el("button",{type:"button",class:"chip","aria-pressed":"false",text:v});b.onclick=()=>{state.filter.vibes.has(v)?state.filter.vibes.delete(v):state.filter.vibes.add(v);b.setAttribute("aria-pressed",String(state.filter.vibes.has(v)));renderCards();};$("#f-vibes").append(b);});
   $("#f-game").onchange=e=>{state.filter.game=e.target.value;renderCards();};
   $("#f-platform").onchange=e=>{state.filter.platform=e.target.value;renderCards();};
-  ["mic","examples","online","fav","trusted"].forEach(k=>$("#f-"+k).onchange=e=>{state.filter[k]=e.target.checked;renderCards();});
+  ["mic","online","trusted","friends"].forEach(k=>$("#f-"+k).onchange=e=>{state.filter[k]=e.target.checked;renderCards();});
 }
 function allProfiles(){
   const me=state.me;
   const list=C.on?C.profiles.map(p=>({...p,mine:p.id===state.uid})):[];
   if(me&&!(C.on&&state.uid&&C.profiles.some(p=>p.id===state.uid)))list.unshift({...me,id:"local",mine:true,localOnly:true});
-  if(state.filter.examples)list.push(...EXAMPLES);
   return list;
 }
 function renderYouBar(){
   const bar=$("#you-bar");bar.replaceChildren();const me=state.me;
+  if(C.on&&!state.uid){bar.append(el("div",{class:"meta"},el("b",{text:"Log in to find your squad. "}),"Use Google or Discord. It takes a few seconds."),el("button",{type:"button",class:"btn",text:"Log in",onclick:()=>openLogin()}));return;}
   if(!me){bar.append(el("div",{class:"meta"},el("b",{text:"Get matched with players like you. "}),"Set up your profile in four quick steps."),el("a",{class:"btn",href:"#menu",text:"Set up my profile"}));return;}
   const on=isOnline(me);
   bar.append(avatar(me),el("div",{class:"meta"},el("b",{text:"Matching you as "+me.tag+". "}),(me.games||[]).map(gameName).slice(0,4).join(", ")+((me.games||[]).length>4?" +"+(me.games.length-4)+" more":"")),
@@ -1099,13 +1121,17 @@ function renderCards(){
     if(f.mic&&!p.mic)return false;
     if(f.online&&!isOnline(p))return false;
     if(f.fav&&!state.favs.has(p.id))return false;
+    if(f.friends&&!(p.uid&&friendState(p.uid)==="friends"))return false;
     if(state.reported.has(p.id))return false;
     if(f.trusted&&!trustOf(p).color)return false;
     if(f.vibes.size&&!(p.vibes||[]).some(v=>f.vibes.has(v)))return false;
     return true;});
   list.forEach(p=>p._score=p.mine?null:similarity(p,me));
   list.sort((a,b)=>(b.mine?1:0)-(a.mine?1:0)||(isOnline(b)?1:0)-(isOnline(a)?1:0)||(b._score??-1)-(a._score??-1));
-  if(!list.length){box.append(el("div",{class:"empty",text:f.fav?"No favorites yet. Open a profile and tap the star to save someone.":"No one matches those filters yet. Try loosening them."}));return;}
+  const others=list.filter(p=>!p.mine);
+  if(!others.length){const anyFilter=f.game||f.platform||f.mic||f.online||f.fav||f.trusted||f.friends||f.vibes.size;
+    box.append(...list.map(card),el("div",{class:"empty"},el("b",{style:"display:block;font-family:var(--display);color:var(--ink);font-size:18px;margin-bottom:6px",text:anyFilter?"No one matches those filters yet":"No other players yet"}),
+      el("p",{style:"margin:0 0 14px",text:anyFilter?"Try loosening your filters, or invite friends who play these games.":"Party Up is brand new. Invite your friends so you can find each other!"}),el("button",{type:"button",class:"btn",text:"Copy invite link",onclick:copyInvite})));return;}
   list.forEach(p=>box.append(card(p)));
 }
 function card(p){
@@ -1115,6 +1141,8 @@ function card(p){
   if(isOnline(p))flags.append(el("span",{class:"pill online",text:"● Online now"}));
   if(p.example)flags.append(el("span",{class:"pill ex",text:"Example"}));
   if(p.mine)flags.append(el("span",{class:"pill you",text:"You"}));
+  if(p.uid&&friendState(p.uid)==="friends")flags.append(el("span",{class:"pill online",text:"✓ Friend"}));
+  if(p.uid&&friendState(p.uid)==="received")flags.append(el("span",{class:"pill ex",text:"Wants to be friends"}));
   shared.slice(0,3).forEach(g=>flags.append(el("span",{class:"pill shared",text:gameName(g)})));
   const wrap=el("div",{style:"position:relative"});
   const c=el("button",{type:"button",class:"card"+(p.mine?" mine":""),style:"width:100%;height:100%",onclick:()=>openProfile(p),"aria-label":"View "+(p.tag||"player")+"'s profile"},
@@ -1127,7 +1155,6 @@ function card(p){
     topEndorse(p),
     el("div",{class:"card-foot"},el("span",{text:(p.games||[]).length+" game"+((p.games||[]).length===1?"":"s")}),el("b",{text:"View profile →"})));
   wrap.append(c);
-  if(!p.mine){const sb=el("button",{type:"button",class:"star-btn","aria-pressed":String(state.favs.has(p.id)),"aria-label":(state.favs.has(p.id)?"Remove ":"Add ")+(p.tag||"player")+" "+(state.favs.has(p.id)?"from":"to")+" favorites",onclick:e=>{e.stopPropagation();toggleFav(p.id);renderCards();}},starIcon());wrap.append(sb);}
   return wrap;
 }
 
@@ -1159,8 +1186,8 @@ function openProfile(p){
       sherpaList(p).length?el("dt",{text:"Sherpa for"}):null,sherpaList(p).length?el("dd",{},el("div",{class:"pills"},sherpaList(p).map(b=>el("span",{class:"sherpa",text:b})))):null),
     el("div",{class:"meta",style:"font-size:12.5px"},"Trust: ",el("b",{style:"color:"+(trustOf(p).color||"var(--soft)"),text:trustOf(p).label}),` (${trustOf(p).total} endorsements). 10+ makes a player Trusted, 25+ makes them Elite.`),
     p.mine?null:el("button",{type:"button",class:"btn ghost sm",style:"justify-self:start;color:#ff8f85",text:"Report & hide this player",onclick:()=>{state.reported.add(p.id);if(C.on&&state.uid)C.sb.from("reports").insert({user_id:state.uid,reported_id:p.id}).then(()=>{});else store("reported",[...state.reported]);closeModal();renderCards();}}),
-    p.mine?null:el("button",{type:"button",class:"btn",text:"Message "+(p.tag||"player"),onclick:()=>messagePlayer(p)}),
-    p.mine?el("a",{class:"btn ghost",href:"#profile",onclick:closeModal,text:"Edit my profile"}):el("button",{type:"button",class:"btn"+(state.favs.has(p.id)?" ghost":" ghost"),onclick:()=>{toggleFav(p.id);openProfile(p);renderCards();}},starIcon(),state.favs.has(p.id)?"Saved to favorites":"Add to favorites")
+    p.mine?null:el("div",{style:"display:flex;gap:10px;flex-wrap:wrap"},el("button",{type:"button",class:"btn",text:"Message "+(p.tag||"player"),onclick:()=>messagePlayer(p)}),friendButton(p,()=>openProfile({...authorOf(p.uid),_score:p._score}))),
+    p.mine?el("a",{class:"btn ghost",href:"#profile",onclick:closeModal,text:"Edit my profile"}):null
   ]);
 }
 
@@ -1171,7 +1198,7 @@ function activePosts(){
   if(C.on){mine=C.posts.map(p=>({id:p.id,game:p.game,need:p.need,mic:p.mic,note:p.note,hours:p.hours,created:Date.parse(p.created_at),mine:p.user_id===state.uid,author:authorOf(p.user_id)}));}
   else{state.myPosts=state.myPosts.filter(p=>p.created+p.hours*HOUR>now());store("lfg",state.myPosts);
   mine=state.myPosts.map(p=>({...p,mine:true,author:state.me?{...state.me,id:"local",mine:true}:p.author}));}
-  return [...mine,...($("#lfg-examples").checked?examplePosts():[])].filter(p=>p.created+p.hours*HOUR>now());
+  return [...mine,...([])].filter(p=>p.created+p.hours*HOUR>now());
 }
 function timeLeft(p){const ms=p.created+p.hours*HOUR-now();const m=Math.max(0,Math.round(ms/60e3));return m>=60?Math.floor(m/60)+"h "+(m%60)+"m left":m+"m left";}
 function ago(t){const m=Math.round((now()-t)/60e3);return m<1?"just now":m<60?m+"m ago":Math.floor(m/60)+"h ago";}
@@ -1218,7 +1245,7 @@ function renderEvents(){
   if(C.on){mineEv=C.events.map(e=>({id:e.id,title:e.title,when:Date.parse(e.starts_at),place:e.place,game:e.game,note:e.note,mine:e.user_id===state.uid,going:C.going.filter(g=>g.event_id===e.id).length})).filter(e=>e.when>now()-6*HOUR);
     state.going=new Set(C.going.filter(g=>g.user_id===state.uid).map(g=>g.event_id).concat([...state.going].filter(id=>String(id).startsWith("ev"))));}
   else{state.myEvents=state.myEvents.filter(e=>e.when>now()-6*HOUR);store("events",state.myEvents);mineEv=state.myEvents.map(e=>({...e,mine:true}));}
-  const list=[...mineEv,...($("#ev-examples").checked?exampleEvents():[])].sort((a,b)=>a.when-b.when);
+  const list=[...mineEv,...([])].sort((a,b)=>a.when-b.when);
   if(!list.length){box.append(el("div",{class:"empty",text:"No upcoming events yet. Add one!"}));return;}
   list.forEach(e=>{const d=new Date(e.when),g=e.game&&gameById(e.game);const going=state.going.has(e.id);
     box.append(el("article",{class:"event"},
@@ -1245,7 +1272,6 @@ $("#add-event").onclick=()=>{
       if(C.on){closeModal();cloudDo(C.sb.from("events").insert({user_id:state.uid,title:title.value.trim(),starts_at:new Date(t).toISOString(),place:place.value.trim(),game:game.value||null,note:note.value.trim()}));return;}
       state.myEvents.push({id:"e"+now(),title:title.value.trim(),when:t,place:place.value.trim(),game:game.value,note:note.value.trim()});store("events",state.myEvents);closeModal();renderEvents();}}))]);
 };
-$("#ev-examples").onchange=renderEvents;
 
 /* ---------- Intel ---------- */
 function renderGameList(){
@@ -1311,6 +1337,7 @@ function validStep(n){
   return true;
 }
 function prefillMenu(){
+  const gate=C.on&&!state.uid;$("#menu-login").hidden=!gate;$("#step-dots").hidden=gate;if(gate){document.querySelectorAll(".menu-panel[data-step]").forEach(p=>p.hidden=true);$("#menu-sub").textContent="Find teammates who play the way you do.";return;}
   const p=state.me||{};menuSel.games=new Set(p.games||[]);menuSel.vibes=new Set(p.vibes||[]);menuSel.banner=p.banner||"sunset";menuSel.avatar=p.avatar||"initial";menuSel.online=!!(p.onlineUntil&&p.onlineUntil>now());const h=p.handles||{};
   $("#m-tag").value=p.tag||"";$("#m-discord").value=h.discord||"";$("#m-psn").value=h.psn||"";$("#m-xbox").value=h.xbox||"";
   $("#m-platform").value=p.platform||"PC";$("#m-mic").value=p.mic===false?"no":"yes";$("#m-skill").value=p.skill||"Casual";$("#m-times").value=p.times||"";$("#m-bio").value=p.bio||"";
@@ -1318,11 +1345,12 @@ function prefillMenu(){
   $("#m-search").value="";buildTiles();chipGroup($("#m-vibes"),VIBES,menuSel.vibes);showStep(1);
 }
 $("#m-search").addEventListener("input",buildTiles);
+$("#ml-google").onclick=()=>signIn("google");$("#ml-discord").onclick=()=>signIn("discord");
 document.querySelectorAll("[data-next]").forEach(b=>b.addEventListener("click",()=>{const to=+b.dataset.next,from=+b.closest(".menu-panel").dataset.step;if(to>from&&!validStep(from))return;showStep(to);window.scrollTo(0,0);}));
 $("#m-finish").onclick=async()=>{
   const body={...draftProfile(),epic:(state.me&&state.me.epic)||"",sherpa:state.mySherpa,updated:new Date().toISOString()};state.me=body;store("profile",body);
   let msg="Saved! Your profile is remembered on this device.";
-  if(C.on){if(state.uid){if(await saveProfileCloud(body))msg="Saved to your account! Other players can now find you.";}else{setTimeout(()=>openLogin("Your profile is saved on this device. Log in to post it so other players can find you."),300);}}
+  if(C.on){if(state.uid){if(await saveProfileCloud(body)){msg="Saved to your account! Other players can now find you.";store("profile",null);renderLogin();}}else{setTimeout(()=>openLogin("Your profile is saved on this device. Log in to post it so other players can find you."),300);}}
   state.filter.game="";$("#f-game").value="";location.hash="squads";$("#status").textContent=msg;
 };
 
@@ -1330,10 +1358,10 @@ $("#m-finish").onclick=async()=>{
 function renderProfile(){
   const v=$("#view-profile");v.replaceChildren();const me=state.me;
   v.append(el("div",{class:"lede"},el("div",{},el("h1",{},"Your ",el("span",{class:"grad",text:"profile"})),el("p",{text:"This is what other players see when they click your card."}))));
+  if(C.on&&!state.uid){v.append(el("div",{class:"panel soon"},el("b",{text:"Log in to see your profile"}),el("p",{text:"Use Google or Discord."}),el("button",{type:"button",class:"btn",text:"Log in",onclick:()=>openLogin()})));return;}
   if(!me){v.append(el("div",{class:"panel soon"},el("b",{text:"You haven't set up a profile yet"}),el("p",{text:"It takes about a minute."}),el("a",{class:"btn",href:"#menu",text:"Set up my profile"})));return;}
   const h=me.handles||{},on=isOnline(me);
   const sw=el("button",{type:"button",class:"switch",role:"switch","aria-checked":String(on),"aria-label":"Looking for a group right now",onclick:()=>{setOnline(!on);renderProfile();}});
-  const favs=[...state.favs].map(profileById).filter(Boolean);
   v.append(el("div",{class:"panel",style:"padding-top:0;overflow:hidden"},
     el("div",{class:"prof-banner",style:"margin:0 -22px;border-radius:0;background:"+bannerBg(me.banner)}),
     el("div",{class:"prof-head over"},avatar(me,true),el("div",{style:"padding-bottom:4px"},el("h2",{text:me.tag}),el("div",{class:"meta",style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"},el("span",{text:[me.platform,me.mic?"Mic on":"No mic"].join(" · ")}),rankBadge(me.skill)))),
@@ -1346,6 +1374,10 @@ function renderProfile(){
       ...Object.keys(HANDLE_LABELS).filter(k=>h[k]).flatMap(k=>[el("dt",{text:HANDLE_LABELS[k]}),el("dd",{text:h[k]})])),
     el("div",{style:"display:flex;gap:10px;margin-top:18px;flex-wrap:wrap"},el("a",{class:"btn",href:"#menu",text:"Edit profile & look"}),el("button",{type:"button",class:"btn ghost",text:"Clear my profile",onclick:async()=>{if(C.on&&state.uid){if(!confirmClear())return;await cloudDo(C.sb.from("profiles").delete().eq("id",state.uid));}state.me=null;store("profile",null);renderProfile();}})),
     C.on?(state.uid?null:el("div",{class:"note"},"Your profile is only saved on this device. ",el("button",{type:"button",class:"btn sm",style:"margin-left:6px",text:"Log in to save it to your account",onclick:()=>openLogin()}))):el("div",{class:"note",text:"Your profile is saved in this browser. Logging in with Google or Discord is coming soon."})));
+  if(C.on&&state.uid){const reqs=incomingRequests();const fr=friendIds().map(id=>authorOf(id)).filter(p=>p.id);
+    v.append(el("div",{class:"panel"},el("h3",{text:"Friends"+(fr.length?" ("+fr.length+")":"")}),
+      reqs.length?el("div",{style:"display:grid;gap:8px;margin-bottom:14px"},reqs.map(r=>{const p=authorOf(r.requester);return el("div",{class:"handle-row"},avatar(p),el("code",{style:"font-family:var(--body);font-weight:700",text:p.tag+" wants to be friends"}),el("div",{style:"display:flex;gap:6px"},el("button",{type:"button",class:"btn sm",text:"Accept",onclick:()=>friendAction(p.id,"accept")}),el("button",{type:"button",class:"btn ghost sm",text:"Decline",onclick:()=>friendAction(p.id,"decline")})));})):null,
+      fr.length?el("div",{class:"grid"},fr.map(p=>card({...p,mine:false,_score:similarity(p,me)}))):el("div",{},el("p",{class:"meta",style:"margin:0 0 12px",text:"No friends yet. Open anyone's profile and tap \u201c+ Add friend\u201d, or invite people you know."}),el("button",{type:"button",class:"btn ghost",text:"Copy invite link",onclick:copyInvite}))));}
   // Linked accounts & stats
   const epicIn=el("input",{type:"text",id:"epic-name",maxlength:"32",placeholder:"Your Epic display name",value:me.epic||""});
   v.append(el("div",{class:"panel"},el("h3",{text:"Linked accounts & stats"}),
@@ -1358,13 +1390,12 @@ function renderProfile(){
       el("button",{type:"button",class:"btn ghost",text:"Log out",onclick:signOut})):null,
     el("p",{class:"meta",style:"font-size:12.5px;margin-top:12px",text:"Coming later: Valorant rank (waiting on Riot approval) and Steam stats."})));
   if(state.reported.size)v.append(el("div",{class:"panel"},el("h3",{text:"Hidden players"}),el("p",{class:"meta",style:"margin:0 0 10px",text:"You reported and hid these players. They won't show in your squad finder."}),el("div",{class:"pills"},[...state.reported].map(id=>{const p=profileById(id);return el("button",{type:"button",class:"chip",text:"Unhide "+(p?p.tag:id),onclick:()=>{state.reported.delete(id);if(C.on&&state.uid)C.sb.from("reports").delete().match({user_id:state.uid,reported_id:id}).then(()=>{});else store("reported",[...state.reported]);renderProfile();}});}))));
-  v.append(el("div",{class:"panel"},el("h3",{text:"Favorites"}),favs.length?el("div",{class:"grid"},favs.map(p=>card({...p,_score:similarity(p,me)}))):el("p",{class:"meta",style:"margin:0",text:"No favorites yet. Tap the star on anyone's card to save them here."})));
 }
 
 /* ---------- Boss Bounties ---------- */
 function bossGames(){return GAMES.filter(g=>g.bosses?.length);}
 function exampleBounties(){return EXAMPLE_BOUNTIES.map(x=>({...x,created:now()-x.ago*60e3,example:true,author:EXAMPLES.find(e=>e.id===x.by)}));}
-function allBounties(){const mine=C.on?C.bounties.map(b=>({id:b.id,game:b.game,boss:b.boss,note:b.note,platform:b.platform,created:Date.parse(b.created_at),mine:b.user_id===state.uid,author:authorOf(b.user_id)})):state.myBounties.map(b=>({...b,mine:true,author:state.me?{...state.me,id:"local",mine:true}:null}));return [...mine,...(($("#bounty-examples")||{}).checked!==false?exampleBounties():[])];}
+function allBounties(){const mine=C.on?C.bounties.map(b=>({id:b.id,game:b.game,boss:b.boss,note:b.note,platform:b.platform,created:Date.parse(b.created_at),mine:b.user_id===state.uid,author:authorOf(b.user_id)})):state.myBounties.map(b=>({...b,mine:true,author:state.me?{...state.me,id:"local",mine:true}:null}));return [...mine,...[]];}
 function renderBountyForm(){
   const box=$("#bounty-post");box.replaceChildren();
   if(!state.me){box.append(el("h3",{text:"Post a bounty"}),el("p",{class:"meta",style:"margin:0 0 12px",text:"Set up your profile first so helpers can add you."}),el("a",{class:"btn",href:"#menu",text:"Set up my profile"}));return;}
@@ -1426,7 +1457,7 @@ function renderRadar(){
 
 /* ---------- Clips ---------- */
 function weekKey(){const d=new Date();const onejan=new Date(d.getFullYear(),0,1);return d.getFullYear()+"-"+Math.ceil(((d-onejan)/86400e3+onejan.getDay()+1)/7);}
-function allClips(){if(C.on)state.votes=new Set([...state.votes].filter(id=>String(id).startsWith("c")&&EXAMPLE_CLIPS.some(e=>e.id===id)).concat(C.votes.filter(v=>v.user_id===state.uid).map(v=>v.clip_id)));const mine=C.on?C.clips.map(c=>({id:c.id,title:c.title,url:c.url,game:c.game,created:Date.parse(c.created_at),votes:C.votes.filter(v=>v.clip_id===c.id&&v.user_id!==state.uid).length,mine:c.user_id===state.uid,author:authorOf(c.user_id),cloud:true})):state.myClips.map(c=>({...c,mine:true,author:state.me?{...state.me,id:"local",mine:true}:null}));const ex=$("#clip-examples").checked?EXAMPLE_CLIPS.map(c=>({...c,created:now()-c.ago*60e3,example:true,author:EXAMPLES.find(e=>e.id===c.by)})):[];return [...mine,...ex].map(c=>({...c,score:(c.votes||0)+(state.votes.has(c.id)?1:0)}));}
+function allClips(){if(C.on)state.votes=new Set([...state.votes].filter(id=>String(id).startsWith("c")&&EXAMPLE_CLIPS.some(e=>e.id===id)).concat(C.votes.filter(v=>v.user_id===state.uid).map(v=>v.clip_id)));const mine=C.on?C.clips.map(c=>({id:c.id,title:c.title,url:c.url,game:c.game,created:Date.parse(c.created_at),votes:C.votes.filter(v=>v.clip_id===c.id&&v.user_id!==state.uid).length,mine:c.user_id===state.uid,author:authorOf(c.user_id),cloud:true})):state.myClips.map(c=>({...c,mine:true,author:state.me?{...state.me,id:"local",mine:true}:null}));const ex=[];return [...mine,...ex].map(c=>({...c,score:(c.votes||0)+(state.votes.has(c.id)?1:0)}));}
 function clipCard(c){const g=gameById(c.game)||GAMES[0],a=c.author||{};const voted=state.votes.has(c.id);
   const th=el("div",{class:"thumb",style:"background:"+tileBg(g)});th.append(icon(GAME_ICON[g.id]));
   return el("article",{class:"clip"},th,el("div",{class:"body"},el("div",{class:"meta",text:g.name}),el("h3",{text:c.title}),
@@ -1452,7 +1483,6 @@ $("#add-clip").onclick=()=>{
       if(C.on){closeModal();cloudDo(C.sb.from("clips").insert({user_id:state.uid,title:title.value.trim(),url:u.href,game:game.value}));return;}
       state.myClips.unshift({id:"c"+now(),title:title.value.trim(),url:u.href,game:game.value,votes:0,created:now()});store("clips",state.myClips);closeModal();renderClips();}}))]);
 };
-$("#clip-examples").onchange=renderClips;
 
 /* ---------- Messages ---------- */
 let openConvo=null;
@@ -1467,7 +1497,8 @@ async function loadMessages(){
 }
 function convoMembers(id){return C.members.filter(m=>m.conversation_id===id);}
 function unreadIn(id){const me=C.members.find(m=>m.conversation_id===id&&m.user_id===state.uid);const lr=me&&me.last_read?Date.parse(me.last_read):0;return C.msgs.filter(m=>m.conversation_id===id&&m.user_id!==state.uid&&Date.parse(m.created_at)>lr).length;}
-function updateBadge(){const n=C.convos.reduce((a,c)=>a+unreadIn(c.id),0);const b=$("#msg-badge");b.hidden=!n;b.textContent=n>9?"9+":String(n);}
+function updateFrBadge(){const b=$("#fr-badge");if(!b)return;const n=incomingRequests().length;b.hidden=!n;b.textContent=String(n);}
+function updateBadge(){updateFrBadge();const n=C.convos.reduce((a,c)=>a+unreadIn(c.id),0);const b=$("#msg-badge");b.hidden=!n;b.textContent=n>9?"9+":String(n);}
 function convoTitle(c){if(c.is_group)return c.name||"Group chat";const other=convoMembers(c.id).find(m=>m.user_id!==state.uid);return other?authorOf(other.user_id).tag:"Chat";}
 function convoAvatar(c){if(c.is_group)return el("div",{class:"group-av",text:(c.name||"G").charAt(0).toUpperCase()});const other=convoMembers(c.id).find(m=>m.user_id!==state.uid);return avatar(other?authorOf(other.user_id):{tag:"?"});}
 async function messagePlayer(p){
@@ -1526,9 +1557,9 @@ $("#new-group").onclick=()=>{
   if(!state.me||!C.profiles.some(x=>x.id===state.uid)){location.hash="menu";return;}
   const name=el("input",{type:"text",id:"g-name",maxlength:"40",placeholder:"Friday Fortnite squad"});const q=el("input",{type:"search",id:"g-search",placeholder:"Search players","aria-label":"Search players"});
   const picked=new Set();const list=el("div",{class:"pick-list"});const err=el("div",{class:"err",role:"alert"});
-  const draw=()=>{list.replaceChildren();const f=q.value.toLowerCase();const people=C.profiles.filter(p=>p.id!==state.uid&&!state.reported.has(p.id)&&p.tag.toLowerCase().includes(f)).sort((a,b)=>(state.favs.has(b.id)?1:0)-(state.favs.has(a.id)?1:0));
+  const draw=()=>{list.replaceChildren();const f=q.value.toLowerCase();const people=C.profiles.filter(p=>p.id!==state.uid&&!state.reported.has(p.id)&&p.tag.toLowerCase().includes(f)).sort((a,b)=>(friendState(b.id)==="friends"?2:state.favs.has(b.id)?1:0)-(friendState(a.id)==="friends"?2:state.favs.has(a.id)?1:0));
     if(!people.length)list.append(el("div",{class:"meta",text:"No players found."}));
-    people.slice(0,50).forEach(p=>{const cb=el("input",{type:"checkbox",id:"pk-"+p.id});cb.checked=picked.has(p.id);cb.onchange=()=>{cb.checked?picked.add(p.id):picked.delete(p.id);};list.append(el("label",{class:"pick",for:"pk-"+p.id},cb,avatar(p),el("span",{text:p.tag}),state.favs.has(p.id)?el("span",{class:"pill ex",text:"Favorite"}):null));});};
+    people.slice(0,50).forEach(p=>{const cb=el("input",{type:"checkbox",id:"pk-"+p.id});cb.checked=picked.has(p.id);cb.onchange=()=>{cb.checked?picked.add(p.id):picked.delete(p.id);};list.append(el("label",{class:"pick",for:"pk-"+p.id},cb,avatar(p),el("span",{text:p.tag}),friendState(p.id)==="friends"?el("span",{class:"pill online",text:"Friend"}):state.favs.has(p.id)?el("span",{class:"pill ex",text:"Favorite"}):null));});};
   q.addEventListener("input",draw);draw();
   openModal(()=>[el("h2",{id:"dlg-title",text:"New group chat"}),el("div",{class:"field"},el("label",{for:"g-name",text:"Group name"}),name),el("div",{class:"field"},el("label",{for:"g-search",text:"Add players"}),q),list,err,
     el("div",{style:"display:flex;gap:10px;justify-content:flex-end"},el("button",{type:"button",class:"btn ghost",text:"Cancel",onclick:closeModal}),el("button",{type:"button",class:"btn",text:"Create group",onclick:async()=>{
@@ -1547,16 +1578,17 @@ function route(keepScroll){
   if(v==="menu")prefillMenu();if(v==="intel")renderIntel();if(v==="profile")renderProfile();if(v==="squads")renderCards();if(v==="lfg")renderLfg();if(v==="events")renderEvents();if(v==="bounties")renderBounties();if(v==="radar")renderRadar();if(v==="clips")renderClips();if(v==="messages")renderMessages();
   if(!keepScroll)window.scrollTo(0,0);
 }
-window.addEventListener("hashchange",()=>route());
+window.addEventListener("hashchange",()=>{route();if(C.on&&Date.now()-lastLoad>5000)cloudLoad().then(()=>{if($("#overlay").hidden)rerender();});});
 $("#gl-search").addEventListener("input",renderGameList);
 gameOptions($("#lfg-filter"),false);
-{const bf=$("#bounty-filter");bf.append(el("option",{value:"",text:"All games"}));bossGames().forEach(g=>bf.append(el("option",{value:g.id,text:g.name})));bf.onchange=renderBounties;$("#bounty-examples").onchange=renderBounties;}$("#lfg-filter").onchange=renderLfg;$("#lfg-examples").onchange=renderLfg;
+{const bf=$("#bounty-filter");bf.append(el("option",{value:"",text:"All games"}));bossGames().forEach(g=>bf.append(el("option",{value:g.id,text:g.name})));bf.onchange=renderBounties;}$("#lfg-filter").onchange=renderLfg;
 setInterval(()=>{if(!$("#view-lfg").hidden)renderLfg();if(!$("#view-radar").hidden)renderRadar();},60e3);
 
 buildFilters();
 if(!location.hash)location.hash=state.me?"squads":"menu";
 route();initCloud();setInterval(()=>{if(!(C.on&&state.uid))return;const before=C.msgs.length;loadMessages().then(()=>{if(!$("#view-messages").hidden&&$("#overlay").hidden&&C.msgs.length!==before)renderMessages();});},5e3);
-setInterval(()=>{if(C.on)cloudLoad().then(()=>{if($("#overlay").hidden)rerender();});},60e3);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&C.on&&Date.now()-lastLoad>5000)cloudLoad().then(()=>{if($("#overlay").hidden)rerender();});});
+setInterval(()=>{if(C.on&&!document.hidden)cloudLoad().then(()=>{if($("#overlay").hidden)rerender();});},30e3);
 </script>
 </body>
 </html>
