@@ -431,7 +431,7 @@ nav a{white-space:nowrap}
 .pick input{accent-color:var(--coral);width:17px;height:17px}
 .steps[hidden]{display:none}
 .logo{white-space:nowrap;flex:none}
-@media (min-width:761px){.bar{flex-wrap:nowrap}nav{min-width:0;flex:0 1 auto}}
+@media (min-width:761px){.bar{flex-wrap:nowrap}nav{min-width:0;flex:0 1 auto}nav a{padding:7px 10px;font-size:13.5px}}
 </style>
 </head>
 <body>
@@ -728,6 +728,15 @@ const GAMES = [
 { id:"cuphead", name:"Cuphead", genre:"Run-and-gun boss rush", type:"boss", color:["#ff5d5d","#5a1414"],
   squad:"Solo or local co-op 2", platforms:["PC","PS","Xbox","Switch"], mic:1, difficulty:5, roles:[["Partner","Revive each other by parrying the ghost."]] },
 
+{ id:"silksong", name:"Hollow Knight: Silksong", genre:"Metroidvania", type:"boss", color:["#ff6f8e","#4a1424"],
+  squad:"Single-player", platforms:["PC","PS","Xbox","Switch"], mic:0, difficulty:5, roles:[] },
+{ id:"e33", name:"Clair Obscur: Expedition 33", genre:"Turn-based RPG", type:"boss", color:["#e8d5a8","#5a4220"],
+  squad:"Single-player", platforms:["PC","PS","Xbox"], mic:0, difficulty:4, roles:[] },
+{ id:"yotei", name:"Ghost of Yōtei", genre:"Open-world action", type:"boss", color:["#ff8a6b","#3b1a24"],
+  squad:"Single-player", platforms:["PS"], mic:0, difficulty:3, roles:[] },
+{ id:"bg3", name:"Baldur's Gate 3", genre:"Co-op RPG", type:"boss", color:["#c9a4ff","#2a1a4a"],
+  squad:"Solo or co-op up to 4", platforms:["PC","PS","Xbox"], mic:3, difficulty:3,
+  roles:[["Tank","Fighter or Paladin up front."],["Healer","Cleric keeps the party alive."],["Caster","Wizard or Sorcerer for big spells."],["Utility","Rogue for locks, traps and stealth."]] },
 /* ===== Multiplayer ===== */
 { id:"fortnite", name:"Fortnite", genre:"Battle royale", type:"multi", color:["#4fd1ff","#5b2ad6"],
   squad:"Solo, duo, trio or squads of 4", platforms:["PC","PS","Xbox","Switch","Mobile"], mic:4, difficulty:3,
@@ -819,6 +828,59 @@ const GAMES = [
   essentials:[["Elemental reactions","Combine elements like Hydro + Pyro (Vaporize) for big damage."],["Co-op bosses","World bosses and domains are faster with friends."],["Resin","Daily resin limits rewards; plan your farming."]],
   news:"https://genshin.hoyoverse.com/en/news" },
 
+{ id:"r6", name:"Rainbow Six Siege X", genre:"5v5 tactical shooter", type:"multi", color:["#7ec8ff","#1b2a44"],
+  squad:"5 per team", platforms:["PC","PS","Xbox"], mic:5, difficulty:5,
+  roles:[["Entry","First into the room."],["Support","Utility and drones for the team."],["Anchor","Holds the objective until the end."],["Roamer","Defends away from the site to slow attackers."]] },
+{ id:"bf6", name:"Battlefield 6", genre:"Large-scale shooter", type:"multi", color:["#ffb347","#2b2f3a"],
+  squad:"Squads of 4", platforms:["PC","PS","Xbox"], mic:4, difficulty:3,
+  roles:[["Assault","Leads pushes."],["Engineer","Repairs and destroys vehicles."],["Support","Ammo, healing and revives."],["Recon","Spots enemies and snipes."]] },
+{ id:"pubg", name:"PUBG: Battlegrounds", genre:"Battle royale", type:"multi", color:["#f5b041","#3b2f12"],
+  squad:"Solo, duo or squads of 4", platforms:["PC","PS","Xbox"], mic:4, difficulty:4,
+  roles:[["Fragger","Takes the fights."],["Sniper","Picks from long range."],["Driver","Gets the squad to the zone."]] },
+{ id:"finals", name:"The Finals", genre:"Team arena shooter", type:"multi", color:["#ff4f6d","#1d1d2b"],
+  squad:"Teams of 3", platforms:["PC","PS","Xbox"], mic:4, difficulty:4,
+  roles:[["Light","Fast and sneaky."],["Medium","Healing and support gadgets."],["Heavy","Tanky, breaks walls."]] },
+{ id:"halo", name:"Halo Infinite", genre:"Arena shooter", type:"multi", color:["#7ed957","#173a2a"],
+  squad:"4v4 (bigger modes too)", platforms:["PC","Xbox"], mic:3, difficulty:3,
+  roles:[["Slayer","Gets kills."],["Objective","Plays the flag or zone."]] },
+{ id:"dota2", name:"Dota 2", genre:"5v5 MOBA", type:"multi", color:["#ff4b3a","#2a0e0b"],
+  squad:"5 per team", platforms:["PC"], mic:3, difficulty:5,
+  roles:[["Carry (pos 1)","Farms to win late."],["Mid (pos 2)","Solo lane playmaker."],["Offlane (pos 3)","Tanky frontliner."],["Supports (pos 4–5)","Wards, saves and roams."]] },
+{ id:"gtao", name:"GTA Online", genre:"Open-world multiplayer", type:"multi", color:["#7ad36b","#1a3a1c"],
+  squad:"Crews; heists up to 4", platforms:["PC","PS","Xbox"], mic:4, difficulty:2,
+  roles:[["Driver","Getaway and vehicles."],["Gunner","Covers the crew."],["Hacker","Handles the tech parts of heists."]],
+  essentials:[["GTA VI is coming","Grand Theft Auto VI launches November 19, 2026 on PS5 and Xbox. Check the Radar for updates."]] },
+{ id:"seaofthieves", name:"Sea of Thieves", genre:"Pirate adventure", type:"multi", color:["#3fd0c9","#0e2f3a"],
+  squad:"Crews up to 4", platforms:["PC","PS","Xbox"], mic:5, difficulty:2,
+  roles:[["Captain","Steers and calls the plan."],["Navigator","Reads the map."],["Gunner","Mans the cannons."],["Repairs","Patches holes and bails water."]] },
+{ id:"dbd", name:"Dead by Daylight", genre:"Asymmetric horror", type:"multi", color:["#d6382f","#1a0b0b"],
+  squad:"4 survivors vs 1 killer", platforms:["PC","PS","Xbox","Switch"], mic:3, difficulty:3,
+  roles:[["Gen jockey","Focuses generators."],["Looper","Chases the killer around."],["Rescuer","Unhooks teammates."]] },
+{ id:"phasmo", name:"Phasmophobia", genre:"Co-op ghost hunting", type:"multi", color:["#8fd7ff","#0c1a2a"],
+  squad:"Up to 4", platforms:["PC","PS","Xbox"], mic:5, difficulty:3,
+  roles:[["Investigator","Gathers evidence inside."],["Truck","Watches cameras and sensors."]] },
+{ id:"repo", name:"R.E.P.O.", genre:"Co-op horror", type:"multi", color:["#ffd23f","#3a2a0a"],
+  squad:"Up to 6", platforms:["PC"], mic:5, difficulty:3, roles:[["Hauler","Carries the valuables."],["Lookout","Watches for monsters."]] },
+{ id:"peak", name:"PEAK", genre:"Co-op climbing", type:"multi", color:["#7fd6a6","#1f3a2e"],
+  squad:"Up to 4", platforms:["PC"], mic:5, difficulty:3, roles:[["Climber","Leads the route."],["Supplier","Carries food and gear."]] },
+{ id:"palworld", name:"Palworld", genre:"Survival crafting", type:"multi", color:["#6fc8ff","#173356"],
+  squad:"Co-op up to 4 (servers hold more)", platforms:["PC","PS","Xbox"], mic:2, difficulty:2,
+  roles:[["Builder","Runs the base."],["Explorer","Catches Pals and finds resources."]] },
+{ id:"rust", name:"Rust", genre:"Survival PvP", type:"multi", color:["#cd6b3c","#2a1408"],
+  squad:"Any size", platforms:["PC"], mic:5, difficulty:5, roles:[["Builder","Designs the base."],["Farmer","Gathers resources."],["PvP","Defends and raids."]] },
+{ id:"roblox", name:"Roblox", genre:"Game platform", type:"multi", color:["#e8e8f0","#3a3f55"],
+  squad:"Depends on the experience", platforms:["PC","PS","Xbox","Mobile"], mic:2, difficulty:1, roles:[] },
+{ id:"amongus", name:"Among Us", genre:"Social deduction", type:"multi", color:["#ff4f4f","#1a2a5a"],
+  squad:"4–15 players", platforms:["PC","PS","Xbox","Switch","Mobile"], mic:4, difficulty:1,
+  roles:[["Crewmate","Finish tasks and find the impostor."],["Impostor","Blend in and sabotage."]] },
+{ id:"fallguys", name:"Fall Guys", genre:"Party battle royale", type:"multi", color:["#ff8fd0","#4a2a6a"],
+  squad:"Solo or squads up to 4", platforms:["PC","PS","Xbox","Switch"], mic:1, difficulty:1, roles:[] },
+{ id:"brawlstars", name:"Brawl Stars", genre:"Mobile team brawler", type:"multi", color:["#ffd23f","#6a2aff"],
+  squad:"3v3 (also duos and solo)", platforms:["Mobile"], mic:2, difficulty:2, roles:[["Tank","Takes space."],["Damage","Gets kills."],["Support","Heals and controls."]] },
+{ id:"splitfiction", name:"Split Fiction", genre:"2-player co-op adventure", type:"multi", color:["#9b7bff","#ff7a6b"],
+  squad:"2 players only", platforms:["PC","PS","Xbox","Switch"], mic:5, difficulty:2, roles:[["Partner","Every puzzle needs both players."]] },
+{ id:"fc26", name:"EA Sports FC 26", genre:"Soccer", type:"multi", color:["#4fd1a5","#0d2a22"],
+  squad:"1v1, co-op, or Clubs up to 11", platforms:["PC","PS","Xbox","Switch"], mic:3, difficulty:3, roles:[["Striker","Scores goals."],["Midfielder","Controls the game."],["Defender","Stops attacks."]] },
 /* ===== Fighting ===== */
 { id:"sf6", name:"Street Fighter 6", genre:"Fighting", type:"fight", color:["#ff7a3d","#ffdc4d"],
   squad:"1v1", platforms:["PC","PS","Xbox"], mic:1, difficulty:4, roles:[["Sparring partner","Long sets to practice matchups."]],
@@ -829,12 +891,14 @@ const GAMES = [
 { id:"dbsz", name:"Dragon Ball: Sparking! Zero", genre:"Anime arena fighter", type:"fight", color:["#ffb01f","#2a6bff"],
   squad:"1v1", platforms:["PC","PS","Xbox"], mic:1, difficulty:2, roles:[["Rival","Someone to run custom battles with."]],
   essentials:[["Huge roster","Lots of characters and forms to pick from."],["Ki management","Charge ki for Blasts and Ultimates."]] },
+{ id:"mkworld", name:"Mario Kart World", genre:"Kart racing", type:"fight", color:["#ff4f4f","#ffd23f"],
+  squad:"Up to 24 online", platforms:["Switch"], mic:1, difficulty:2, roles:[], essentials:[["Switch 2 only","Mario Kart World is a Nintendo Switch 2 game."]] },
 { id:"smash", name:"Super Smash Bros. Ultimate", genre:"Platform fighter", type:"fight", color:["#ff5d8f","#ffd84d"],
   squad:"Up to 8 players", platforms:["Switch"], mic:1, difficulty:3, roles:[["Doubles partner","2v2 teams are a whole different game."]],
   essentials:[["Ledge play","Recovering to the ledge safely is half the game."],["Arenas","Online arenas let a group rotate who plays."]] }
 ];
 
-const TYPE_LABEL = { boss:"Boss guide", multi:"Multiplayer", fight:"Fighting" };
+const TYPE_LABEL = { boss:"Boss guide", multi:"Multiplayer", fight:"Fighting & racing" };
 
 const EXAMPLES = [];
 EXAMPLES.forEach(e=>e.example=true);
@@ -864,7 +928,10 @@ const ICONS = {
 };
 const GAME_ICON = { elden:"tree", nightreign:"moon", souls3:"flame", bloodborne:"moon", sekiro:"blade", hollow:"leaf", mhw:"sword", wukong:"star", liesofp:"blade", gowr:"sword", cuphead:"star",
   fortnite:"skull", val:"crosshair", apex:"crosshair", warzone:"crosshair", overwatch:"star", rivals:"star", lol:"sword", cs2:"crosshair", rl:"ball", hd2:"skull", destiny2:"moon", drg:"pick", lethal:"ghost", minecraft:"block", genshin:"leaf",
-  sf6:"flame", tekken8:"star", dbsz:"flame", smash:"star" };
+  sf6:"flame", tekken8:"star", dbsz:"flame", smash:"star",
+  silksong:"leaf", e33:"star", yotei:"blade", bg3:"sword", r6:"crosshair", bf6:"crosshair", pubg:"crosshair", finals:"crosshair", halo:"crosshair", dota2:"sword",
+  gtao:"star", seaofthieves:"skull", dbd:"ghost", phasmo:"ghost", repo:"ghost", peak:"tree", palworld:"leaf", rust:"pick", roblox:"block", amongus:"ghost",
+  fallguys:"star", brawlstars:"star", splitfiction:"moon", fc26:"ball", mkworld:"star" };
 
 /* ---------- Example Looking for Group posts and events (minutes are relative to now) ---------- */
 const EXAMPLE_LFG = [];
@@ -1276,7 +1343,7 @@ $("#add-event").onclick=()=>{
 /* ---------- Intel ---------- */
 function renderGameList(){
   const q=($("#gl-search").value||"").toLowerCase(),box=$("#gl-items");box.replaceChildren();
-  const colors={boss:"var(--pink)",multi:"var(--cyan)",fight:"var(--sun)"},labels={boss:"Boss guides",multi:"Multiplayer",fight:"Fighting games"};
+  const colors={boss:"var(--pink)",multi:"var(--cyan)",fight:"var(--sun)"},labels={boss:"Boss guides",multi:"Multiplayer",fight:"Fighting & racing"};
   for(const t of ["boss","multi","fight"]){const gs=GAMES.filter(g=>g.type===t&&g.name.toLowerCase().includes(q));if(!gs.length)continue;
     box.append(el("div",{class:"gl-group",style:"color:"+colors[t],text:labels[t]}));
     gs.forEach(g=>box.append(el("button",{type:"button",class:"gl-item","aria-current":String(g.id===state.intelGame),onclick:()=>{location.hash="intel-"+g.id;}},el("span",{class:"gl-dot",style:"background:"+tileBg(g)}),g.name)));}
