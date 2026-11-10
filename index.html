@@ -337,6 +337,87 @@ nav a{white-space:nowrap}
 /* Weekly changes */
 .changes{border:1px solid rgba(255,210,63,.25);background:linear-gradient(135deg,rgba(255,210,63,.08),rgba(255,95,58,.05))}
 .changes .tips li::marker{color:var(--sun)}
+
+/* ===== v6: Radar, Bounties, Clips, Trust ===== */
+.trust{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:800}
+.trust svg{width:14px;height:14px}
+.radar-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.legend{display:flex;flex-wrap:wrap;gap:8px}
+.st{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px}
+.st-live{background:rgba(166,242,92,.14);color:var(--lime)} .st-confirmed{background:rgba(56,225,245,.14);color:var(--cyan)}
+.st-reported{background:rgba(255,210,63,.14);color:var(--sun)} .st-rumor{background:rgba(255,79,184,.14);color:var(--pink)}
+.countdown{display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:linear-gradient(135deg,rgba(56,225,245,.12),rgba(255,79,184,.12));border:1px solid rgba(56,225,245,.25);border-radius:var(--r);padding:18px 20px;margin-bottom:18px}
+.countdown h2{font-size:22px;flex:1;min-width:200px}
+.cd-units{display:flex;gap:8px}
+.cd-units div{background:var(--surface);border-radius:12px;padding:8px 12px;text-align:center;min-width:64px}
+.cd-units b{display:block;font-family:var(--display);font-size:26px;font-variant-numeric:tabular-nums;line-height:1.1}
+.cd-units small{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.radar-list{display:grid;gap:12px}
+.ritem{display:grid;grid-template-columns:86px 1fr;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
+.ritem .when{text-align:center;border-radius:14px;background:var(--surface-2);padding:10px 6px;font-family:var(--display);align-self:start}
+.ritem .when b{display:block;font-size:22px;line-height:1.1}
+.ritem .when small{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.ritem h3{font-size:16.5px;margin:6px 0 4px}
+.ritem p{margin:0;color:var(--soft);font-size:14px}
+.srcs{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;font-size:12.5px}
+.srcs span{color:var(--faint)}
+@media (max-width:560px){.ritem{grid-template-columns:1fr}.ritem .when{display:flex;gap:8px;align-items:baseline;justify-content:flex-start;padding:6px 10px;width:max-content}}
+.bounty{border-left:0}
+.bounty::before{background:var(--pink)!important}
+.sherpa{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;color:var(--pink);background:rgba(255,79,184,.12);padding:3px 10px;border-radius:999px}
+.clip-feature{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;border-radius:var(--r);padding:20px;margin-bottom:18px;background:linear-gradient(135deg,rgba(255,210,63,.16),rgba(255,95,58,.12));border:1px solid rgba(255,210,63,.3)}
+.trophy{width:58px;height:58px;border-radius:16px;background:var(--sun);color:#1a1300;display:grid;place-items:center}
+.trophy svg{width:30px;height:30px}
+.clip-feature h2{font-size:20px}
+.clips{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.clip{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.clip .thumb{height:120px;position:relative;display:grid;place-items:center;color:#fff}
+.clip .thumb svg{width:44px;height:44px;opacity:.9}
+.clip .thumb .play{position:absolute;inset:0;display:grid;place-items:center}
+.clip .body{padding:14px;display:grid;gap:8px;flex:1}
+.clip h3{font-size:15.5px}
+.vote{display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:1px solid var(--line-2);background:var(--surface-2);border-radius:999px;padding:6px 12px;font-weight:800;font-size:13px}
+.vote[aria-pressed="true"]{border-color:rgba(255,210,63,.6);background:rgba(255,210,63,.14);color:var(--sun)}
+.clip .row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:auto}
+@media (max-width:560px){.clip-feature{grid-template-columns:auto 1fr}.clip-feature .btn{grid-column:1/-1}}
+.by{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+.by .avatar{width:24px;height:24px;border-radius:7px;font-size:11px}
+.by .dot{width:9px;height:9px;border-width:2px;right:-2px;bottom:-2px}
+.vote svg{width:14px;height:14px}
+.stats-box{background:var(--surface-2);border-radius:14px;padding:14px;display:grid;gap:8px}
+.stats-box .stat{background:var(--surface)}
+#login-btn{flex:none}
+@media (max-width:760px){.logo{order:1}#login-btn{order:2;margin-left:auto}nav{order:3}}
+
+/* ===== Messages ===== */
+.badge{display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--pink);color:#fff;font-size:11px;font-weight:800;margin-left:4px}
+.badge[hidden]{display:none}
+.chat{display:grid;grid-template-columns:300px 1fr;height:min(70vh,640px);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
+.convos{border-right:1px solid var(--line);overflow:auto}
+.convo{display:flex;gap:10px;align-items:center;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:12px 14px;cursor:pointer;color:var(--ink)}
+.convo:hover{background:var(--surface-2)} .convo[aria-current="true"]{background:var(--raise)}
+.convo .c-meta{min-width:0;flex:1}
+.convo b{display:block;font-family:var(--display);font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.convo small{display:block;color:var(--muted);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.convo .badge{flex:none}
+.group-av{flex:none;width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,var(--cyan),var(--pink));color:#0b0d14;font-family:var(--display);font-weight:800}
+.thread{display:grid;grid-template-rows:auto 1fr auto;min-height:0}
+.t-head{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.t-head h2{font-size:17px;flex:1;min-width:120px}
+.t-msgs{overflow:auto;padding:16px;display:flex;flex-direction:column;gap:8px}
+.msg{max-width:72%;padding:9px 13px;border-radius:16px;background:var(--surface-2);font-size:14.5px;line-height:1.45;word-wrap:break-word;white-space:pre-wrap}
+.msg.me{align-self:flex-end;background:linear-gradient(135deg,var(--coral),var(--coral-2));color:var(--ink-dark);border-bottom-right-radius:5px}
+.msg.them{align-self:flex-start;border-bottom-left-radius:5px}
+.msg .who{display:block;font-size:11.5px;font-weight:800;color:var(--cyan);margin-bottom:2px}
+.msg time{display:block;font-size:10.5px;opacity:.6;margin-top:3px}
+.t-input{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}
+.t-input textarea{resize:none;min-height:44px;max-height:120px}
+.safety{font-size:12px;color:var(--faint);text-align:center;padding:4px 0 8px}
+.back-btn{display:none}
+@media (max-width:760px){.chat{grid-template-columns:1fr;height:72vh}.chat.open .convos{display:none}.chat:not(.open) .thread{display:none}.back-btn{display:inline-flex}}
+.pick-list{display:grid;gap:6px;max-height:280px;overflow:auto}
+.pick{display:flex;align-items:center;gap:10px;background:var(--surface-2);border-radius:12px;padding:8px 10px;cursor:pointer}
+.pick input{accent-color:var(--coral);width:17px;height:17px}
 </style>
 </head>
 <body>
@@ -347,11 +428,16 @@ nav a{white-space:nowrap}
     <nav aria-label="Sections">
       <a href="#menu" id="nav-menu">Menu</a>
       <a href="#squads" id="nav-squads">Squads</a>
-      <a href="#lfg" id="nav-lfg">Looking for Group</a>
+      <a href="#lfg" id="nav-lfg">LFG</a>
+      <a href="#bounties" id="nav-bounties">Boss Bounties</a>
+      <a href="#radar" id="nav-radar">Radar</a>
       <a href="#intel" id="nav-intel">Game Intel</a>
+      <a href="#clips" id="nav-clips">Clips</a>
       <a href="#events" id="nav-events">Events</a>
+      <a href="#messages" id="nav-messages">Messages <span class="badge" id="msg-badge" hidden></span></a>
       <a href="#profile" id="nav-profile">Profile</a>
     </nav>
+    <button type="button" class="btn sm" id="login-btn" hidden>Log in</button>
   </div>
 </header>
 <div class="wrap"><aside class="hot" id="hot" hidden aria-label="Hot right now"></aside></div>
@@ -431,6 +517,7 @@ nav a{white-space:nowrap}
       <div class="field"><label for="f-platform">Platform</label><select id="f-platform"><option value="">Any</option><option>PC</option><option>PS5</option><option>Xbox</option><option>Switch</option><option>Mobile</option></select></div>
       <label class="check"><input type="checkbox" id="f-online">Online now</label>
       <label class="check"><input type="checkbox" id="f-fav">Favorites only</label>
+      <label class="check"><input type="checkbox" id="f-trusted">Trusted players only</label>
       <label class="check"><input type="checkbox" id="f-mic">Mic required</label>
       <label class="check"><input type="checkbox" id="f-examples" checked>Show example profiles</label>
       <div class="wide"><span class="flabel">Only show these vibes</span><div class="chips" id="f-vibes"></div></div>
@@ -461,6 +548,43 @@ nav a{white-space:nowrap}
     </div>
   </section>
 
+  <!-- BOUNTIES -->
+  <section class="view" id="view-bounties" hidden>
+    <div class="lede"><div><h1>Boss <span class="grad">bounties</span></h1>
+      <p>Stuck on a boss? Post a bounty. Players who've already beaten it can claim it and help you through co-op. Helpers earn Sherpa badges on their profile.</p></div></div>
+    <div class="panel" id="bounty-post"></div>
+    <div class="filters" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+      <div class="field"><label for="bounty-filter">Game</label><select id="bounty-filter"></select></div>
+      <label class="check"><input type="checkbox" id="bounty-examples" checked>Show example bounties</label>
+    </div>
+    <div class="lfg-list" id="bounty-list"></div>
+  </section>
+
+  <!-- RADAR -->
+  <section class="view" id="view-radar" hidden>
+    <div class="lede"><div><h1>The <span class="grad">radar</span></h1>
+      <p>What's live, what's coming, and what's leaked across games. Every item is labeled by how solid it is and links to its sources.</p></div></div>
+    <div id="radar-count"></div>
+    <div class="radar-head"><div class="chips" id="radar-filter"></div><span class="meta" id="radar-updated"></span></div>
+    <div class="panel" style="padding:14px 18px"><div class="legend">
+      <span class="st st-live">Live</span><span class="meta">Out now</span>
+      <span class="st st-confirmed">Confirmed</span><span class="meta">Announced by the company</span>
+      <span class="st st-reported">Reported</span><span class="meta">Multiple reliable outlets or known dataminers</span>
+      <span class="st st-rumor">Rumor</span><span class="meta">Single source or disputed, so take it with a grain of salt</span>
+    </div></div>
+    <div class="radar-list" id="radar-list"></div>
+  </section>
+
+  <!-- CLIPS -->
+  <section class="view" id="view-clips" hidden>
+    <div class="lede"><div><h1>Clip of the <span class="grad">week</span></h1>
+      <p>Share your best plays and vote for your favorites. The top clip each week gets featured here.</p></div>
+      <button class="btn" type="button" id="add-clip">Share a clip</button></div>
+    <div id="clip-feature"></div>
+    <label class="check" style="margin-bottom:16px"><input type="checkbox" id="clip-examples" checked>Show example clips</label>
+    <div class="clips" id="clips"></div>
+  </section>
+
   <!-- EVENTS -->
   <section class="view" id="view-events" hidden>
     <div class="lede"><div><h1>Upcoming <span class="grad">events</span></h1>
@@ -468,6 +592,14 @@ nav a{white-space:nowrap}
       <button class="btn" type="button" id="add-event">Add an event</button></div>
     <label class="check" style="margin-bottom:16px"><input type="checkbox" id="ev-examples" checked>Show example events</label>
     <div class="events" id="events"></div>
+  </section>
+
+  <!-- MESSAGES -->
+  <section class="view" id="view-messages" hidden>
+    <div class="lede"><div><h1>Your <span class="grad">messages</span></h1>
+      <p>Chat with players before you add each other on Discord, or start a group chat for your squad.</p></div>
+      <button class="btn" type="button" id="new-group">New group chat</button></div>
+    <div id="msg-body"></div>
   </section>
 
   <!-- PROFILE -->
@@ -478,12 +610,13 @@ nav a{white-space:nowrap}
 
 <div class="overlay" id="overlay" hidden><div class="dialog" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dlg-title"></div></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 /* ---------- Hot right now ----------
  Change this to feature a different game in the yellow poster at the top. Set to null to hide it. */
 const HOT = { game:"fortnite", title:"Fortnite: Treasure Hunters",
   text:"Everyone's squadding up to hunt treasure on Crossbones Isle. Find a crew before the mini-season ends.",
-  ticker:["HOT · FORTNITE TREASURE HUNTERS","CROSSBONES ISLE IS LIVE","DEVIL FRUIT MYTHICS","SQUAD UP NOW","POST IN LOOKING FOR GROUP"] };
+  ticker:["HOT · FORTNITE TREASURE HUNTERS","CROSSBONES ISLE IS LIVE","DEVIL FRUIT MYTHICS","GTA 6 LANDS NOV 19","CHAPTER 8 REPORTED FOR NOV 28","SQUAD UP NOW"] };
 
 /* ---------- Games ----------
  type: "boss" (boss-focused guide), "multi" (multiplayer intel), "fight" (fighting game)
@@ -694,18 +827,18 @@ const GAMES = [
 const TYPE_LABEL = { boss:"Boss guide", multi:"Multiplayer", fight:"Fighting" };
 
 const EXAMPLES = [
-  {id:"ex1",banner:"gold",avatar:"moon",online:true,endorse:{"Good comms":14,"Chill":9,"Carried me":6},tag:"TarnishedTom",platform:"PC",games:["elden","nightreign","souls3"],mic:true,skill:"Experienced",vibes:["Chill","Newbie-friendly"],times:"Weeknights after 9",bio:"Happy to help with Malenia. I've died to her more times than I can count.",handles:{discord:"tarnishedtom"}},
-  {id:"ex2",banner:"sunset",avatar:"star",online:false,endorse:{"Funny":11,"Good comms":7},tag:"FlashPodQueen",platform:"PS5",games:["mhw","elden"],mic:true,skill:"Casual",vibes:["Funny","Strategic"],times:"Weekend afternoons",bio:"Hunting Horn main. I'll keep you buffed.",handles:{psn:"flashpodqueen",discord:"flashpodqueen"}},
-  {id:"ex3",banner:"toxic",avatar:"skull",online:true,endorse:{"Carried me":12,"Funny":8},tag:"DemocracyDan",platform:"PC",games:["hd2","drg"],mic:true,skill:"Competitive",vibes:["Tryhard","Funny"],times:"Late nights",bio:"Anti-tank only. Point me at the Bile Titan.",handles:{discord:"democracydan"}},
+  {id:"ex1",sherpa:["Malenia, Blade of Miquella","Margit, the Fell Omen","Iudex Gundyr"],banner:"gold",avatar:"moon",online:true,endorse:{"Good comms":14,"Chill":9,"Carried me":6},tag:"TarnishedTom",platform:"PC",games:["elden","nightreign","souls3"],mic:true,skill:"Experienced",vibes:["Chill","Newbie-friendly"],times:"Weeknights after 9",bio:"Happy to help with Malenia. I've died to her more times than I can count.",handles:{discord:"tarnishedtom"}},
+  {id:"ex2",sherpa:["Rathalos"],banner:"sunset",avatar:"star",online:false,endorse:{"Funny":11,"Good comms":7},tag:"FlashPodQueen",platform:"PS5",games:["mhw","elden"],mic:true,skill:"Casual",vibes:["Funny","Strategic"],times:"Weekend afternoons",bio:"Hunting Horn main. I'll keep you buffed.",handles:{psn:"flashpodqueen",discord:"flashpodqueen"}},
+  {id:"ex3",sherpa:["Bile Titan"],banner:"toxic",avatar:"skull",online:true,endorse:{"Carried me":12,"Funny":8},tag:"DemocracyDan",platform:"PC",games:["hd2","drg"],mic:true,skill:"Competitive",vibes:["Tryhard","Funny"],times:"Late nights",bio:"Anti-tank only. Point me at the Bile Titan.",handles:{discord:"democracydan"}},
   {id:"ex4",banner:"ocean",avatar:"blade",online:false,endorse:{"Good comms":10,"Chill":5},tag:"QuietSmokes",platform:"PC",games:["val","cs2"],mic:false,skill:"Experienced",vibes:["Strategic","No toxicity"],times:"Evenings",bio:"Controller main. I type callouts fast if you don't mind no mic.",handles:{discord:"quietsmokes"}},
   {id:"ex5",banner:"violet",avatar:"controller",online:true,endorse:{"Chill":4},tag:"NewbieNova",platform:"Xbox",games:["fortnite","minecraft","hd2"],mic:true,skill:"New",vibes:["Chill","Newbie-friendly","Night owl"],times:"After midnight",bio:"Just started, looking for patient people to learn with.",handles:{xbox:"NewbieNova"}},
   {id:"ex6",banner:"ocean",avatar:"initial",online:false,endorse:{"Good comms":6,"Carried me":3},tag:"EcoRoundEnjoyer",platform:"PS5",games:["val","apex"],mic:true,skill:"Competitive",vibes:["Competitive","No toxicity"],times:"Weeknights 7–11",bio:"Grinding ranked. Looking for a consistent duo.",handles:{psn:"EcoRoundEnjoyer",discord:"ecoround"}},
   {id:"ex7",banner:"sunset",avatar:"skull",online:true,endorse:{"Funny":9,"Good comms":8,"Carried me":4},tag:"CrossbonesCaptain",platform:"PC",games:["fortnite","warzone"],mic:true,skill:"Experienced",vibes:["Funny","Competitive"],times:"Every night 8–12",bio:"Need a squad for the new Crossbones Isle map. I call drops.",handles:{discord:"crossbonescap",psn:"CrossbonesCap"}},
   {id:"ex8",banner:"violet",avatar:"star",online:false,endorse:{"Chill":15,"Good comms":11},tag:"SupportSoraka",platform:"PC",games:["lol","overwatch","rivals"],mic:true,skill:"Casual",vibes:["Chill","No toxicity"],times:"Weekends",bio:"Support main in every game. You do damage, I keep you alive.",handles:{discord:"supportsoraka"}},
-  {id:"ex9",banner:"gold",avatar:"flame",online:true,endorse:{"Carried me":7},tag:"AerialAce",platform:"Switch",games:["rl","smash","minecraft"],mic:false,skill:"Experienced",vibes:["Strategic","Chill"],times:"After class",bio:"Diamond in 2s. I play third man so you can go for the flashy goals.",handles:{discord:"aerialace"}},
+  {id:"ex9",sherpa:["Ender Dragon"],banner:"gold",avatar:"flame",online:true,endorse:{"Carried me":7},tag:"AerialAce",platform:"Switch",games:["rl","smash","minecraft"],mic:false,skill:"Experienced",vibes:["Strategic","Chill"],times:"After class",bio:"Diamond in 2s. I play third man so you can go for the flashy goals.",handles:{discord:"aerialace"}},
   {id:"ex10",banner:"sunset",avatar:"flame",online:false,endorse:{"Funny":6},tag:"KameKameHa",platform:"PS5",games:["dbsz","tekken8","sf6"],mic:true,skill:"Casual",vibes:["Funny","Newbie-friendly"],times:"Late nights",bio:"Anime fighter fan. Down for long casual sets.",handles:{psn:"KameKameHa"}},
   {id:"ex11",banner:"toxic",avatar:"controller",online:true,endorse:{"Funny":13},tag:"ScrapGoblin",platform:"PC",games:["lethal","drg"],mic:true,skill:"Casual",vibes:["Funny","Night owl"],times:"Fridays",bio:"I will absolutely die first and scream on mic.",handles:{discord:"scrapgoblin"}},
-  {id:"ex12",banner:"ocean",avatar:"moon",online:false,endorse:{"Chill":8,"Good comms":4},tag:"ResinHoarder",platform:"PC",games:["genshin","hollow"],mic:false,skill:"Experienced",vibes:["Chill","No toxicity"],times:"Mornings",bio:"Happy to help with world bosses and domains.",handles:{discord:"resinhoarder"}}
+  {id:"ex12",sherpa:["Hornet (Protector)"],banner:"ocean",avatar:"moon",online:false,endorse:{"Chill":8,"Good comms":4},tag:"ResinHoarder",platform:"PC",games:["genshin","hollow"],mic:false,skill:"Experienced",vibes:["Chill","No toxicity"],times:"Mornings",bio:"Happy to help with world bosses and domains.",handles:{discord:"resinhoarder"}}
 ];
 EXAMPLES.forEach(e=>e.example=true);
 const HANDLE_LABELS = {discord:"Discord",psn:"PSN",xbox:"Xbox"};
@@ -749,6 +882,58 @@ const EXAMPLE_EVENTS = [
   {id:"ev3",title:"Fortnite Treasure Hunters squad scrims",game:"fortnite",place:"Online (Discord)",inDays:2,hour:21,note:"Trios. Find a squad on Party Up first."}
 ];
 
+/* ---------- Radar: what's live, coming, and leaked ----------
+ status: live (out now), confirmed (official), reported (multiple reliable outlets / known dataminers), rumor (single source or disputed)
+ date: YYYY-MM-DD when known. Update this list when you ask for a Radar refresh. */
+const RADAR_UPDATED = "November 9, 2026";
+const RADAR = [
+  {id:"r-gta6",title:"Grand Theft Auto VI launches",game:"GTA VI",status:"confirmed",date:"2026-11-19",
+   summary:"Rockstar's release date for PS5 and Xbox Series X|S after two delays. Take-Two has repeated the date in its earnings updates. No PC date yet.",
+   sources:[["Rockstar Newswire","https://www.rockstargames.com/newswire/article/ak3ak31a49a221/grand-theft-auto-vi-is-now-set-to-launch-november-19-2026"],["PC Gamer","https://www.pcgamer.com/games/action/grand-theft-auto-6-is-delayed-to-november-these-extra-months-will-allow-us-to-finish-the-game-with-the-level-of-polish-you-have-come-to-expect-and-deserve"]]},
+  {id:"r-fn-th",title:"Fortnite: Treasure Hunters mini-season",game:"fortnite",status:"live",date:"2026-11-01",
+   summary:"One Piece crossover on the new Crossbones Isle map, with Devil Fruit Mythics and new crews each week.",
+   sources:[["Fortnite News","https://www.fortnite.com/news"],["Gladiatorboost guide","https://gladiatorboost.com/news/fortnite-treasure-hunters-mini-season-guide/"]]},
+  {id:"r-fn-ch8",title:"Fortnite Chapter 8 (v44.00)",game:"fortnite",status:"reported",date:"2026-11-28",
+   summary:"Listed for November 28 on Epic's public creator roadmap and by dataminer HYPEX. ShiinaBR's reading points to around December 5 instead, so the exact day could shift.",
+   sources:[["esports.net tracker","https://www.esports.net/wiki/guides/fortnite-chapter-8"],["Timesaver","https://timesaver.gg/blog/fortnite-next-season-mini-season-or-chapter-8"]]},
+  {id:"r-fn-collabs",title:"Chapter 8 crossover rumors",game:"fortnite",status:"rumor",date:null,
+   summary:"Leak trackers mention Chainsaw Man, Crash Bandicoot, Fallout's Lucy and Wicked as possible Chapter 8 collabs. None are confirmed by Epic.",
+   sources:[["esports.net tracker","https://www.esports.net/wiki/guides/fortnite-chapter-8"]]},
+  {id:"r-tga",title:"The Game Awards 2026",game:"Event",status:"confirmed",date:"2026-12-10",
+   summary:"Geoff Keighley announced the show for December 10 at the Peacock Theater in Los Angeles. Expect world-premiere trailers and big reveals.",
+   sources:[["Insider Gaming","https://insider-gaming.com/the-game-awards-2026-date-and-venue-revealed/"]]},
+  {id:"r-dqm",title:"Dragon Quest Monsters: The Withered World",game:"Dragon Quest Monsters",status:"confirmed",date:"2026-12-03",
+   summary:"Monster-collecting RPG coming to PC, PS5, Xbox, Switch and Switch 2.",
+   sources:[["VGC release schedule","https://www.videogameschronicle.com/news/new-game-release-dates/"]]},
+  {id:"r-poe2",title:"Path of Exile 2 full release (1.0)",game:"Path of Exile 2",status:"reported",date:"2026-12-11",
+   summary:"Release trackers list the 1.0 launch for December 11.",
+   sources:[["Talkesport release list","https://www.talkesport.com/news/gaming/upcoming-game-release-dates-2026/"]]},
+  {id:"r-mw4",title:"Call of Duty: Modern Warfare 4 is out",game:"Call of Duty: Modern Warfare 4",status:"live",date:"2026-10-23",
+   summary:"Launched October 23 on PS5, Xbox, PC and Switch 2. A good time to find a squad.",
+   sources:[["Talkesport release list","https://www.talkesport.com/news/gaming/upcoming-game-release-dates-2026/"]]},
+  {id:"r-gta6pc",title:"GTA VI on PC",game:"GTA VI",status:"rumor",date:null,
+   summary:"No official PC date. Outlets expect it some time in 2027 based on Rockstar's past releases.",
+   sources:[["PCGamesN","https://www.pcgamesn.com/gta-6-release-date"]]}
+];
+
+/* ---------- Example Boss Bounties and clips ---------- */
+const EXAMPLE_BOUNTIES = [
+  {id:"b1",by:"ex5",game:"elden",boss:"Margit, the Fell Omen",note:"Died 30 times. Level 22. Please send help.",platform:"Xbox",ago:20},
+  {id:"b2",by:"ex10",game:"mhw",boss:"Rathalos",note:"Need someone to farm Rathalos Plates with.",platform:"PS5",ago:65},
+  {id:"b3",by:"ex6",game:"hd2",boss:"Bile Titan",note:"Keep getting stomped on Diff 6. Teach me.",platform:"PS5",ago:140}
+];
+const EXAMPLE_CLIPS = [
+  {id:"c1",by:"ex7",game:"fortnite",title:"1v3 clutch with Gum-Gum Fruit on Crossbones Isle",votes:41,ago:300},
+  {id:"c2",by:"ex9",game:"rl",title:"Ceiling shot double tap in overtime",votes:33,ago:900},
+  {id:"c3",by:"ex1",game:"elden",title:"No-hit Malenia phase 2",votes:28,ago:1500},
+  {id:"c4",by:"ex11",game:"lethal",title:"Whole crew screaming at the same monster",votes:19,ago:600}
+];
+const TRUST = [ [25,"Elite","#ffd23f"], [10,"Trusted","#a6f25c"], [0,"New",null] ];
+
+/* ---------- Accounts config ----------
+ Fill these in from Supabase > Project Settings > API. The anon key is public by design (row-level security protects the data). */
+const CLOUD = { url:"", anonKey:"" };
+const STATS_URL = "/.netlify/functions/fortnite-stats";
 </script>
 <script>
 const $=s=>document.querySelector(s);
@@ -769,8 +954,8 @@ const HOUR=3600e3;
 
 /* ---------- State ---------- */
 const state={ me:load("profile",null), real:[], myId:null, db:null, canWrite:null,
-  favs:new Set(load("favs",[])), endorsed:load("endorsed",{}), myPosts:load("lfg",[]), myEvents:load("events",[]), going:new Set(load("going",[])),
-  filter:{game:"",platform:"",mic:false,examples:true,online:false,fav:false,vibes:new Set()}, intelGame:"elden", boss:0 };
+  favs:new Set(load("favs",[])), reported:new Set(load("reported",[])), myBounties:load("bounties",[]), claims:new Set(load("claims",[])), mySherpa:load("sherpa",[]), myClips:load("clips",[]), votes:new Set(load("votes",[])), endorsed:load("endorsed",{}), myPosts:load("lfg",[]), myEvents:load("events",[]), going:new Set(load("going",[])),
+  filter:{game:"",platform:"",mic:false,examples:true,online:false,fav:false,trusted:false,vibes:new Set()}, intelGame:"elden", boss:0 };
 const isOnline=p=>p.example?!!p.online:(p.onlineUntil&&p.onlineUntil>now());
 
 /* ---------- Shared bits ---------- */
@@ -781,8 +966,13 @@ function avatar(p,lg){
   return el("div",{class:"av-wrap"},a,isOnline(p)?el("span",{class:"dot",title:"Looking for a group now"}):null);
 }
 function rankBadge(skill){const r=RANKS[skill];if(!r)return null;return el("span",{class:"rank",style:"color:"+r[1]},rankIcon(r[1]),r[0]);}
-function endorseCounts(p){const base={...(p.endorse||{})};(state.endorsed[p.id]||[]).forEach(t=>base[t]=(base[t]||0)+1);return base;}
+function endorseCounts(p){const base={...(p.endorse||{})};if(C.on&&p.uid){C.endorse.filter(e=>e.to_user===p.uid).forEach(e=>base[e.tag]=(base[e.tag]||0)+1);return base;}(state.endorsed[p.id]||[]).forEach(t=>base[t]=(base[t]||0)+1);return base;}
+function myEndorse(p){if(C.on&&p.uid)return new Set(C.endorse.filter(e=>e.to_user===p.uid&&e.from_user===state.uid).map(e=>e.tag));return new Set(state.endorsed[p.id]||[]);}
 function topEndorse(p){const c=endorseCounts(p);const e=Object.entries(c).sort((a,b)=>b[1]-a[1])[0];return e?el("div",{class:"top-endorse"},"Top endorsement: ",el("b",{text:e[0]+" ×"+e[1]})):null;}
+function shieldIcon(color){const s=document.createElementNS(SVGNS,"svg");s.setAttribute("viewBox","0 0 24 24");s.setAttribute("aria-hidden","true");const p=document.createElementNS(SVGNS,"path");p.setAttribute("d","M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5z");p.setAttribute("fill",color);const c=document.createElementNS(SVGNS,"path");c.setAttribute("d","M8 12l3 3 5-6");c.setAttribute("fill","none");c.setAttribute("stroke","rgba(0,0,0,.55)");c.setAttribute("stroke-width","2.2");c.setAttribute("stroke-linecap","round");c.setAttribute("stroke-linejoin","round");s.append(p,c);return s;}
+function trustOf(p){const total=Object.values(endorseCounts(p)).reduce((a,b)=>a+b,0);const t=TRUST.find(([min])=>total>=min);return {total,label:t[1],color:t[2]};}
+function trustBadge(p){const t=trustOf(p);if(!t.color)return null;return el("span",{class:"trust",style:"color:"+t.color,title:t.total+" endorsements"},shieldIcon(t.color),t.label);}
+function sherpaList(p){return p.mine||p.id==="local"?state.mySherpa:(p.sherpa||[]);}
 function similarity(p,me){
   if(!me)return null;const mg=me.games||[],pg=p.games||[];const shared=pg.filter(g=>mg.includes(g)).length;
   const gameScore=mg.length?Math.min(1,shared/Math.min(mg.length,3)):0;const plat=p.platform===me.platform?1:0;const mic=(!!p.mic)===(!!me.mic)?1:0;
@@ -790,8 +980,74 @@ function similarity(p,me){
   const sk=1-Math.abs(SKILLS.indexOf(p.skill)-SKILLS.indexOf(me.skill))/3;
   return Math.round((gameScore*.45+plat*.15+mic*.12+vib*.18+(isNaN(sk)?.5:sk)*.10)*100);
 }
-function profileById(id){if(id==="local"||id===state.myId)return state.me?{...state.me,id:"local",mine:true}:null;return EXAMPLES.find(e=>e.id===id)||state.real.find(r=>r.id===id)||null;}
-function toggleFav(id){state.favs.has(id)?state.favs.delete(id):state.favs.add(id);store("favs",[...state.favs]);}
+function profileById(id){if(id==="local"||(state.uid&&id===state.uid))return state.me?{...state.me,id:id,mine:true}:null;return EXAMPLES.find(e=>e.id===id)||C.profiles.find(r=>r.id===id)||null;}
+function toggleFav(id){const had=state.favs.has(id);had?state.favs.delete(id):state.favs.add(id);if(C.on&&state.uid){(had?C.sb.from("favorites").delete().match({user_id:state.uid,fav_id:id}):C.sb.from("favorites").insert({user_id:state.uid,fav_id:id})).then(r=>{if(r.error)toast("Couldn't save favorite.");});}else store("favs",[...state.favs]);}
+
+/* ---------- Cloud (Supabase) ---------- */
+const C={on:false,sb:null,convos:[],members:[],msgs:[],profiles:[],posts:[],bounties:[],claims:[],endorse:[],events:[],going:[],clips:[],votes:[],favs:[],reports:[]};
+const fromRow=r=>r&&({id:r.id,uid:r.id,tag:r.tag,platform:r.platform,games:r.games||[],mic:r.mic,skill:r.skill,vibes:r.vibes||[],handles:r.handles||{},times:r.times||"",bio:r.bio||"",banner:r.banner,avatar:r.avatar,onlineUntil:r.online_until?Date.parse(r.online_until):0,sherpa:r.sherpa||[],epic:r.epic_name||""});
+const toRow=(p,uid)=>({id:uid,tag:p.tag,platform:p.platform,games:p.games||[],mic:!!p.mic,skill:p.skill,vibes:p.vibes||[],handles:p.handles||{},times:p.times||"",bio:p.bio||"",banner:p.banner||"sunset",avatar:p.avatar||"initial",online_until:p.onlineUntil?new Date(p.onlineUntil).toISOString():null,sherpa:p.sherpa||state.mySherpa||[],epic_name:p.epic||null,updated_at:new Date().toISOString()});
+const authorOf=uid=>{const p=C.profiles.find(x=>x.id===uid);return p?{...p,mine:uid===state.uid}:{tag:"Player"};};
+async function cloudLoad(){
+  if(!C.on)return;
+  const q=t=>C.sb.from(t).select("*");
+  const [pr,po,bo,cl,en,ev,go,cp,vo]=await Promise.all(["profiles","lfg_posts","bounties","bounty_claims","endorsements","events","event_going","clips","clip_votes"].map(t=>q(t)));
+  C.profiles=(pr.data||[]).map(fromRow);C.posts=po.data||[];C.bounties=bo.data||[];C.claims=cl.data||[];C.endorse=en.data||[];C.events=ev.data||[];C.going=go.data||[];C.clips=cp.data||[];C.votes=vo.data||[];
+  if(state.uid){const [f,r]=await Promise.all([q("favorites"),q("reports")]);C.favs=f.data||[];C.reports=r.data||[];
+    state.favs=new Set(C.favs.map(x=>x.fav_id));state.reported=new Set(C.reports.map(x=>x.reported_id));
+    const mine=C.profiles.find(p=>p.id===state.uid);if(mine){state.me=mine;state.mySherpa=mine.sherpa||[];}await loadMessages();}
+}
+function rerender(){const h=location.hash.slice(1)||"squads";route(true);}
+async function cloudDo(promise){try{const r=await promise;if(r&&r.error)throw r.error;await cloudLoad();rerender();return true;}catch(e){toast("Couldn't save that. Check your connection and try again.");return false;}}
+function toast(msg){let t=$("#toast");if(!t){t=el("div",{id:"toast",role:"status",style:"position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--raise);border:1px solid var(--line-2);color:var(--ink);padding:10px 16px;border-radius:12px;z-index:20;font-weight:600;box-shadow:var(--shadow)"});document.body.append(t);}t.textContent=msg;t.hidden=false;clearTimeout(t._h);t._h=setTimeout(()=>t.hidden=true,3500);}
+function needLogin(){if(C.on&&!state.uid){openLogin();return true;}return false;}
+function openLogin(reason){
+  openModal(()=>[el("h2",{id:"dlg-title",text:"Log in to Party Up"}),el("p",{class:"meta",style:"margin:0",text:reason||"Log in so your profile, posts and favorites save to your account and other players can find you."}),
+    el("button",{type:"button",class:"btn",style:"justify-content:center",text:"Continue with Google",onclick:()=>signIn("google")}),
+    el("button",{type:"button",class:"btn ghost",style:"justify-content:center",text:"Continue with Discord",onclick:()=>signIn("discord")}),
+    el("p",{class:"meta",style:"margin:0;font-size:12.5px",text:"We only use your login to keep your account. Your email is never shown to other players."})]);
+}
+async function signIn(provider){const redirectTo=location.origin+location.pathname+"#squads";const {error}=await C.sb.auth.signInWithOAuth({provider,options:{redirectTo}});if(error)toast(provider==="google"?"Google login isn't available yet.":"Discord login isn't available yet.");}
+async function signOut(){await C.sb.auth.signOut();state.uid=null;state.me=load("profile",null);state.favs=new Set(load("favs",[]));state.reported=new Set(load("reported",[]));renderLogin();rerender();}
+function renderLogin(){const b=$("#login-btn");if(!C.on){b.hidden=true;return;}b.hidden=false;
+  if(state.uid){b.textContent=state.me?state.me.tag:"My account";b.className="btn ghost sm";b.onclick=()=>{location.hash="profile";};}
+  else{b.textContent="Log in";b.className="btn sm";b.onclick=()=>openLogin();}}
+async function saveProfileCloud(p){if(!state.uid)return false;const {error}=await C.sb.from("profiles").upsert(toRow(p,state.uid));if(error){toast("Couldn't save your profile. Try again.");return false;}await cloudLoad();return true;}
+async function initCloud(){
+  if(!CLOUD.url||!CLOUD.anonKey||!window.supabase)return;
+  try{C.sb=window.supabase.createClient(CLOUD.url,CLOUD.anonKey);C.on=true;}catch(e){return;}
+  const {data}=await C.sb.auth.getSession();state.uid=data.session?data.session.user.id:null;
+  C.sb.auth.onAuthStateChange(async(ev,session)=>{const uid=session?session.user.id:null;if(uid===state.uid&&ev!=="USER_UPDATED")return;state.uid=uid;await afterLogin(session);});
+  await afterLogin(data.session);
+}
+async function afterLogin(session){
+  await cloudLoad();
+  if(state.uid&&!C.profiles.find(p=>p.id===state.uid)){
+    const local=load("profile",null);
+    if(local){await saveProfileCloud({...local,sherpa:state.mySherpa});toast("Your profile is now saved to your account.");}
+    else{state.me=null;}
+  }
+  if(state.uid&&session){const disc=(session.user.identities||[]).find(i=>i.provider==="discord");const dn=disc&&disc.identity_data&&(disc.identity_data.global_name||disc.identity_data.full_name||disc.identity_data.name||disc.identity_data.user_name);
+    if(dn&&state.me&&!(state.me.handles||{}).discord){await saveProfileCloud({...state.me,handles:{...state.me.handles,discord:dn}});}}
+  renderLogin();rerender();
+}
+
+function confirmClear(){try{return window.confirm("Delete your profile from Party Up? This can\u2019t be undone.");}catch(e){return true;}}
+
+/* ---------- Fortnite stats ---------- */
+const statCache={};
+async function fetchStats(name){
+  if(!name)return null;const k=name.toLowerCase();if(statCache[k])return statCache[k];
+  const p=fetch(STATS_URL+"?name="+encodeURIComponent(name)).then(async r=>{const j=await r.json().catch(()=>({error:"Stats aren't available here."}));return r.ok?j:{error:j.error||"Stats aren't available right now."};}).catch(()=>({error:"Stats aren't available here."}));
+  statCache[k]=p;return p;
+}
+function statsBox(name){
+  const box=el("div",{class:"stats-box"},el("span",{class:"flabel",text:"Fortnite stats · "+name}),el("div",{class:"meta",text:"Loading stats…"}));
+  fetchStats(name).then(s=>{box.replaceChildren(el("span",{class:"flabel",text:"Fortnite stats · "+name}));
+    if(!s||s.error){box.append(el("div",{class:"meta",text:s?s.error:"Stats aren't available."}));return;}
+    box.append(el("div",{class:"sheet"},[["Wins",s.wins],["K/D",(+s.kd).toFixed(2)],["Win rate",(+s.winRate).toFixed(1)+"%"],["Matches",s.matches],["Kills",s.kills]].concat(s.level!=null?[["BP level",s.level]]:[]).map(([l,v])=>el("div",{class:"stat"},el("b",{text:String(v)}),el("span",{text:l})))),el("div",{class:"meta",style:"font-size:12px;margin-top:6px",text:"Lifetime Battle Royale stats via Fortnite-API.com. Players must have public stats."}));});
+  return box;
+}
 
 /* ---------- Hot poster ---------- */
 function renderHot(view){
@@ -815,12 +1071,12 @@ function buildFilters(){
   VIBES.forEach(v=>{const b=el("button",{type:"button",class:"chip","aria-pressed":"false",text:v});b.onclick=()=>{state.filter.vibes.has(v)?state.filter.vibes.delete(v):state.filter.vibes.add(v);b.setAttribute("aria-pressed",String(state.filter.vibes.has(v)));renderCards();};$("#f-vibes").append(b);});
   $("#f-game").onchange=e=>{state.filter.game=e.target.value;renderCards();};
   $("#f-platform").onchange=e=>{state.filter.platform=e.target.value;renderCards();};
-  ["mic","examples","online","fav"].forEach(k=>$("#f-"+k).onchange=e=>{state.filter[k]=e.target.checked;renderCards();});
+  ["mic","examples","online","fav","trusted"].forEach(k=>$("#f-"+k).onchange=e=>{state.filter[k]=e.target.checked;renderCards();});
 }
 function allProfiles(){
-  const me=state.me,mineReal=state.myId&&state.real.find(p=>p.id===state.myId);
-  const list=[...state.real.map(p=>({...p,mine:p.id===state.myId}))];
-  if(me&&!mineReal)list.unshift({...me,id:"local",mine:true,localOnly:true});
+  const me=state.me;
+  const list=C.on?C.profiles.map(p=>({...p,mine:p.id===state.uid})):[];
+  if(me&&!(C.on&&state.uid&&C.profiles.some(p=>p.id===state.uid)))list.unshift({...me,id:"local",mine:true,localOnly:true});
   if(state.filter.examples)list.push(...EXAMPLES);
   return list;
 }
@@ -832,7 +1088,7 @@ function renderYouBar(){
     el("button",{type:"button",class:"btn ghost sm",text:on?"● Online now":"Go online",style:on?"color:var(--lime)":null,onclick:()=>{setOnline(!on);renderCards();}}),
     el("a",{class:"btn ghost sm",href:"#profile",text:"Edit profile"}));
 }
-function setOnline(on){if(!state.me)return;state.me.onlineUntil=on?now()+3*HOUR:0;store("profile",state.me);}
+function setOnline(on){if(!state.me)return;state.me.onlineUntil=on?now()+3*HOUR:0;if(C.on&&state.uid)saveProfileCloud(state.me).then(rerender);else store("profile",state.me);}
 function renderCards(){
   renderYouBar();
   const f=state.filter,me=state.me,box=$("#cards");box.replaceChildren();
@@ -843,6 +1099,8 @@ function renderCards(){
     if(f.mic&&!p.mic)return false;
     if(f.online&&!isOnline(p))return false;
     if(f.fav&&!state.favs.has(p.id))return false;
+    if(state.reported.has(p.id))return false;
+    if(f.trusted&&!trustOf(p).color)return false;
     if(f.vibes.size&&!(p.vibes||[]).some(v=>f.vibes.has(v)))return false;
     return true;});
   list.forEach(p=>p._score=p.mine?null:similarity(p,me));
@@ -861,10 +1119,11 @@ function card(p){
   const wrap=el("div",{style:"position:relative"});
   const c=el("button",{type:"button",class:"card"+(p.mine?" mine":""),style:"width:100%;height:100%",onclick:()=>openProfile(p),"aria-label":"View "+(p.tag||"player")+"'s profile"},
     el("div",{class:"strip",style:"background:"+bannerBg(p.banner)}),
-    el("div",{class:"card-top"},el("div",{class:"who"},avatar(p),el("div",{style:"min-width:0"},el("div",{class:"tag",text:p.tag||"Unnamed"}),el("div",{class:"meta",style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"},el("span",{text:p.platform||""}),rankBadge(p.skill)))),ring),
+    el("div",{class:"card-top"},el("div",{class:"who"},avatar(p),el("div",{style:"min-width:0"},el("div",{class:"tag",text:p.tag||"Unnamed"}),el("div",{class:"meta",style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"},el("span",{text:p.platform||""}),rankBadge(p.skill),trustBadge(p)))),ring),
     flags.childElementCount?flags:null,
     el("div",{class:"pills"},el("span",{class:"pill "+(p.mic?"mic":"nomic"),text:p.mic?"Mic on":"No mic"}),...(p.vibes||[]).slice(0,3).map(v=>el("span",{class:"pill",text:v}))),
     p.bio?el("p",{class:"bio",text:p.bio}):null,
+    sherpaList(p).length?el("div",{class:"pills"},el("span",{class:"sherpa",text:"Sherpa ×"+sherpaList(p).length})):null,
     topEndorse(p),
     el("div",{class:"card-foot"},el("span",{text:(p.games||[]).length+" game"+((p.games||[]).length===1?"":"s")}),el("b",{text:"View profile →"})));
   wrap.append(c);
@@ -883,28 +1142,35 @@ function openProfile(p){
   if(p._score===undefined&&!p.mine)p._score=similarity(p,state.me);
   const h=p.handles||{},me=state.me;
   const rows=Object.keys(HANDLE_LABELS).filter(k=>h[k]).map(k=>el("div",{class:"handle-row"},el("span",{text:HANDLE_LABELS[k]}),el("code",{text:h[k]}),copyBtn(h[k],HANDLE_LABELS[k])));
-  const counts=endorseCounts(p),mine=new Set(state.endorsed[p.id]||[]);
-  const endorseRow=el("div",{class:"endorse"},ENDORSE_TAGS.map(t=>el("button",{type:"button","aria-pressed":String(mine.has(t)),disabled:p.mine?"":null,onclick:()=>{const arr=new Set(state.endorsed[p.id]||[]);arr.has(t)?arr.delete(t):arr.add(t);state.endorsed[p.id]=[...arr];store("endorsed",state.endorsed);openProfile(p);renderCards();}},t,el("b",{text:String(counts[t]||0)}))));
+  const counts=endorseCounts(p),mine=myEndorse(p);
+  const endorseRow=el("div",{class:"endorse"},ENDORSE_TAGS.map(t=>el("button",{type:"button","aria-pressed":String(mine.has(t)),disabled:p.mine?"":null,onclick:async()=>{if(C.on&&p.uid){if(needLogin())return;const has=mine.has(t);await cloudDo(has?C.sb.from("endorsements").delete().match({from_user:state.uid,to_user:p.uid,tag:t}):C.sb.from("endorsements").insert({from_user:state.uid,to_user:p.uid,tag:t}));openProfile({...authorOf(p.uid),_score:p._score});return;}const arr=new Set(state.endorsed[p.id]||[]);arr.has(t)?arr.delete(t):arr.add(t);state.endorsed[p.id]=[...arr];store("endorsed",state.endorsed);openProfile(p);renderCards();}},t,el("b",{text:String(counts[t]||0)}))));
   openModal(()=>[
     el("div",{class:"prof-banner",style:"background:"+bannerBg(p.banner)}),
-    el("div",{class:"prof-head over"},avatar(p,true),el("div",{style:"padding-bottom:4px"},el("h2",{id:"dlg-title",text:p.tag||"Player"}),el("div",{class:"meta",style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"},el("span",{text:[p.platform,p.mic?"Mic on":"No mic"].filter(Boolean).join(" · ")}),rankBadge(p.skill)))),
+    el("div",{class:"prof-head over"},avatar(p,true),el("div",{style:"padding-bottom:4px"},el("h2",{id:"dlg-title",text:p.tag||"Player"}),el("div",{class:"meta",style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"},el("span",{text:[p.platform,p.mic?"Mic on":"No mic"].filter(Boolean).join(" · ")}),rankBadge(p.skill),trustBadge(p)))),
     el("div",{class:"pills"},isOnline(p)?el("span",{class:"pill online",text:"● Looking for a group now"}):null,p._score!=null?el("span",{class:"pill shared",text:p._score+"% similar to you"}):null,p.example?el("span",{class:"pill ex",text:"Example profile"}):null),
     p.example?el("div",{class:"note",style:"margin-top:0",text:"This is an example profile to show how Party Up works. These handles aren't real people."}):null,
     p.bio?el("p",{class:"bio",text:p.bio}):null,
     el("div",{},el("span",{class:"flabel",text:"Add them on"}),rows.length?el("div",{class:"handle-list"},rows):el("div",{class:"meta",text:"No handles listed."})),
     el("div",{},el("span",{class:"flabel",text:p.mine?"Your endorsements":"Played with them? Endorse them"}),endorseRow),
+    p.epic?statsBox(p.epic):null,
     el("dl",{class:"kv"},el("dt",{text:"Plays"}),el("dd",{},el("div",{class:"pills"},(p.games||[]).map(g=>el("span",{class:"pill"+(me&&(me.games||[]).includes(g)?" shared":""),text:gameName(g)})))),
       p.vibes?.length?el("dt",{text:"Vibe"}):null,p.vibes?.length?el("dd",{text:p.vibes.join(", ")}):null,
-      p.times?el("dt",{text:"Usually on"}):null,p.times?el("dd",{text:p.times}):null),
-    p.mine?el("a",{class:"btn ghost",href:"#profile",onclick:closeModal,text:"Edit my profile"}):el("button",{type:"button",class:"btn"+(state.favs.has(p.id)?" ghost":""),onclick:()=>{toggleFav(p.id);openProfile(p);renderCards();}},starIcon(),state.favs.has(p.id)?"Saved to favorites":"Add to favorites")
+      p.times?el("dt",{text:"Usually on"}):null,p.times?el("dd",{text:p.times}):null,
+      sherpaList(p).length?el("dt",{text:"Sherpa for"}):null,sherpaList(p).length?el("dd",{},el("div",{class:"pills"},sherpaList(p).map(b=>el("span",{class:"sherpa",text:b})))):null),
+    el("div",{class:"meta",style:"font-size:12.5px"},"Trust: ",el("b",{style:"color:"+(trustOf(p).color||"var(--soft)"),text:trustOf(p).label}),` (${trustOf(p).total} endorsements). 10+ makes a player Trusted, 25+ makes them Elite.`),
+    p.mine?null:el("button",{type:"button",class:"btn ghost sm",style:"justify-self:start;color:#ff8f85",text:"Report & hide this player",onclick:()=>{state.reported.add(p.id);if(C.on&&state.uid)C.sb.from("reports").insert({user_id:state.uid,reported_id:p.id}).then(()=>{});else store("reported",[...state.reported]);closeModal();renderCards();}}),
+    p.mine?null:el("button",{type:"button",class:"btn",text:"Message "+(p.tag||"player"),onclick:()=>messagePlayer(p)}),
+    p.mine?el("a",{class:"btn ghost",href:"#profile",onclick:closeModal,text:"Edit my profile"}):el("button",{type:"button",class:"btn"+(state.favs.has(p.id)?" ghost":" ghost"),onclick:()=>{toggleFav(p.id);openProfile(p);renderCards();}},starIcon(),state.favs.has(p.id)?"Saved to favorites":"Add to favorites")
   ]);
 }
 
 /* ---------- LFG ---------- */
 function examplePosts(){return EXAMPLE_LFG.map(x=>({...x,created:now()-x.ago*60e3,example:true,author:EXAMPLES.find(e=>e.id===x.by)}));}
 function activePosts(){
-  state.myPosts=state.myPosts.filter(p=>p.created+p.hours*HOUR>now());store("lfg",state.myPosts);
-  const mine=state.myPosts.map(p=>({...p,mine:true,author:state.me?{...state.me,id:"local",mine:true}:p.author}));
+  let mine;
+  if(C.on){mine=C.posts.map(p=>({id:p.id,game:p.game,need:p.need,mic:p.mic,note:p.note,hours:p.hours,created:Date.parse(p.created_at),mine:p.user_id===state.uid,author:authorOf(p.user_id)}));}
+  else{state.myPosts=state.myPosts.filter(p=>p.created+p.hours*HOUR>now());store("lfg",state.myPosts);
+  mine=state.myPosts.map(p=>({...p,mine:true,author:state.me?{...state.me,id:"local",mine:true}:p.author}));}
   return [...mine,...($("#lfg-examples").checked?examplePosts():[])].filter(p=>p.created+p.hours*HOUR>now());
 }
 function timeLeft(p){const ms=p.created+p.hours*HOUR-now();const m=Math.max(0,Math.round(ms/60e3));return m>=60?Math.floor(m/60)+"h "+(m%60)+"m left":m+"m left";}
@@ -925,6 +1191,7 @@ function renderLfgForm(){
     el("div",{class:"field wide"},el("label",{for:"lfg-note",text:"What are you looking for?"}),note),
     el("div",{class:"wide",style:"display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"},el("span",{class:"meta",text:"Posting as "+state.me.tag+". Your handles show when someone taps Join."}),el("button",{type:"button",class:"btn",text:"Post it",onclick:()=>{
       if(!gsel.value){err.textContent="Pick a game.";return;}
+      if(C.on){if(needLogin())return;cloudDo(C.sb.from("lfg_posts").insert({user_id:state.uid,game:gsel.value,need:+need.value,mic:mic.value==="yes",note:note.value.trim(),hours:+hrs.value}));if(state.me&&!isOnline(state.me))setOnline(true);return;}
       state.myPosts.unshift({id:"p"+now(),game:gsel.value,need:+need.value,mic:mic.value==="yes",note:note.value.trim(),hours:+hrs.value,created:now()});store("lfg",state.myPosts);
       if(state.me&&!isOnline(state.me))setOnline(true);
       note.value="";renderLfg();}}))),err);
@@ -939,7 +1206,7 @@ function renderLfg(){
       el("div",{class:"need"},el("div",{},el("b",{text:"+"+p.need}),el("small",{text:"needed"}))),
       el("div",{style:"min-width:0"},el("h3",{text:g.name+" · "+(p.mic?"Mic required":"Mic optional")}),p.note?el("p",{text:p.note}):null,
         el("div",{class:"by"},avatar(a),el("span",{text:(a.tag||"Player")+" · posted "+ago(p.created)}),p.example?el("span",{class:"pill ex",text:"Example"}):null,p.mine?el("span",{class:"pill you",text:"You"}):null)),
-      el("div",{class:"side"},el("span",{class:"timeleft",text:timeLeft(p)}),p.mine?el("button",{type:"button",class:"btn ghost sm",text:"Remove",onclick:()=>{state.myPosts=state.myPosts.filter(x=>x.id!==p.id);store("lfg",state.myPosts);renderLfg();}}):el("button",{type:"button",class:"btn sm",text:"Join →",onclick:()=>openProfile(a)}))));
+      el("div",{class:"side"},el("span",{class:"timeleft",text:timeLeft(p)}),p.mine?el("button",{type:"button",class:"btn ghost sm",text:"Remove",onclick:()=>{if(C.on){cloudDo(C.sb.from("lfg_posts").delete().eq("id",p.id));return;}state.myPosts=state.myPosts.filter(x=>x.id!==p.id);store("lfg",state.myPosts);renderLfg();}}):el("button",{type:"button",class:"btn sm",text:"Join →",onclick:()=>openProfile(a)}))));
   });
 }
 
@@ -947,19 +1214,23 @@ function renderLfg(){
 function exampleEvents(){return EXAMPLE_EVENTS.map(e=>{const d=new Date();d.setDate(d.getDate()+e.inDays);d.setHours(e.hour,0,0,0);return {...e,when:d.getTime(),example:true};});}
 function renderEvents(){
   const box=$("#events");box.replaceChildren();
-  state.myEvents=state.myEvents.filter(e=>e.when>now()-6*HOUR);store("events",state.myEvents);
-  const list=[...state.myEvents.map(e=>({...e,mine:true})),...($("#ev-examples").checked?exampleEvents():[])].sort((a,b)=>a.when-b.when);
+  let mineEv;
+  if(C.on){mineEv=C.events.map(e=>({id:e.id,title:e.title,when:Date.parse(e.starts_at),place:e.place,game:e.game,note:e.note,mine:e.user_id===state.uid,going:C.going.filter(g=>g.event_id===e.id).length})).filter(e=>e.when>now()-6*HOUR);
+    state.going=new Set(C.going.filter(g=>g.user_id===state.uid).map(g=>g.event_id).concat([...state.going].filter(id=>String(id).startsWith("ev"))));}
+  else{state.myEvents=state.myEvents.filter(e=>e.when>now()-6*HOUR);store("events",state.myEvents);mineEv=state.myEvents.map(e=>({...e,mine:true}));}
+  const list=[...mineEv,...($("#ev-examples").checked?exampleEvents():[])].sort((a,b)=>a.when-b.when);
   if(!list.length){box.append(el("div",{class:"empty",text:"No upcoming events yet. Add one!"}));return;}
   list.forEach(e=>{const d=new Date(e.when),g=e.game&&gameById(e.game);const going=state.going.has(e.id);
     box.append(el("article",{class:"event"},
       el("div",{class:"cal"},el("small",{text:d.toLocaleDateString(undefined,{month:"short"}).toUpperCase()}),el("b",{text:String(d.getDate())})),
       el("div",{style:"min-width:0"},el("h3",{text:e.title}),el("div",{class:"meta",text:[d.toLocaleDateString(undefined,{weekday:"long"})+" at "+d.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"}),e.place,g?g.name:null].filter(Boolean).join(" · ")}),e.note?el("p",{text:e.note}):null,
         el("div",{class:"pills",style:"margin-top:8px"},e.example?el("span",{class:"pill ex",text:"Example"}):null,e.mine?el("span",{class:"pill you",text:"Your event"}):null,going?el("span",{class:"pill online",text:"You're going"}):null)),
-      el("div",{class:"side",style:"display:flex;gap:8px"},el("button",{type:"button",class:"btn sm"+(going?" ghost":""),text:going?"Not going":"I'm going",onclick:()=>{going?state.going.delete(e.id):state.going.add(e.id);store("going",[...state.going]);renderEvents();}}),
-        e.mine?el("button",{type:"button",class:"btn ghost sm",text:"Delete",onclick:()=>{state.myEvents=state.myEvents.filter(x=>x.id!==e.id);store("events",state.myEvents);renderEvents();}}):null)));
+      el("div",{class:"side",style:"display:flex;gap:8px"},el("button",{type:"button",class:"btn sm"+(going?" ghost":""),text:going?"Not going":"I'm going",onclick:()=>{if(C.on&&!e.example){if(needLogin())return;cloudDo(going?C.sb.from("event_going").delete().match({event_id:e.id,user_id:state.uid}):C.sb.from("event_going").insert({event_id:e.id,user_id:state.uid}));return;}going?state.going.delete(e.id):state.going.add(e.id);store("going",[...state.going]);renderEvents();}}),
+        e.mine?el("button",{type:"button",class:"btn ghost sm",text:"Delete",onclick:()=>{if(C.on){cloudDo(C.sb.from("events").delete().eq("id",e.id));return;}state.myEvents=state.myEvents.filter(x=>x.id!==e.id);store("events",state.myEvents);renderEvents();}}):null)));
   });
 }
 $("#add-event").onclick=()=>{
+  if(needLogin())return;
   const title=el("input",{type:"text",id:"ev-title",maxlength:"60",placeholder:"Friday LAN night"});
   const when=el("input",{type:"datetime-local",id:"ev-when",style:"width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;color-scheme:dark"});
   const place=el("input",{type:"text",id:"ev-place",maxlength:"60",placeholder:"Student center / Discord"});
@@ -971,6 +1242,7 @@ $("#add-event").onclick=()=>{
     el("div",{class:"field"},el("label",{for:"ev-place",text:"Where"}),place),el("div",{class:"field"},el("label",{for:"ev-note",text:"Details"}),note),err,
     el("div",{class:"actions",style:"display:flex;gap:10px;justify-content:flex-end"},el("button",{type:"button",class:"btn ghost",text:"Cancel",onclick:closeModal}),el("button",{type:"button",class:"btn",text:"Add event",onclick:()=>{
       if(!title.value.trim()){err.textContent="Give your event a name.";return;}const t=new Date(when.value).getTime();if(!when.value||isNaN(t)||t<now()){err.textContent="Pick a date and time in the future.";return;}
+      if(C.on){closeModal();cloudDo(C.sb.from("events").insert({user_id:state.uid,title:title.value.trim(),starts_at:new Date(t).toISOString(),place:place.value.trim(),game:game.value||null,note:note.value.trim()}));return;}
       state.myEvents.push({id:"e"+now(),title:title.value.trim(),when:t,place:place.value.trim(),game:game.value,note:note.value.trim()});store("events",state.myEvents);closeModal();renderEvents();}}))]);
 };
 $("#ev-examples").onchange=renderEvents;
@@ -1001,7 +1273,8 @@ function renderIntel(){
   if(g.season){const s=g.season;body.append(el("div",{class:"panel season"},el("h3",{text:"This season"}),el("h2",{text:s.title}),el("div",{class:"asof",text:"Updated "+s.asof+" · Seasons change fast, so check the official news for the latest"}),el("ul",{class:"tips"},s.points.map(t=>el("li",{text:t}))),el("div",{style:"margin-top:14px"},el("a",{href:s.source,target:"_blank",rel:"noopener",text:"Official news ↗"}))));}
   if(g.bosses?.length){if(state.boss>=g.bosses.length)state.boss=0;const b=g.bosses[state.boss];
     const tabs=g.bosses.length>1?el("div",{class:"boss-tabs"},g.bosses.map((x,i)=>el("button",{type:"button",class:"chip pinkc","aria-pressed":String(i===state.boss),text:x.name,onclick:()=>{state.boss=i;renderIntel();}}))):null;
-    body.append(el("div",{class:"panel"},el("h3",{text:g.type==="boss"?"Boss guide":"Boss & big-threat guide"}),tabs,el("div",{class:"boss-head"},el("h2",{text:b.name})),
+    const openB=allBounties().filter(x=>x.boss===b.name).length;
+    body.append(el("div",{class:"panel"},el("h3",{text:g.type==="boss"?"Boss guide":"Boss & big-threat guide"}),tabs,el("div",{class:"boss-head"},el("h2",{text:b.name}),el("div",{style:"display:flex;gap:8px;flex-wrap:wrap"},openB?el("a",{class:"btn ghost sm",href:"#bounties",onclick:()=>{$("#bounty-filter").value=g.id;},text:openB+" open "+(openB===1?"bounty":"bounties")}):null,el("button",{type:"button",class:"btn sm",text:"Stuck? Post a bounty",onclick:()=>{state.bountyDraft={game:g.id,boss:b.name};location.hash="bounties";}}))),
       el("div",{class:"locate"},el("div",{class:"pin",text:"⌖","aria-hidden":"true"}),el("div",{},el("b",{text:b.where}),el("p",{text:b.how}))),
       el("span",{class:"flabel",text:"Weak to"}),el("div",{class:"weak"},b.weak.map(w=>el("span",{class:"pill good",text:w})),...(b.resist||[]).map(w=>el("span",{class:"pill bad",text:"Resists "+w}))),
       b.phases?el("span",{class:"flabel",text:"How the fight flows"}):null,b.phases?el("div",{class:"timeline"},b.phases.map(([n,d,w])=>el("div",{class:"seg",style:"flex:"+w},el("b",{text:n}),el("span",{text:d})))):null,
@@ -1047,9 +1320,9 @@ function prefillMenu(){
 $("#m-search").addEventListener("input",buildTiles);
 document.querySelectorAll("[data-next]").forEach(b=>b.addEventListener("click",()=>{const to=+b.dataset.next,from=+b.closest(".menu-panel").dataset.step;if(to>from&&!validStep(from))return;showStep(to);window.scrollTo(0,0);}));
 $("#m-finish").onclick=async()=>{
-  const body={...draftProfile(),updated:new Date().toISOString()};state.me=body;store("profile",body);
+  const body={...draftProfile(),epic:(state.me&&state.me.epic)||"",sherpa:state.mySherpa,updated:new Date().toISOString()};state.me=body;store("profile",body);
   let msg="Saved! Your profile is remembered on this device.";
-  if(state.db&&state.myId&&state.canWrite!==false){try{await state.db.doc("squads/"+state.myId).set(body);msg="Saved and posted! Other players can now find you.";}catch(e){if(e&&e.code==="invalid_argument")state.canWrite=false;}}
+  if(C.on){if(state.uid){if(await saveProfileCloud(body))msg="Saved to your account! Other players can now find you.";}else{setTimeout(()=>openLogin("Your profile is saved on this device. Log in to post it so other players can find you."),300);}}
   state.filter.game="";$("#f-game").value="";location.hash="squads";$("#status").textContent=msg;
 };
 
@@ -1065,42 +1338,225 @@ function renderProfile(){
     el("div",{class:"prof-banner",style:"margin:0 -22px;border-radius:0;background:"+bannerBg(me.banner)}),
     el("div",{class:"prof-head over"},avatar(me,true),el("div",{style:"padding-bottom:4px"},el("h2",{text:me.tag}),el("div",{class:"meta",style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"},el("span",{text:[me.platform,me.mic?"Mic on":"No mic"].join(" · ")}),rankBadge(me.skill)))),
     me.bio?el("p",{class:"bio",style:"margin-top:14px",text:me.bio}):null,
+    el("div",{class:"pills",style:"margin-top:12px"},trustBadge(me)||el("span",{class:"pill",text:"Trust: New (get 10 endorsements to become Trusted)"}),...state.mySherpa.map(b=>el("span",{class:"sherpa",text:"Sherpa: "+b}))),
     el("div",{class:"toggle",style:"margin-top:16px"},el("div",{},el("b",{text:on?"You're online":"Looking for a group right now?"}),el("div",{class:"meta",text:on?"Your green dot shows for "+Math.max(1,Math.round((me.onlineUntil-now())/60e3))+" more minutes.":"Turn this on to show a green dot on your card for 3 hours."})),sw),
     el("dl",{class:"kv",style:"margin-top:16px"},
       el("dt",{text:"Games"}),el("dd",{},el("div",{class:"pills"},(me.games||[]).map(g=>el("span",{class:"pill",text:gameName(g)})))),
       el("dt",{text:"Vibe"}),el("dd",{text:(me.vibes||[]).join(", ")||"Not set"}),el("dt",{text:"Usually on"}),el("dd",{text:me.times||"Not set"}),
       ...Object.keys(HANDLE_LABELS).filter(k=>h[k]).flatMap(k=>[el("dt",{text:HANDLE_LABELS[k]}),el("dd",{text:h[k]})])),
-    el("div",{style:"display:flex;gap:10px;margin-top:18px;flex-wrap:wrap"},el("a",{class:"btn",href:"#menu",text:"Edit profile & look"}),el("button",{type:"button",class:"btn ghost",text:"Clear my profile",onclick:()=>{state.me=null;store("profile",null);renderProfile();}})),
-    el("div",{class:"note",text:"Your profile, favorites, posts and endorsements are saved in this browser for now. Accounts with login (so everything follows you to any device and other players see you live) are coming next."})));
+    el("div",{style:"display:flex;gap:10px;margin-top:18px;flex-wrap:wrap"},el("a",{class:"btn",href:"#menu",text:"Edit profile & look"}),el("button",{type:"button",class:"btn ghost",text:"Clear my profile",onclick:async()=>{if(C.on&&state.uid){if(!confirmClear())return;await cloudDo(C.sb.from("profiles").delete().eq("id",state.uid));}state.me=null;store("profile",null);renderProfile();}})),
+    C.on?(state.uid?null:el("div",{class:"note"},"Your profile is only saved on this device. ",el("button",{type:"button",class:"btn sm",style:"margin-left:6px",text:"Log in to save it to your account",onclick:()=>openLogin()}))):el("div",{class:"note",text:"Your profile is saved in this browser. Logging in with Google or Discord is coming soon."})));
+  // Linked accounts & stats
+  const epicIn=el("input",{type:"text",id:"epic-name",maxlength:"32",placeholder:"Your Epic display name",value:me.epic||""});
+  v.append(el("div",{class:"panel"},el("h3",{text:"Linked accounts & stats"}),
+    el("div",{class:"row2",style:"align-items:end"},el("div",{class:"field"},el("label",{for:"epic-name",text:"Epic Games name (for Fortnite stats)"}),epicIn),
+      el("div",{},el("button",{type:"button",class:"btn",text:"Save & show my stats",onclick:async()=>{state.me.epic=epicIn.value.trim();store("profile",state.me);if(C.on&&state.uid)await saveProfileCloud(state.me);renderProfile();}}))),
+    el("p",{class:"meta",style:"font-size:12.5px",text:"Your Fortnite stats need to be public. In Fortnite, check your privacy settings if your stats don't show up."}),
+    me.epic?statsBox(me.epic):null,
+    C.on&&state.uid?el("div",{style:"display:flex;gap:10px;flex-wrap:wrap;margin-top:14px"},
+      el("button",{type:"button",class:"btn ghost",text:(me.handles||{}).discord?"Discord connected: "+me.handles.discord:"Connect Discord",onclick:async()=>{if(!C.sb.auth.linkIdentity){toast("Log out and log back in with Discord to connect it.");return;}const {error}=await C.sb.auth.linkIdentity({provider:"discord",options:{redirectTo:location.origin+location.pathname+"#profile"}});if(error)toast("Connecting Discord isn't available yet.");}}),
+      el("button",{type:"button",class:"btn ghost",text:"Log out",onclick:signOut})):null,
+    el("p",{class:"meta",style:"font-size:12.5px;margin-top:12px",text:"Coming later: Valorant rank (waiting on Riot approval) and Steam stats."})));
+  if(state.reported.size)v.append(el("div",{class:"panel"},el("h3",{text:"Hidden players"}),el("p",{class:"meta",style:"margin:0 0 10px",text:"You reported and hid these players. They won't show in your squad finder."}),el("div",{class:"pills"},[...state.reported].map(id=>{const p=profileById(id);return el("button",{type:"button",class:"chip",text:"Unhide "+(p?p.tag:id),onclick:()=>{state.reported.delete(id);if(C.on&&state.uid)C.sb.from("reports").delete().match({user_id:state.uid,reported_id:id}).then(()=>{});else store("reported",[...state.reported]);renderProfile();}});}))));
   v.append(el("div",{class:"panel"},el("h3",{text:"Favorites"}),favs.length?el("div",{class:"grid"},favs.map(p=>card({...p,_score:similarity(p,me)}))):el("p",{class:"meta",style:"margin:0",text:"No favorites yet. Tap the star on anyone's card to save them here."})));
 }
 
-/* ---------- Routing ---------- */
-function route(){
-  const h=location.hash.slice(1);let v="squads";
-  if(["menu","profile","lfg","events"].includes(h))v=h;else if(h.startsWith("intel")){v="intel";const id=h.slice(6);if(id&&gameById(id)&&id!==state.intelGame){state.intelGame=id;state.boss=0;}}
-  ["menu","squads","lfg","intel","events","profile"].forEach(x=>{$("#view-"+x).hidden=x!==v;const n=$("#nav-"+x);if(n){if(x===v)n.setAttribute("aria-current","page");else n.removeAttribute("aria-current");}});
-  renderHot(v);
-  if(v==="menu")prefillMenu();if(v==="intel")renderIntel();if(v==="profile")renderProfile();if(v==="squads")renderCards();if(v==="lfg")renderLfg();if(v==="events")renderEvents();
-  window.scrollTo(0,0);
+/* ---------- Boss Bounties ---------- */
+function bossGames(){return GAMES.filter(g=>g.bosses?.length);}
+function exampleBounties(){return EXAMPLE_BOUNTIES.map(x=>({...x,created:now()-x.ago*60e3,example:true,author:EXAMPLES.find(e=>e.id===x.by)}));}
+function allBounties(){const mine=C.on?C.bounties.map(b=>({id:b.id,game:b.game,boss:b.boss,note:b.note,platform:b.platform,created:Date.parse(b.created_at),mine:b.user_id===state.uid,author:authorOf(b.user_id)})):state.myBounties.map(b=>({...b,mine:true,author:state.me?{...state.me,id:"local",mine:true}:null}));return [...mine,...(($("#bounty-examples")||{}).checked!==false?exampleBounties():[])];}
+function renderBountyForm(){
+  const box=$("#bounty-post");box.replaceChildren();
+  if(!state.me){box.append(el("h3",{text:"Post a bounty"}),el("p",{class:"meta",style:"margin:0 0 12px",text:"Set up your profile first so helpers can add you."}),el("a",{class:"btn",href:"#menu",text:"Set up my profile"}));return;}
+  const draft=state.bountyDraft||{};state.bountyDraft=null;
+  const gsel=el("select",{id:"bt-game"},bossGames().map(g=>el("option",{value:g.id,text:g.name})));
+  const bsel=el("select",{id:"bt-boss"});
+  const fillBosses=()=>{bsel.replaceChildren(...(gameById(gsel.value).bosses||[]).map(b=>el("option",{value:b.name,text:b.name})),el("option",{value:"__other",text:"Another boss…"}));};
+  if(draft.game)gsel.value=draft.game;fillBosses();if(draft.boss)bsel.value=draft.boss;
+  const other=el("input",{type:"text",id:"bt-other",maxlength:"60",placeholder:"Boss name",hidden:""});
+  gsel.onchange=()=>{fillBosses();other.hidden=true;};bsel.onchange=()=>{other.hidden=bsel.value!=="__other";};
+  const note=el("input",{type:"text",id:"bt-note",maxlength:"120",placeholder:"Level, build, what keeps killing you…"});const err=el("div",{class:"err",role:"alert"});
+  box.append(el("h3",{text:"Post a bounty"}),el("div",{class:"lfg-form"},
+    el("div",{class:"field"},el("label",{for:"bt-game",text:"Game"}),gsel),el("div",{class:"field"},el("label",{for:"bt-boss",text:"Boss"}),bsel,other),
+    el("div",{class:"field wide"},el("label",{for:"bt-note",text:"Details"}),note),
+    el("div",{class:"wide",style:"display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"},el("span",{class:"meta",text:"Posting as "+state.me.tag+" on "+state.me.platform+"."}),el("button",{type:"button",class:"btn",text:"Post bounty",onclick:()=>{
+      const boss=bsel.value==="__other"?other.value.trim():bsel.value;if(!boss){err.textContent="Name the boss you need help with.";return;}
+      if(C.on){if(needLogin())return;cloudDo(C.sb.from("bounties").insert({user_id:state.uid,game:gsel.value,boss,note:note.value.trim(),platform:state.me.platform}));return;}
+      state.myBounties.unshift({id:"b"+now(),game:gsel.value,boss,note:note.value.trim(),platform:state.me.platform,created:now()});store("bounties",state.myBounties);note.value="";renderBounties();}}))),err);
 }
-window.addEventListener("hashchange",route);
-$("#gl-search").addEventListener("input",renderGameList);
-gameOptions($("#lfg-filter"),false);$("#lfg-filter").onchange=renderLfg;$("#lfg-examples").onchange=renderLfg;
-setInterval(()=>{if(!$("#view-lfg").hidden)renderLfg();},60e3);
+function renderBounties(){
+  renderBountyForm();
+  const f=$("#bounty-filter").value,list=$("#bounty-list");list.replaceChildren();
+  const items=allBounties().filter(b=>!f||b.game===f).sort((a,b)=>(b.mine?1:0)-(a.mine?1:0)||b.created-a.created);
+  if(!items.length){list.append(el("div",{class:"empty",text:"No open bounties. Everyone's winning!"}));return;}
+  items.forEach(b=>{const g=gameById(b.game)||GAMES[0],a=b.author||{},claimed=state.claims.has(b.id)||C.claims.some(c=>c.bounty_id===b.id&&c.user_id===state.uid);
+    list.append(el("article",{class:"post bounty",style:"--gc:var(--pink)"},
+      el("div",{class:"need",style:"background:rgba(255,79,184,.12);color:var(--pink)"},icon("skull")),
+      el("div",{style:"min-width:0"},el("h3",{text:b.boss}),el("div",{class:"meta",text:g.name+" · "+(b.platform||"")}),b.note?el("p",{text:b.note}):null,
+        el("div",{class:"by"},avatar(a),el("span",{text:(a.tag||"Player")+" · posted "+ago(b.created)}),b.example?el("span",{class:"pill ex",text:"Example"}):null,b.mine?el("span",{class:"pill you",text:"You"}):null,claimed?el("span",{class:"pill online",text:"You claimed this"}):null)),
+      el("div",{class:"side"},b.mine?el("div",{style:"display:flex;gap:8px"},el("button",{type:"button",class:"btn sm",text:"Beaten it!",onclick:()=>{if(C.on){cloudDo(C.sb.from("bounties").delete().eq("id",b.id));return;}state.myBounties=state.myBounties.filter(x=>x.id!==b.id);store("bounties",state.myBounties);renderBounties();}}),el("button",{type:"button",class:"btn ghost sm",text:"Remove",onclick:()=>{if(C.on){cloudDo(C.sb.from("bounties").delete().eq("id",b.id));return;}state.myBounties=state.myBounties.filter(x=>x.id!==b.id);store("bounties",state.myBounties);renderBounties();}})):
+        el("button",{type:"button",class:"btn sm",text:claimed?"See their handles":"Claim & help →",onclick:async()=>{if(!claimed){if(C.on&&!b.example){if(needLogin())return;await C.sb.from("bounty_claims").insert({bounty_id:b.id,user_id:state.uid});}state.claims.add(b.id);store("claims",[...state.claims]);if(!state.mySherpa.includes(b.boss)){state.mySherpa.push(b.boss);store("sherpa",state.mySherpa);if(C.on&&state.uid&&state.me)await saveProfileCloud({...state.me,sherpa:state.mySherpa});}renderBounties();}openProfile(a);}}))));
+  });
+}
 
-/* ---------- Optional shared data (only inside Claude preview) ---------- */
-async function connect(){
-  if(!(window.claude&&typeof claude.use==="function"))return;
-  try{const[db,user]=await Promise.all([claude.use("db"),claude.use("user")]);if(!db)return;state.db=db;
-    if(user){state.myId=await user.id();try{if(await user.can("data.write")===false)state.canWrite=false;}catch(e){}}
-    db.collection("squads").onSnapshot(s=>{state.real=s.docs.filter(d=>d.exists).map(d=>({id:d.id,...d.data()}));if(!$("#view-squads").hidden)renderCards();},()=>{});
-  }catch(e){}
+/* ---------- Radar ---------- */
+let radarFilter="all";
+function daysUntil(iso){const t=new Date(iso+"T00:00:00").getTime();return Math.ceil((t-now())/86400e3);}
+function renderRadar(){
+  $("#radar-updated").textContent="Updated "+RADAR_UPDATED;
+  const fb=$("#radar-filter");fb.replaceChildren();
+  [["all","All"],["live","Live now"],["confirmed","Confirmed"],["reported","Reported"],["rumor","Rumors & leaks"]].forEach(([k,t])=>fb.append(el("button",{type:"button",class:"chip","aria-pressed":String(radarFilter===k),text:t,onclick:()=>{radarFilter=k;renderRadar();}})));
+  // countdown to the next big confirmed date
+  const next=RADAR.filter(r=>r.status==="confirmed"&&r.date&&daysUntil(r.date)>0).sort((a,b)=>a.date.localeCompare(b.date))[0];
+  const cd=$("#radar-count");cd.replaceChildren();
+  if(next){const target=new Date(next.date+"T00:00:00").getTime();const ms=Math.max(0,target-now());const d=Math.floor(ms/86400e3),h=Math.floor(ms%86400e3/3600e3),m=Math.floor(ms%3600e3/60e3);
+    cd.append(el("div",{class:"countdown"},el("span",{class:"st st-confirmed",text:"Next up"}),el("h2",{text:next.title}),el("div",{class:"cd-units"},[[d,"days"],[h,"hours"],[m,"mins"]].map(([n,l])=>el("div",{},el("b",{text:String(n)}),el("small",{text:l}))))));}
+  const list=$("#radar-list");list.replaceChildren();
+  const order={live:0,confirmed:1,reported:2,rumor:3};
+  RADAR.filter(r=>radarFilter==="all"||r.status===radarFilter).sort((a,b)=>(a.date&&b.date?a.date.localeCompare(b.date):a.date?-1:b.date?1:order[a.status]-order[b.status])).forEach(r=>{
+    const g=gameById(r.game);const dt=r.date?new Date(r.date+"T00:00:00"):null;const dd=r.date?daysUntil(r.date):null;
+    list.append(el("article",{class:"ritem"},
+      el("div",{class:"when"},dt?[el("small",{text:dt.toLocaleDateString(undefined,{month:"short"})}),el("b",{text:String(dt.getDate())}),el("small",{text:dd>0?"in "+dd+"d":"out"})]:[el("small",{text:"Date"}),el("b",{text:"TBA"})]),
+      el("div",{style:"min-width:0"},el("div",{style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"},el("span",{class:"st st-"+r.status,text:r.status}),el("span",{class:"meta",text:g?g.name:r.game})),
+        el("h3",{text:r.title}),el("p",{text:r.summary}),
+        el("div",{class:"srcs"},el("span",{text:"Sources:"}),r.sources.map(([n,u])=>el("a",{href:u,target:"_blank",rel:"noopener",text:n+" ↗"}))),
+        g&&g.squad!=="Single-player"?el("div",{style:"margin-top:10px"},el("button",{type:"button",class:"btn ghost sm",text:"Find "+g.name+" teammates",onclick:()=>{state.filter.game=g.id;$("#f-game").value=g.id;location.hash="squads";}})):null)));
+  });
 }
+
+/* ---------- Clips ---------- */
+function weekKey(){const d=new Date();const onejan=new Date(d.getFullYear(),0,1);return d.getFullYear()+"-"+Math.ceil(((d-onejan)/86400e3+onejan.getDay()+1)/7);}
+function allClips(){if(C.on)state.votes=new Set([...state.votes].filter(id=>String(id).startsWith("c")&&EXAMPLE_CLIPS.some(e=>e.id===id)).concat(C.votes.filter(v=>v.user_id===state.uid).map(v=>v.clip_id)));const mine=C.on?C.clips.map(c=>({id:c.id,title:c.title,url:c.url,game:c.game,created:Date.parse(c.created_at),votes:C.votes.filter(v=>v.clip_id===c.id&&v.user_id!==state.uid).length,mine:c.user_id===state.uid,author:authorOf(c.user_id),cloud:true})):state.myClips.map(c=>({...c,mine:true,author:state.me?{...state.me,id:"local",mine:true}:null}));const ex=$("#clip-examples").checked?EXAMPLE_CLIPS.map(c=>({...c,created:now()-c.ago*60e3,example:true,author:EXAMPLES.find(e=>e.id===c.by)})):[];return [...mine,...ex].map(c=>({...c,score:(c.votes||0)+(state.votes.has(c.id)?1:0)}));}
+function clipCard(c){const g=gameById(c.game)||GAMES[0],a=c.author||{};const voted=state.votes.has(c.id);
+  const th=el("div",{class:"thumb",style:"background:"+tileBg(g)});th.append(icon(GAME_ICON[g.id]));
+  return el("article",{class:"clip"},th,el("div",{class:"body"},el("div",{class:"meta",text:g.name}),el("h3",{text:c.title}),
+    el("div",{class:"by"},avatar(a),el("span",{class:"meta",text:(a.tag||"Player")+" · "+ago(c.created)}),c.example?el("span",{class:"pill ex",text:"Example"}):null,c.mine?el("span",{class:"pill you",text:"You"}):null),
+    el("div",{class:"row"},el("button",{type:"button",class:"vote","aria-pressed":String(voted),onclick:()=>{if(c.cloud){if(needLogin())return;cloudDo(voted?C.sb.from("clip_votes").delete().match({clip_id:c.id,user_id:state.uid}):C.sb.from("clip_votes").insert({clip_id:c.id,user_id:state.uid}));return;}voted?state.votes.delete(c.id):state.votes.add(c.id);store("votes",[...state.votes]);renderClips();}},starIcon(),String(c.score)),
+      c.url?el("a",{class:"btn sm",href:c.url,target:"_blank",rel:"noopener",text:"Watch ↗"}):el("span",{class:"meta",text:"Example, no link"}),
+      c.mine?el("button",{type:"button",class:"btn ghost sm",text:"Remove",onclick:()=>{if(c.cloud){cloudDo(C.sb.from("clips").delete().eq("id",c.id));return;}state.myClips=state.myClips.filter(x=>x.id!==c.id);store("clips",state.myClips);renderClips();}}):null)));}
+function renderClips(){
+  const clips=allClips().sort((a,b)=>b.score-a.score);const fb=$("#clip-feature");fb.replaceChildren();
+  if(clips.length){const top=clips[0],g=gameById(top.game)||GAMES[0];const tr=el("div",{class:"trophy"});tr.append(icon("star"));
+    fb.append(el("div",{class:"clip-feature"},tr,el("div",{},el("span",{class:"meta",style:"font-weight:800;color:var(--sun);letter-spacing:.08em;text-transform:uppercase;font-size:12px",text:"Clip of the week"}),el("h2",{text:top.title}),el("div",{class:"meta",text:g.name+" · by "+((top.author||{}).tag||"Player")+" · "+top.score+" votes"+(top.example?" · Example":"")})),top.url?el("a",{class:"btn",href:top.url,target:"_blank",rel:"noopener",text:"Watch ↗"}):null));}
+  const box=$("#clips");box.replaceChildren();if(!clips.length){box.append(el("div",{class:"empty",text:"No clips yet. Share your best play!"}));return;}
+  clips.forEach(c=>box.append(clipCard(c)));
+}
+$("#add-clip").onclick=()=>{
+  if(needLogin())return;
+  if(!state.me){location.hash="menu";return;}
+  const title=el("input",{type:"text",id:"cl-title",maxlength:"80",placeholder:"Ceiling shot in overtime"});const url=el("input",{type:"text",id:"cl-url",maxlength:"300",placeholder:"https://youtube.com/… or Medal / Twitch link"});
+  const game=el("select",{id:"cl-game"});GAMES.forEach(g=>game.append(el("option",{value:g.id,text:g.name})));if(state.me.games?.[0])game.value=state.me.games[0];const err=el("div",{class:"err",role:"alert"});
+  openModal(()=>[el("h2",{id:"dlg-title",text:"Share a clip"}),el("div",{class:"field"},el("label",{for:"cl-title",text:"Title"}),title),el("div",{class:"field"},el("label",{for:"cl-url",text:"Link to the clip"}),url),el("div",{class:"field"},el("label",{for:"cl-game",text:"Game"}),game),err,
+    el("div",{style:"display:flex;gap:10px;justify-content:flex-end"},el("button",{type:"button",class:"btn ghost",text:"Cancel",onclick:closeModal}),el("button",{type:"button",class:"btn",text:"Share it",onclick:()=>{
+      if(!title.value.trim()){err.textContent="Give your clip a title.";return;}let u;try{u=new URL(url.value.trim());}catch(e){}if(!u||u.protocol!=="https:"){err.textContent="Paste a full link that starts with https://";return;}
+      if(C.on){closeModal();cloudDo(C.sb.from("clips").insert({user_id:state.uid,title:title.value.trim(),url:u.href,game:game.value}));return;}
+      state.myClips.unshift({id:"c"+now(),title:title.value.trim(),url:u.href,game:game.value,votes:0,created:now()});store("clips",state.myClips);closeModal();renderClips();}}))]);
+};
+$("#clip-examples").onchange=renderClips;
+
+/* ---------- Messages ---------- */
+let openConvo=null;
+const uuid=()=>(crypto.randomUUID?crypto.randomUUID():"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,c=>{const r=Math.random()*16|0;return (c==="x"?r:(r&3|8)).toString(16);}));
+async function loadMessages(){
+  if(!C.on||!state.uid){C.convos=[];C.members=[];C.msgs=[];return;}
+  const [cv,mb,ms]=await Promise.all(["conversations","conversation_members","messages"].map(t=>C.sb.from(t).select("*")));
+  const mine=new Set((mb.data||[]).filter(m=>m.user_id===state.uid).map(m=>m.conversation_id));
+  C.convos=(cv.data||[]).filter(c=>mine.has(c.id));C.members=(mb.data||[]).filter(m=>mine.has(m.conversation_id));
+  C.msgs=(ms.data||[]).filter(m=>mine.has(m.conversation_id)&&!state.reported.has(m.user_id)).sort((a,b)=>a.created_at.localeCompare(b.created_at));
+  updateBadge();
+}
+function convoMembers(id){return C.members.filter(m=>m.conversation_id===id);}
+function unreadIn(id){const me=C.members.find(m=>m.conversation_id===id&&m.user_id===state.uid);const lr=me&&me.last_read?Date.parse(me.last_read):0;return C.msgs.filter(m=>m.conversation_id===id&&m.user_id!==state.uid&&Date.parse(m.created_at)>lr).length;}
+function updateBadge(){const n=C.convos.reduce((a,c)=>a+unreadIn(c.id),0);const b=$("#msg-badge");b.hidden=!n;b.textContent=n>9?"9+":String(n);}
+function convoTitle(c){if(c.is_group)return c.name||"Group chat";const other=convoMembers(c.id).find(m=>m.user_id!==state.uid);return other?authorOf(other.user_id).tag:"Chat";}
+function convoAvatar(c){if(c.is_group)return el("div",{class:"group-av",text:(c.name||"G").charAt(0).toUpperCase()});const other=convoMembers(c.id).find(m=>m.user_id!==state.uid);return avatar(other?authorOf(other.user_id):{tag:"?"});}
+async function messagePlayer(p){
+  if(p.example){toast("That's an example profile, so you can't message them. Real players can be messaged once they sign up.");return;}
+  if(!C.on){toast("Messaging turns on once accounts are live.");return;}
+  if(needLogin())return;
+  if(!state.me||!C.profiles.some(x=>x.id===state.uid)){toast("Set up your profile first so they know who you are.");location.hash="menu";return;}
+  await loadMessages();
+  const existing=C.convos.find(c=>!c.is_group&&convoMembers(c.id).some(m=>m.user_id===p.uid)&&convoMembers(c.id).length===2);
+  if(existing){openConvo=existing.id;closeModal();location.hash="messages";rerender();return;}
+  const id=uuid();
+  const r1=await C.sb.from("conversations").insert({id,is_group:false,created_by:state.uid});if(r1.error){toast("Couldn't start the chat.");return;}
+  const r2=await C.sb.from("conversation_members").insert([{conversation_id:id,user_id:state.uid},{conversation_id:id,user_id:p.uid}]);if(r2.error){toast("Couldn't start the chat.");return;}
+  openConvo=id;await loadMessages();closeModal();location.hash="messages";rerender();
+}
+function renderMessages(){
+  const prevIn=$("#msg-input"),draft=prevIn?prevIn.value:"",hadFocus=prevIn&&document.activeElement===prevIn;
+  const body=$("#msg-body");body.replaceChildren();
+  if(!C.on){body.append(el("div",{class:"panel soon"},el("b",{text:"Messaging turns on with accounts"}),"Once login is live, you'll be able to message players and start group chats here."));return;}
+  if(!state.uid){body.append(el("div",{class:"panel soon"},el("b",{text:"Log in to see your messages"}),el("p",{text:"Message players before adding them on Discord, or start a group chat for your squad."}),el("button",{type:"button",class:"btn",text:"Log in",onclick:()=>openLogin()})));return;}
+  const convos=[...C.convos].sort((a,b)=>{const la=C.msgs.filter(m=>m.conversation_id===a.id).pop(),lb=C.msgs.filter(m=>m.conversation_id===b.id).pop();return (lb?lb.created_at:b.created_at).localeCompare(la?la.created_at:a.created_at);});
+  if(!convos.length){body.append(el("div",{class:"panel soon"},el("b",{text:"No messages yet"}),"Open any player's profile and tap Message, or start a group chat."));return;}
+  if(openConvo&&!convos.some(c=>c.id===openConvo))openConvo=null;
+  if(openConvo)markRead(openConvo);
+  const list=el("div",{class:"convos"},convos.map(c=>{const last=C.msgs.filter(m=>m.conversation_id===c.id).pop();const un=unreadIn(c.id);
+    return el("button",{type:"button",class:"convo","aria-current":String(c.id===openConvo),onclick:()=>{openConvo=c.id;renderMessages();}},convoAvatar(c),el("div",{class:"c-meta"},el("b",{text:convoTitle(c)}),el("small",{text:last?((last.user_id===state.uid?"You: ":"")+last.body):"No messages yet"})),un?el("span",{class:"badge",text:String(un)}):null);}));
+  const chat=el("div",{class:"chat"+(openConvo?" open":"")},list);
+  if(openConvo){const c=convos.find(x=>x.id===openConvo);const mem=convoMembers(c.id).map(m=>authorOf(m.user_id));
+    const msgs=el("div",{class:"t-msgs"},C.msgs.filter(m=>m.conversation_id===c.id).map(m=>{const me=m.user_id===state.uid;const a=authorOf(m.user_id);
+      return el("div",{class:"msg "+(me?"me":"them")},c.is_group&&!me?el("span",{class:"who",text:a.tag}):null,m.body,el("time",{text:new Date(m.created_at).toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"})}));}));
+    if(!msgs.childElementCount)msgs.append(el("div",{class:"safety",text:"Say hi! Keep it to gaming handles. Never share your address, phone number or passwords."}));
+    const ta=el("textarea",{id:"msg-input",maxlength:"500",rows:"1",placeholder:"Message "+convoTitle(c),"aria-label":"Message"});
+    const send=async()=>{const t=ta.value.trim();if(!t)return;ta.value="";const r=await C.sb.from("messages").insert({conversation_id:c.id,user_id:state.uid,body:t});if(r.error){toast("Message didn't send. Try again.");ta.value=t;return;}await loadMessages();await markRead(c.id);renderMessages();$("#msg-input")&&$("#msg-input").focus();};
+    ta.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send();}});
+    chat.append(el("div",{class:"thread"},
+      el("div",{class:"t-head"},el("button",{type:"button",class:"btn ghost sm back-btn",text:"← Back",onclick:()=>{openConvo=null;renderMessages();}}),convoAvatar(c),el("h2",{text:convoTitle(c)}),
+        el("button",{type:"button",class:"btn sm",text:"Move to Discord",onclick:()=>discordHandoff(mem)}),
+        c.is_group?el("button",{type:"button",class:"btn ghost sm",text:"Members",onclick:()=>groupInfo(c,mem)}):el("button",{type:"button",class:"btn ghost sm",text:"Profile",onclick:()=>{const o=mem.find(x=>x.id!==state.uid);if(o)openProfile(o);}})),
+      msgs,el("div",{},el("div",{class:"t-input"},ta,el("button",{type:"button",class:"btn",text:"Send",onclick:send})),el("div",{class:"safety",text:"Chats are visible only to people in this conversation. Report anyone who makes you uncomfortable."}))));
+    body.append(chat);msgs.scrollTop=msgs.scrollHeight;markRead(c.id);if(draft)ta.value=draft;if(hadFocus)ta.focus();
+  } else {chat.append(el("div",{class:"thread"},el("div",{class:"soon",style:"align-self:center"},el("b",{text:"Pick a conversation"}),"Or start a new group chat.")));body.append(chat);}
+}
+async function markRead(id){const me=C.members.find(m=>m.conversation_id===id&&m.user_id===state.uid);if(!me||!unreadIn(id))return;me.last_read=new Date(Date.now()+1000).toISOString();updateBadge();await C.sb.from("conversation_members").update({last_read:me.last_read}).match({conversation_id:id,user_id:state.uid});}
+function discordHandoff(mem){
+  openModal(()=>[el("h2",{id:"dlg-title",text:"Move to Discord"}),el("p",{class:"meta",style:"margin:0",text:"Add each other on Discord to keep the squad going. Copy their names below."}),
+    el("div",{class:"handle-list"},mem.filter(m=>m.id!==state.uid).map(m=>{const d=(m.handles||{}).discord;return el("div",{class:"handle-row"},el("span",{text:m.tag}),el("code",{text:d||"No Discord listed"}),d?copyBtn(d,"Discord name"):null);})),
+    el("p",{class:"meta",style:"margin:0;font-size:12.5px",text:"Tip: one person can make a Discord server or group DM and invite the rest."})]);
+}
+function groupInfo(c,mem){
+  openModal(()=>[el("h2",{id:"dlg-title",text:c.name||"Group chat"}),el("div",{class:"handle-list"},mem.map(m=>el("div",{class:"handle-row"},el("span",{text:m.id===state.uid?"You":""}),el("code",{text:m.tag}),m.id!==state.uid?el("button",{type:"button",class:"btn ghost sm",text:"Profile",onclick:()=>openProfile(m)}):null))),
+    el("button",{type:"button",class:"btn ghost",style:"color:#ff8f85",text:"Leave group",onclick:async()=>{await C.sb.from("conversation_members").delete().match({conversation_id:c.id,user_id:state.uid});openConvo=null;closeModal();await loadMessages();renderMessages();}})]);
+}
+$("#new-group").onclick=()=>{
+  if(!C.on){toast("Group chats turn on once accounts are live.");return;}
+  if(needLogin())return;
+  if(!state.me||!C.profiles.some(x=>x.id===state.uid)){location.hash="menu";return;}
+  const name=el("input",{type:"text",id:"g-name",maxlength:"40",placeholder:"Friday Fortnite squad"});const q=el("input",{type:"search",id:"g-search",placeholder:"Search players","aria-label":"Search players"});
+  const picked=new Set();const list=el("div",{class:"pick-list"});const err=el("div",{class:"err",role:"alert"});
+  const draw=()=>{list.replaceChildren();const f=q.value.toLowerCase();const people=C.profiles.filter(p=>p.id!==state.uid&&!state.reported.has(p.id)&&p.tag.toLowerCase().includes(f)).sort((a,b)=>(state.favs.has(b.id)?1:0)-(state.favs.has(a.id)?1:0));
+    if(!people.length)list.append(el("div",{class:"meta",text:"No players found."}));
+    people.slice(0,50).forEach(p=>{const cb=el("input",{type:"checkbox",id:"pk-"+p.id});cb.checked=picked.has(p.id);cb.onchange=()=>{cb.checked?picked.add(p.id):picked.delete(p.id);};list.append(el("label",{class:"pick",for:"pk-"+p.id},cb,avatar(p),el("span",{text:p.tag}),state.favs.has(p.id)?el("span",{class:"pill ex",text:"Favorite"}):null));});};
+  q.addEventListener("input",draw);draw();
+  openModal(()=>[el("h2",{id:"dlg-title",text:"New group chat"}),el("div",{class:"field"},el("label",{for:"g-name",text:"Group name"}),name),el("div",{class:"field"},el("label",{for:"g-search",text:"Add players"}),q),list,err,
+    el("div",{style:"display:flex;gap:10px;justify-content:flex-end"},el("button",{type:"button",class:"btn ghost",text:"Cancel",onclick:closeModal}),el("button",{type:"button",class:"btn",text:"Create group",onclick:async()=>{
+      if(!name.value.trim()){err.textContent="Give your group a name.";return;}if(picked.size<1){err.textContent="Add at least one player.";return;}if(picked.size>11){err.textContent="Groups can have up to 12 people.";return;}
+      const id=uuid();const r1=await C.sb.from("conversations").insert({id,name:name.value.trim(),is_group:true,created_by:state.uid});if(r1.error){err.textContent="Couldn't create the group. Try again.";return;}
+      const r2=await C.sb.from("conversation_members").insert([state.uid,...picked].map(u=>({conversation_id:id,user_id:u})));if(r2.error){err.textContent="Couldn't add everyone. Try again.";return;}
+      openConvo=id;closeModal();await loadMessages();location.hash="messages";rerender();}}))]);
+};
+
+/* ---------- Routing ---------- */
+function route(keepScroll){
+  const h=location.hash.slice(1);let v="squads";
+  if(["menu","profile","lfg","events","bounties","radar","clips","messages"].includes(h))v=h;else if(h.startsWith("intel")){v="intel";const id=h.slice(6);if(id&&gameById(id)&&id!==state.intelGame){state.intelGame=id;state.boss=0;}}
+  ["menu","squads","lfg","bounties","radar","intel","clips","events","messages","profile"].forEach(x=>{$("#view-"+x).hidden=x!==v;const n=$("#nav-"+x);if(n){if(x===v)n.setAttribute("aria-current","page");else n.removeAttribute("aria-current");}});
+  renderHot(v);
+  if(v==="menu")prefillMenu();if(v==="intel")renderIntel();if(v==="profile")renderProfile();if(v==="squads")renderCards();if(v==="lfg")renderLfg();if(v==="events")renderEvents();if(v==="bounties")renderBounties();if(v==="radar")renderRadar();if(v==="clips")renderClips();if(v==="messages")renderMessages();
+  if(!keepScroll)window.scrollTo(0,0);
+}
+window.addEventListener("hashchange",()=>route());
+$("#gl-search").addEventListener("input",renderGameList);
+gameOptions($("#lfg-filter"),false);
+{const bf=$("#bounty-filter");bf.append(el("option",{value:"",text:"All games"}));bossGames().forEach(g=>bf.append(el("option",{value:g.id,text:g.name})));bf.onchange=renderBounties;$("#bounty-examples").onchange=renderBounties;}$("#lfg-filter").onchange=renderLfg;$("#lfg-examples").onchange=renderLfg;
+setInterval(()=>{if(!$("#view-lfg").hidden)renderLfg();if(!$("#view-radar").hidden)renderRadar();},60e3);
 
 buildFilters();
 if(!location.hash)location.hash=state.me?"squads":"menu";
-route();connect();
+route();initCloud();setInterval(()=>{if(!(C.on&&state.uid))return;const before=C.msgs.length;loadMessages().then(()=>{if(!$("#view-messages").hidden&&$("#overlay").hidden&&C.msgs.length!==before)renderMessages();});},5e3);
+setInterval(()=>{if(C.on)cloudLoad().then(()=>{if($("#overlay").hidden)rerender();});},60e3);
 </script>
 </body>
 </html>
