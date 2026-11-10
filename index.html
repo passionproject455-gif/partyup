@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Party Up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Layout: top bar with two views (Squads, Intel); cards in a responsive grid; HUD-style meters for game info */
+  --bg:#0f1220; --panel:#171b2e; --panel-2:#1f2440; --line:#2b3154;
+  --ink:#e8e9f3; --muted:#9097b5;
+  --accent:#ff6b3d; --accent-ink:#1a0d07; --cyan:#5ad1e6; --gold:#f5c451;
+  --display:"Chakra Petch", "Segoe UI", system-ui, sans-serif;
+  --body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--body)}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:.01em}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+.beta{background:var(--accent);color:var(--accent-ink);text-align:center;font-size:13px;font-weight:600;padding:6px 16px}
+/* Top bar */
+header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#141832,var(--bg))}
+.bar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:16px 0}
+.logo{font-family:var(--display);font-weight:700;font-size:24px;display:flex;align-items:center;gap:10px}
+.logo i{display:inline-block;width:14px;height:14px;background:var(--accent);transform:rotate(45deg);border-radius:2px}
+.tagline{color:var(--muted);font-size:14px;flex:1;min-width:200px}
+nav{display:flex;gap:6px}
+nav a{font-family:var(--display);font-weight:600;text-decoration:none;color:var(--muted);padding:8px 16px;border:1px solid var(--line);border-radius:8px}
+nav a[aria-current="page"]{color:var(--accent-ink);background:var(--accent);border-color:var(--accent)}
+
+main{padding:28px 0 60px}
+.view[hidden]{display:none}
+.lede{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.lede p{color:var(--muted);margin:6px 0 0;max-width:62ch}
+.btn{cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);font-family:var(--display);font-weight:600;padding:10px 18px;border-radius:8px}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* Filters */
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:20px}
+.filters label,.field label{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px}
+select,input[type=text],textarea{width:100%;background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:9px 10px}
+.vibes{grid-column:1/-1}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{cursor:pointer;border:1px solid var(--line);background:var(--panel-2);border-radius:999px;padding:5px 12px;font-size:13px}
+.chip[aria-pressed="true"]{border-color:var(--cyan);background:rgba(90,209,230,.14);color:var(--cyan)}
+.check{display:flex;align-items:center;gap:8px;font-size:14px;padding-top:24px}
+.check input{accent-color:var(--accent);width:16px;height:16px}
+
+/* Profile cards */
+.status{color:var(--muted);font-size:13px;margin:-8px 0 14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.card.mine{border-color:var(--accent)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.tag{font-family:var(--display);font-weight:700;font-size:18px;word-break:break-word}
+.meta{color:var(--muted);font-size:13px}
+.match{font-family:var(--display);font-weight:700;font-variant-numeric:tabular-nums;text-align:right;line-height:1.1}
+.match small{display:block;font-size:11px;color:var(--muted);font-weight:500;letter-spacing:.06em;text-transform:uppercase}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{font-size:12px;padding:2px 9px;border-radius:999px;background:var(--panel-2);border:1px solid var(--line)}
+.pill.mic{color:var(--cyan);border-color:rgba(90,209,230,.4)}
+.pill.nomic{color:var(--muted)}
+.pill.ex{color:var(--gold);border-color:rgba(245,196,81,.4)}
+.pill.you{color:var(--accent);border-color:var(--accent)}
+.bio{margin:0;font-size:14px}
+.contact{margin-top:auto;border-top:1px dashed var(--line);padding-top:10px;font-size:13px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.contact code{font-family:ui-monospace,Menlo,monospace;color:var(--ink);word-break:break-all}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:40px;border:1px dashed var(--line);border-radius:12px}
+
+/* Profile form dialog */
+.overlay{position:fixed;inset:0;background:rgba(5,7,15,.7);display:flex;align-items:flex-start;justify-content:center;padding:40px 16px;overflow:auto;z-index:10}
+.overlay[hidden]{display:none}
+.dialog{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;width:100%;max-width:560px;display:grid;gap:14px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:480px){.row2{grid-template-columns:1fr}}
+.hint{font-size:12px;color:var(--muted);margin-top:4px}
+.err{color:#ff8a80;font-size:13px;min-height:1em}
+.actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+
+/* Intel */
+.game-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.game-tab{cursor:pointer;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-family:var(--display);font-weight:600;text-align:left}
+.game-tab small{display:block;font-family:var(--body);font-weight:400;color:var(--muted);font-size:12px}
+.game-tab[aria-selected="true"]{border-color:var(--accent);box-shadow:inset 0 -3px 0 var(--accent)}
+.intel{display:grid;grid-template-columns:320px 1fr;gap:16px}
+@media (max-width:820px){.intel{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+.panel h3{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:12px;font-weight:600}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.stat b{display:block;font-family:var(--display);font-size:22px;font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:var(--muted)}
+.meter{display:grid;grid-template-columns:120px 1fr;align-items:center;gap:10px;font-size:13px;margin:8px 0}
+.pips{display:flex;gap:4px}
+.pips i{flex:1;height:8px;border-radius:2px;background:var(--panel-2);border:1px solid var(--line)}
+.pips i.on{background:var(--accent);border-color:var(--accent)}
+.pips.cyan i.on{background:var(--cyan);border-color:var(--cyan)}
+.roles{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.roles li{background:var(--panel-2);border-radius:8px;padding:8px 10px;font-size:14px}
+.roles b{font-family:var(--display)}
+.boss-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.boss-head h2{font-size:26px}
+.boss-sub{color:var(--muted);margin:0 0 16px}
+.timeline{display:flex;gap:4px;margin-bottom:6px}
+.seg{border-radius:6px;padding:10px;min-width:0;background:var(--panel-2);border-top:3px solid var(--accent)}
+.seg:nth-child(2){border-top-color:var(--gold)}
+.seg:nth-child(3){border-top-color:var(--cyan)}
+.seg b{display:block;font-family:var(--display);font-size:14px}
+.seg span{font-size:13px;color:var(--muted)}
+.tl-cap{font-size:12px;color:var(--muted);margin-bottom:18px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:600px){.two{grid-template-columns:1fr}.timeline{flex-direction:column}}
+.tips{margin:0;padding-left:18px;display:grid;gap:6px;font-size:14px}
+.squad-tip{margin-top:16px;border-left:3px solid var(--cyan);background:rgba(90,209,230,.08);padding:10px 14px;border-radius:0 8px 8px 0;font-size:14px}
+.cta{margin-top:16px;display:flex;justify-content:flex-end}
+/* Main menu */
+.menu{max-width:860px;margin:0 auto;text-align:left}
+.title-block{text-align:center;padding:10px 0 26px}
+.title-block .kicker{font-family:var(--display);letter-spacing:.3em;font-size:12px;color:var(--cyan);text-transform:uppercase}
+.title-block h1{font-size:clamp(40px,8vw,72px);font-weight:700;line-height:1;margin:8px 0 10px;letter-spacing:.04em}
+.title-block h1 span{color:var(--accent)}
+.title-block p{color:var(--muted);margin:0 auto;max-width:52ch}
+.steps{display:flex;gap:8px;justify-content:center;margin-bottom:18px;flex-wrap:wrap}
+.step-dot{font-family:var(--display);font-size:13px;font-weight:600;padding:6px 14px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.step-dot.active{border-color:var(--accent);color:var(--ink);background:rgba(255,107,61,.12)}
+.step-dot.done{border-color:var(--cyan);color:var(--cyan)}
+.menu-panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+.menu-panel h2{font-size:22px;margin-bottom:4px}
+.menu-panel .sub{color:var(--muted);margin:0 0 18px;font-size:14px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.tile{cursor:pointer;position:relative;text-align:left;border:2px solid var(--line);border-radius:12px;padding:16px;min-height:120px;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;background:var(--tile,var(--panel-2));overflow:hidden}
+.tile::before{content:"";position:absolute;inset:0;background:linear-gradient(160deg,transparent 30%,rgba(10,12,24,.85));pointer-events:none}
+.tile>*{position:relative}
+.tile b{font-family:var(--display);font-size:18px;line-height:1.15}
+.tile small{color:#c9cce0;font-size:12px}
+.tile .tick{position:absolute;top:10px;right:10px;width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,.5);display:grid;place-items:center;font-size:14px;font-weight:700}
+.tile[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,107,61,.25)}
+.tile[aria-pressed="true"] .tick{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.handles{display:grid;gap:12px}
+.handle{display:grid;grid-template-columns:110px 1fr;align-items:center;gap:12px}
+.handle label{font-family:var(--display);font-weight:600;font-size:15px;text-transform:none;letter-spacing:0;color:var(--ink);margin:0}
+@media (max-width:480px){.handle{grid-template-columns:1fr;gap:4px}}
+.menu-nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:20px;flex-wrap:wrap}
+.handle-list{display:grid;gap:4px;width:100%}
+.handle-row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.handle-row span{color:var(--muted);font-size:12px;min-width:52px}
+.handle-row code{flex:1}
+footer{color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding:18px 0}
+@media (prefers-reduced-motion:no-preference){.card,.panel{transition:border-color .15s}}
+</style>
+</head>
+<body>
+<div class="beta">Beta · Party Up is still being built. Profile posting for everyone is coming soon.</div>
+<header>
+  <div class="wrap bar">
+    <div class="logo"><i aria-hidden="true"></i>Party Up</div>
+    <div class="tagline">Find teammates who play the way you do, and learn the fight before you queue.</div>
+    <nav aria-label="Sections">
+      <a href="#menu" id="nav-menu">Main menu</a>
+      <a href="#squads" id="nav-squads">Squads</a>
+      <a href="#intel" id="nav-intel">Game Intel</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- MAIN MENU -->
+  <section class="view" id="view-menu" hidden>
+    <div class="menu">
+      <div class="title-block">
+        <div class="kicker">Press start</div>
+        <h1>PARTY <span>UP</span></h1>
+        <p>Three quick steps and you're in the lobby with players who match you.</p>
+      </div>
+      <div class="steps" id="step-dots">
+        <span class="step-dot">1 · Games</span><span class="step-dot">2 · Handles</span><span class="step-dot">3 · Play style</span>
+      </div>
+
+      <div class="menu-panel" data-step="1">
+        <h2>What do you play?</h2>
+        <p class="sub">Pick every game you'd queue up for. You can change this later.</p>
+        <div class="tiles" id="m-games"></div>
+        <div class="err" id="m-err-1" role="alert"></div>
+        <div class="menu-nav"><a href="#squads" class="meta">Skip and just browse</a><button class="btn" data-next="2">Next</button></div>
+      </div>
+
+      <div class="menu-panel" data-step="2" hidden>
+        <h2>Where can people find you?</h2>
+        <p class="sub">Add at least one. Only share gaming handles, never a phone number or address.</p>
+        <div class="handles">
+          <div class="handle"><label for="m-tag">Gamertag</label><input type="text" id="m-tag" maxlength="32" placeholder="What people should call you"></div>
+          <div class="handle"><label for="m-discord">Discord</label><input type="text" id="m-discord" maxlength="40" placeholder="yourname"></div>
+          <div class="handle"><label for="m-psn">PSN</label><input type="text" id="m-psn" maxlength="40" placeholder="Your PSN ID"></div>
+          <div class="handle"><label for="m-xbox">Xbox</label><input type="text" id="m-xbox" maxlength="40" placeholder="Your Xbox gamertag"></div>
+          <div class="handle"><label for="m-platform">Main platform</label>
+            <select id="m-platform"><option>PC</option><option>PS5</option><option>Xbox</option></select></div>
+        </div>
+        <div class="err" id="m-err-2" role="alert"></div>
+        <div class="menu-nav"><button class="btn ghost" data-next="1">Back</button><button class="btn" data-next="3">Next</button></div>
+      </div>
+
+      <div class="menu-panel" data-step="3" hidden>
+        <h2>How do you play?</h2>
+        <p class="sub">This is what the match % uses to rank you against other players.</p>
+        <div class="row2" style="margin-bottom:14px">
+          <div class="field"><label for="m-mic">Mic</label>
+            <select id="m-mic"><option value="yes">Mic on</option><option value="no">No mic / text only</option></select></div>
+          <div class="field"><label for="m-skill">Skill level</label>
+            <select id="m-skill"><option>New</option><option selected>Casual</option><option>Experienced</option><option>Competitive</option></select></div>
+        </div>
+        <div class="field"><label>Your vibe</label><div class="chips" id="m-vibes"></div></div>
+        <div class="err" id="m-err-3" role="alert"></div>
+        <div class="menu-nav"><button class="btn ghost" data-next="2">Back</button><button class="btn" id="m-finish">Enter the lobby</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SQUADS -->
+  <section class="view" id="view-squads">
+    <div class="lede">
+      <div>
+        <h1>Find your squad</h1>
+        <p>Filter by game, platform, mic and play style. Cards are ranked by how well they match what you picked.</p>
+      </div>
+      <button class="btn" id="open-form">Post my profile</button>
+    </div>
+
+    <div class="filters">
+      <div><label for="f-game">Game</label><select id="f-game"></select></div>
+      <div><label for="f-platform">Platform</label>
+        <select id="f-platform"><option value="">Any</option><option>PC</option><option>PS5</option><option>Xbox</option></select></div>
+      <div class="check"><input type="checkbox" id="f-mic"><label for="f-mic" style="margin:0;text-transform:none;letter-spacing:0;font-size:14px;color:var(--ink)">Mic required</label></div>
+      <div class="check"><input type="checkbox" id="f-examples" checked><label for="f-examples" style="margin:0;text-transform:none;letter-spacing:0;font-size:14px;color:var(--ink)">Show example profiles</label></div>
+      <div class="vibes"><label>Vibe I'm looking for</label><div class="chips" id="f-vibes"></div></div>
+    </div>
+    <p class="status" id="status">Loading profiles…</p>
+    <div class="grid" id="cards"></div>
+  </section>
+
+  <!-- INTEL -->
+  <section class="view" id="view-intel" hidden>
+    <div class="lede">
+      <div>
+        <h1>Game intel</h1>
+        <p>Squad size, how much comms matter, which roles to fill, and a breakdown of one fight worth learning before you queue up.</p>
+      </div>
+    </div>
+    <div class="game-tabs" role="tablist" id="game-tabs"></div>
+    <div id="intel-body"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Party Up · a student passion project. Game info reflects common community knowledge and can change with patches. Only share a gaming handle here, never a phone number or address.</div>
+</footer>
+
+<!-- Profile form -->
+<div class="overlay" id="overlay" hidden>
+  <form class="dialog" id="form" aria-labelledby="form-title">
+    <h2 id="form-title">Your squad profile</h2>
+    <div class="row2">
+      <div class="field"><label for="p-tag">Gamertag</label><input type="text" id="p-tag" maxlength="32" required></div>
+      <div class="field"><label for="p-platform">Main platform</label>
+        <select id="p-platform"><option>PC</option><option>PS5</option><option>Xbox</option></select></div>
+    </div>
+    <div class="field"><label>Games you play</label><div class="chips" id="p-games"></div></div>
+    <div class="row2">
+      <div class="field"><label for="p-mic">Mic</label>
+        <select id="p-mic"><option value="yes">Mic on</option><option value="no">No mic / text only</option></select></div>
+      <div class="field"><label for="p-skill">Skill level</label>
+        <select id="p-skill"><option>New</option><option>Casual</option><option>Experienced</option><option>Competitive</option></select></div>
+    </div>
+    <div class="field"><label>Your vibe</label><div class="chips" id="p-vibes"></div></div>
+    <div class="field"><label for="p-times">When you play</label><input type="text" id="p-times" maxlength="60" placeholder="Weeknights after 9, weekend afternoons"></div>
+    <div class="field"><label for="p-bio">Short bio</label><textarea id="p-bio" rows="2" maxlength="160" placeholder="What you're grinding right now, what you want in a teammate"></textarea></div>
+    <div class="row2">
+      <div class="field"><label for="p-discord">Discord</label><input type="text" id="p-discord" maxlength="40"></div>
+      <div class="field"><label for="p-psn">PSN</label><input type="text" id="p-psn" maxlength="40"></div>
+    </div>
+    <div class="field"><label for="p-xbox">Xbox</label><input type="text" id="p-xbox" maxlength="40">
+      <div class="hint">Gaming handles only. Everyone who can open this site will see them.</div></div>
+    <div class="err" id="form-err" role="alert"></div>
+    <div class="actions">
+      <button type="button" class="btn ghost" id="delete-profile" hidden>Remove my profile</button>
+      <button type="button" class="btn ghost" id="cancel">Cancel</button>
+      <button type="submit" class="btn" id="save">Save profile</button>
+    </div>
+  </form>
+</div>
+
+<script>
+/* ---------- Content ---------- */
+const VIBES = ["Funny","Chill","Competitive","Tryhard","Newbie-friendly","Strategic","Night owl","No toxicity"];
+
+const GAMES = [
+  { id:"elden", name:"Elden Ring", short:"Co-op souls-like",
+    squad:"Up to 3", platforms:"PC · PS · Xbox", mic:2, difficulty:5,
+    roles:[["Aggro holder","Blocks or dodges up close so others get free hits."],["Caster / ranged","Sorceries or incantations from range; heals the team."],["Status DPS","Bleed or frost builds that burst bosses down."]],
+    boss:{ name:"Malenia, Blade of Miquella", where:"Optional boss, Haligtree",
+      phases:[["Phase 1","Blade of Miquella",55],["Phase 2","Goddess of Rot: opens with Scarlet Aeonia",45]],
+      threat:{Damage:4,Speed:5,"Punishes greed":5},
+      tips:["Every hit she lands heals her, even on your shield. Don't trade hits.","Waterfowl Dance: sprint away from the first flurry, then dodge through the rest.","Frost and bleed both work well on her.","Bring Preserving Boluses to cure Scarlet Rot in phase 2."],
+      squad:"Spread out so Scarlet Aeonia can't catch everyone, and have one player keep her attention so the others can recover." }},
+  { id:"mhw", name:"Monster Hunter Wilds", short:"4-player hunts",
+    squad:"Up to 4", platforms:"PC · PS5 · Xbox", mic:3, difficulty:3,
+    roles:[["Support","Hunting Horn buffs or a healing setup keep everyone alive."],["Ranged","Bowguns and Bow for steady damage and status ammo."],["Knockout","Hammer or Hunting Horn aims for the head to stun."],["Cutter","Blade weapons to sever the tail."]],
+    boss:{ name:"Rathalos", where:"The classic fire wyvern",
+      phases:[["Grounded","Charges, bites, tail swipes",40],["Airborne","Fireballs and poison talon dives",35],["Enraged","Faster, hits harder",25]],
+      threat:{Damage:3,Speed:3,"Punishes greed":3},
+      tips:["Throw a flash pod while it's flying to bring it down.","Carry antidotes: the talon dive poisons you.","Blunt weapons on the head can stun it.","Cut the tail off for extra materials."],
+      squad:"Call out flash pods before throwing them so nobody wastes one, and split up: one player on the head, the rest on legs and tail." }},
+  { id:"hd2", name:"Helldivers 2", short:"Chaotic squad shooter",
+    squad:"Up to 4", platforms:"PC · PS5 · Xbox", mic:4, difficulty:4,
+    roles:[["Anti-tank","Recoilless, Quasar or EAT for the big targets."],["Crowd clear","Machine guns and orbitals for swarms."],["Support","Supply pack and resupply calls."],["Objective runner","Moves the mission forward while others cover."]],
+    boss:{ name:"Bile Titan", where:"Terminid heavy unit",
+      phases:[["Approach","Stomps through anything in its path",35],["Bile spray","Acid from the head at mid range",40],["Close range","Stomps and bites if you stick around",25]],
+      threat:{Damage:5,Speed:2,"Punishes greed":4},
+      tips:["Aim anti-tank weapons at the head.","Orbital Railcannon and 500kg bombs can drop it fast.","Keep moving sideways; standing still invites a stomp.","Friendly fire is always on, so watch your stratagem throws."],
+      squad:"Pick one anti-tank player to focus the Titan while the others clear the bugs around it." }},
+  { id:"val", name:"Valorant", short:"5v5 tactical shooter",
+    squad:"5 per team", platforms:"PC · PS5 · Xbox", mic:5, difficulty:4,
+    roles:[["Duelist","Entry fragger, first through the door."],["Initiator","Gathers info and sets up fights."],["Controller","Smokes to block sight lines."],["Sentinel","Holds a site and watches flanks."]],
+    boss:{ name:"Anatomy of a round", where:"No bosses here, so this breaks down a round instead",
+      phases:[["Buy phase","Buy weapons and plan",20],["Combat","1:40 to plant or win the fight",50],["Spike down","45 seconds to defuse",30]],
+      threat:{"Comms needed":5,"Aim needed":4,"Strategy":5},
+      tips:["First team to 13 rounds wins.","Use callouts so teammates know exactly where enemies are.","Trade kills: if a teammate peeks, be ready to follow.","Save credits on rounds you can't win so the next buy is full."],
+      squad:"Agree on roles before queueing. A team with no Controller leaves sight lines open all game." }}
+];
+
+const TILE_COLORS = { elden:"linear-gradient(135deg,#6b5a2e,#2a2416)", mhw:"linear-gradient(135deg,#8a3b1f,#2b1a12)", hd2:"linear-gradient(135deg,#a88a12,#2a2610)", val:"linear-gradient(135deg,#9c2a3a,#26121a)" };
+
+const EXAMPLES = [
+  {id:"ex1",tag:"TarnishedTom",platform:"PC",games:["elden"],mic:true,skill:"Experienced",vibes:["Chill","Newbie-friendly"],times:"Weeknights after 9",bio:"Happy to help with Malenia. I've died to her more times than I can count.",handles:{discord:"tarnishedtom"}},
+  {id:"ex2",tag:"FlashPodQueen",platform:"PS5",games:["mhw","elden"],mic:true,skill:"Casual",vibes:["Funny","Strategic"],times:"Weekend afternoons",bio:"Hunting Horn main. I'll keep you buffed.",handles:{psn:"flashpodqueen",discord:"flashpodqueen"}},
+  {id:"ex3",tag:"DemocracyDan",platform:"PC",games:["hd2"],mic:true,skill:"Competitive",vibes:["Tryhard","Funny"],times:"Late nights",bio:"Anti-tank only. Point me at the Bile Titan.",handles:{discord:"democracydan"}},
+  {id:"ex4",tag:"QuietSmokes",platform:"PC",games:["val"],mic:false,skill:"Experienced",vibes:["Strategic","No toxicity"],times:"Evenings",bio:"Controller main. I type callouts fast if you don't mind no mic.",handles:{discord:"quietsmokes"}},
+  {id:"ex5",tag:"NewbieNova",platform:"Xbox",games:["hd2","mhw"],mic:true,skill:"New",vibes:["Chill","Newbie-friendly","Night owl"],times:"After midnight",bio:"Just started, looking for patient people to learn with.",handles:{xbox:"NewbieNova"}},
+  {id:"ex6",tag:"EcoRoundEnjoyer",platform:"PS5",games:["val","hd2"],mic:true,skill:"Competitive",vibes:["Competitive","No toxicity"],times:"Weeknights 7–11",bio:"Grinding ranked. Looking for a consistent duo.",handles:{psn:"EcoRoundEnjoyer",discord:"ecoround"}}
+];
+const HANDLE_LABELS = {discord:"Discord",psn:"PSN",xbox:"Xbox"};
+EXAMPLES.forEach(e=>e.example=true);
+
+/* ---------- State ---------- */
+const state = { real:[], myId:null, db:null, canWrite:null, myGames:[], local:null, filter:{game:"",platform:"",mic:false,examples:true,vibes:new Set()} };
+const $ = s=>document.querySelector(s);
+const gameName = id => (GAMES.find(g=>g.id===id)||{}).name || id;
+
+function el(tag, attrs={}, ...kids){
+  const n=document.createElement(tag);
+  for(const [k,v] of Object.entries(attrs)){
+    if(k==="class") n.className=v; else if(k==="text") n.textContent=v; else n.setAttribute(k,v);
+  }
+  kids.flat().forEach(k=>k!=null&&n.append(k)); return n;
+}
+
+/* ---------- Filters ---------- */
+function buildFilters(){
+  const gs=$("#f-game"); gs.append(el("option",{value:"",text:"All games"}), el("option",{value:"mine",text:"My games"}));
+  GAMES.forEach(g=>gs.append(el("option",{value:g.id,text:g.name})));
+  const fv=$("#f-vibes");
+  VIBES.forEach(v=>{
+    const b=el("button",{type:"button",class:"chip","aria-pressed":"false",text:v});
+    b.onclick=()=>{const on=state.filter.vibes.has(v); on?state.filter.vibes.delete(v):state.filter.vibes.add(v); b.setAttribute("aria-pressed",String(!on)); renderCards();};
+    fv.append(b);
+  });
+  gs.onchange=e=>{state.filter.game=e.target.value;renderCards();};
+  $("#f-platform").onchange=e=>{state.filter.platform=e.target.value;renderCards();};
+  $("#f-mic").onchange=e=>{state.filter.mic=e.target.checked;renderCards();};
+  $("#f-examples").onchange=e=>{state.filter.examples=e.target.checked;renderCards();};
+}
+
+function matchScore(p){
+  const f=state.filter; let have=0,want=0;
+  if(f.vibes.size){ want+=f.vibes.size; f.vibes.forEach(v=>{ if((p.vibes||[]).includes(v)) have++; }); }
+  if(f.mic){ want++; if(p.mic) have++; }
+  if(f.platform){ want++; if(p.platform===f.platform) have++; }
+  return want? Math.round(have/want*100) : null;
+}
+
+function renderCards(){
+  const f=state.filter, box=$("#cards"); box.replaceChildren();
+  const hasReal = state.myId && state.real.some(p=>p.id===state.myId);
+  const localCard = (!hasReal && state.local) ? [{...state.local, id:"local", localOnly:true}] : [];
+  let list=[...localCard, ...state.real, ...(f.examples?EXAMPLES:[])];
+  const gameOk = p => !f.game || (f.game==="mine" ? (!state.myGames.length || (p.games||[]).some(g=>state.myGames.includes(g))) : (p.games||[]).includes(f.game));
+  list=list.filter(p=>gameOk(p) && (!f.mic||p.mic));
+  list.forEach(p=>p._score=matchScore(p));
+  list.sort((a,b)=>(b._score??0)-(a._score??0) || (a.example?1:0)-(b.example?1:0));
+  if(!list.length){ box.append(el("div",{class:"empty",text:"No one matches those filters yet. Try loosening them, or post your own profile so others can find you."})); return; }
+  list.forEach(p=>box.append(card(p)));
+}
+
+function card(p){
+  const mine = p.localOnly || (!p.example && p.id===state.myId);
+  const pills=el("div",{class:"pills"},
+    el("span",{class:"pill "+(p.mic?"mic":"nomic"),text:p.mic?"Mic on":"No mic"}),
+    el("span",{class:"pill",text:p.skill||""}),
+    ...(p.vibes||[]).map(v=>el("span",{class:"pill",text:v})));
+  const flags=el("div",{class:"pills"});
+  if(p.example) flags.append(el("span",{class:"pill ex",text:"Example"}));
+  if(mine) flags.append(el("span",{class:"pill you",text:"You"}));
+  if(p.localOnly) flags.append(el("span",{class:"pill nomic",text:"Only you see this"}));
+  const scoreBox = p._score==null ? el("div") : el("div",{class:"match"}, String(p._score)+"%", el("small",{text:"match"}));
+  const h = p.handles || {};
+  const rows = Object.keys(HANDLE_LABELS).filter(k=>h[k]).map(k=>{
+    const b=el("button",{type:"button",class:"btn ghost",style:"padding:3px 9px;font-size:12px",text:"Copy","aria-label":"Copy "+HANDLE_LABELS[k]+" handle"});
+    b.onclick=async()=>{ try{ await navigator.clipboard.writeText(h[k]); b.textContent="Copied"; }catch(e){ b.textContent="Select it"; } setTimeout(()=>b.textContent="Copy",1500); };
+    return el("div",{class:"handle-row"}, el("span",{text:HANDLE_LABELS[k]}), el("code",{text:h[k]}), b);
+  });
+  if(!rows.length && p.contact) rows.push(el("div",{class:"handle-row"}, el("code",{text:p.contact})));
+  return el("article",{class:"card"+(mine?" mine":"")},
+    el("div",{class:"card-top"},
+      el("div",{}, el("div",{class:"tag",text:p.tag||"Unnamed"}), el("div",{class:"meta",text:[p.platform,(p.games||[]).map(gameName).join(", ")].filter(Boolean).join(" · ")})),
+      scoreBox),
+    flags.childElementCount?flags:null,
+    pills,
+    p.bio?el("p",{class:"bio",text:p.bio}):null,
+    p.times?el("div",{class:"meta",text:"Plays: "+p.times}):null,
+    rows.length?el("div",{class:"contact"}, el("div",{class:"handle-list"}, rows)):null
+  );
+}
+
+/* ---------- Profile form ---------- */
+const formSel={games:new Set(),vibes:new Set()};
+function chipGroup(container, items, set, labelOf=x=>x, keyOf=x=>x){
+  container.replaceChildren();
+  items.forEach(it=>{
+    const k=keyOf(it), b=el("button",{type:"button",class:"chip","aria-pressed":String(set.has(k)),text:labelOf(it)});
+    b.onclick=()=>{ set.has(k)?set.delete(k):set.add(k); b.setAttribute("aria-pressed",String(set.has(k))); };
+    container.append(b);
+  });
+}
+function openForm(){
+  const mine=state.real.find(p=>p.id===state.myId);
+  $("#p-tag").value=mine?.tag||""; $("#p-platform").value=mine?.platform||"PC";
+  $("#p-mic").value=mine?(mine.mic?"yes":"no"):"yes"; $("#p-skill").value=mine?.skill||"Casual";
+  $("#p-times").value=mine?.times||""; $("#p-bio").value=mine?.bio||"";
+  const mh=mine?.handles||{}; $("#p-discord").value=mh.discord||""; $("#p-psn").value=mh.psn||""; $("#p-xbox").value=mh.xbox||"";
+  formSel.games=new Set(mine?.games||[]); formSel.vibes=new Set(mine?.vibes||[]);
+  chipGroup($("#p-games"),GAMES,formSel.games,g=>g.name,g=>g.id);
+  chipGroup($("#p-vibes"),VIBES,formSel.vibes);
+  $("#delete-profile").hidden=!mine; $("#form-err").textContent="";
+  $("#overlay").hidden=false; $("#p-tag").focus();
+}
+function closeForm(){ $("#overlay").hidden=true; }
+$("#open-form").onclick=()=>{
+  if(!state.db||!state.myId||state.canWrite===false){ location.hash="menu"; return; }
+  openForm();
+};
+$("#cancel").onclick=closeForm;
+$("#overlay").addEventListener("click",e=>{ if(e.target.id==="overlay") closeForm(); });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&!$("#overlay").hidden) closeForm(); });
+
+$("#form").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const tag=$("#p-tag").value.trim();
+  if(!tag){ $("#form-err").textContent="Add a gamertag so people know who you are."; return; }
+  if(!formSel.games.size){ $("#form-err").textContent="Pick at least one game you play."; return; }
+  const handles=readHandles("p");
+  if(!Object.keys(handles).length){ $("#form-err").textContent="Add at least one handle so people can reach you."; return; }
+  const body={ tag, platform:$("#p-platform").value, games:[...formSel.games], mic:$("#p-mic").value==="yes",
+    skill:$("#p-skill").value, vibes:[...formSel.vibes], times:$("#p-times").value.trim(), bio:$("#p-bio").value.trim(),
+    handles, updated:new Date().toISOString() };
+  const btn=$("#save"); btn.disabled=true; btn.textContent="Saving…";
+  try{ await state.db.doc("squads/"+state.myId).set(body); setMyGames(body.games); closeForm(); }
+  catch(err){
+    if(err&&err.code==="invalid_argument"){ state.canWrite=false; $("#form-err").textContent="You don't have permission to post here yet. Ask the site owner to invite you."; }
+    else if(err&&err.code==="quota_exceeded"){ $("#form-err").textContent="The site is full right now. Ask the site owner to clear out old profiles."; }
+    else { $("#form-err").textContent="Couldn't save right now. Check your connection and try again."; }
+  }
+  finally{ btn.disabled=false; btn.textContent="Save profile"; }
+});
+$("#delete-profile").onclick=async()=>{
+  try{ await state.db.doc("squads/"+state.myId).delete(); closeForm(); }
+  catch(e){ $("#form-err").textContent="Couldn't remove it right now. Try again in a moment."; }
+};
+
+/* ---------- Intel ---------- */
+let currentGame=GAMES[0].id;
+function pips(n,cls=""){ const d=el("div",{class:"pips "+cls}); for(let i=1;i<=5;i++) d.append(el("i",{class:i<=n?"on":""})); return d; }
+function renderTabs(){
+  const t=$("#game-tabs"); t.replaceChildren();
+  GAMES.forEach(g=>{
+    const b=el("button",{class:"game-tab",role:"tab","aria-selected":String(g.id===currentGame)}, g.name, el("small",{text:g.short}));
+    b.onclick=()=>{currentGame=g.id;renderTabs();renderIntel();}; t.append(b);
+  });
+}
+function renderIntel(){
+  const g=GAMES.find(x=>x.id===currentGame), b=g.boss, body=$("#intel-body"); body.replaceChildren();
+  const left=el("div",{class:"panel"},
+    el("h3",{text:"Squad sheet"}),
+    el("div",{class:"stats"},
+      el("div",{class:"stat"},el("b",{text:g.squad}),el("span",{text:"Squad size"})),
+      el("div",{class:"stat"},el("b",{text:g.platforms,style:"font-size:15px;padding-top:6px"}),el("span",{text:"Platforms"}))),
+    el("div",{class:"meter"},el("span",{text:"Mic importance"}),pips(g.mic,"cyan")),
+    el("div",{class:"meter"},el("span",{text:"Difficulty"}),pips(g.difficulty)),
+    el("h3",{text:"Roles to fill",style:"margin-top:18px"}),
+    el("ul",{class:"roles"},g.roles.map(([r,d])=>el("li",{},el("b",{text:r+". "}),d))));
+  const timeline=el("div",{class:"timeline"},b.phases.map(([n,d,w])=>el("div",{class:"seg",style:`flex:${w}`},el("b",{text:n}),el("span",{text:d}))));
+  const threat=el("div",{},Object.entries(b.threat).map(([k,v])=>el("div",{class:"meter"},el("span",{text:k}),pips(v))));
+  const findBtn=el("button",{class:"btn",text:`Find a ${g.name} squad`});
+  findBtn.onclick=()=>{ state.filter.game=g.id; $("#f-game").value=g.id; location.hash="squads"; renderCards(); };
+  const right=el("div",{class:"panel"},
+    el("div",{class:"boss-head"},el("h2",{text:b.name}),el("span",{class:"pill ex",text:g.id==="val"?"Breakdown":"Boss breakdown"})),
+    el("p",{class:"boss-sub",text:b.where}),
+    el("h3",{text:"How the fight flows"}), timeline,
+    el("div",{class:"tl-cap",text:"Bar widths show roughly how much of the fight each part takes up."}),
+    el("div",{class:"two"},
+      el("div",{},el("h3",{text:"Threat profile"}),threat),
+      el("div",{},el("h3",{text:"How to beat it"}),el("ul",{class:"tips"},b.tips.map(t=>el("li",{text:t}))))),
+    el("div",{class:"squad-tip"},el("b",{text:"Squad tip: "}),b.squad),
+    el("div",{class:"cta"},findBtn));
+  body.append(el("div",{class:"intel"},left,right));
+}
+
+/* ---------- Main menu ---------- */
+const menuSel={games:new Set(),vibes:new Set()};
+function store(k,v){ try{ localStorage.setItem("partyup."+k,JSON.stringify(v)); }catch(e){} }
+function load(k){ try{ return JSON.parse(localStorage.getItem("partyup."+k)); }catch(e){ return null; } }
+function readHandles(prefix){ const o={}; ["discord","psn","xbox"].forEach(k=>{ const v=$("#"+prefix+"-"+k).value.trim(); if(v) o[k]=v; }); return o; }
+function setMyGames(g){ state.myGames=g||[]; store("games",state.myGames); }
+
+function buildTiles(){
+  const box=$("#m-games"); box.replaceChildren();
+  GAMES.forEach(g=>{
+    const on=menuSel.games.has(g.id);
+    const t=el("button",{type:"button",class:"tile","aria-pressed":String(on),style:"--tile:"+(TILE_COLORS[g.id]||"var(--panel-2)")},
+      el("span",{class:"tick","aria-hidden":"true",text:on?"✓":""}), el("b",{text:g.name}), el("small",{text:g.short+" · "+g.squad}));
+    t.onclick=()=>{ menuSel.games.has(g.id)?menuSel.games.delete(g.id):menuSel.games.add(g.id); buildTiles(); };
+    box.append(t);
+  });
+}
+function showStep(n){
+  document.querySelectorAll(".menu-panel").forEach(p=>p.hidden=p.dataset.step!==String(n));
+  document.querySelectorAll("#step-dots .step-dot").forEach((d,i)=>{ d.className="step-dot"+(i+1===n?" active":i+1<n?" done":""); });
+  [1,2,3].forEach(i=>$("#m-err-"+i).textContent="");
+}
+function validStep(n){
+  if(n===1 && !menuSel.games.size){ $("#m-err-1").textContent="Pick at least one game."; return false; }
+  if(n===2){
+    if(!$("#m-tag").value.trim()){ $("#m-err-2").textContent="Add a gamertag so people know who you are."; return false; }
+    if(!Object.keys(readHandles("m")).length){ $("#m-err-2").textContent="Add at least one of Discord, PSN or Xbox."; return false; }
+  }
+  return true;
+}
+function prefillMenu(){
+  const p = state.real.find(x=>x.id===state.myId) || state.local || {};
+  menuSel.games=new Set(p.games||state.myGames||[]); menuSel.vibes=new Set(p.vibes||[]);
+  const h=p.handles||{};
+  $("#m-tag").value=p.tag||""; $("#m-discord").value=h.discord||""; $("#m-psn").value=h.psn||""; $("#m-xbox").value=h.xbox||"";
+  $("#m-platform").value=p.platform||"PC"; $("#m-mic").value=p.mic===false?"no":"yes"; $("#m-skill").value=p.skill||"Casual";
+  buildTiles(); chipGroup($("#m-vibes"),VIBES,menuSel.vibes); showStep(1);
+}
+document.querySelectorAll("[data-next]").forEach(b=>b.addEventListener("click",()=>{
+  const to=+b.dataset.next, from=+b.closest(".menu-panel").dataset.step;
+  if(to>from && !validStep(from)) return;
+  showStep(to);
+}));
+$("#m-finish").onclick=async()=>{
+  const btn=$("#m-finish");
+  const prev = state.real.find(x=>x.id===state.myId) || state.local || {};
+  const body={ tag:$("#m-tag").value.trim(), platform:$("#m-platform").value, games:[...menuSel.games], mic:$("#m-mic").value==="yes",
+    skill:$("#m-skill").value, vibes:[...menuSel.vibes], handles:readHandles("m"), times:prev.times||"", bio:prev.bio||"", updated:new Date().toISOString() };
+  setMyGames(body.games);
+  let msg;
+  if(state.db && state.myId && state.canWrite!==false){
+    btn.disabled=true; btn.textContent="Joining…";
+    try{ await state.db.doc("squads/"+state.myId).set(body); state.local=null; store("profile",null); msg="You're in. Your profile is live for other players."; }
+    catch(e){ state.canWrite = e&&e.code==="invalid_argument" ? false : state.canWrite; state.local=body; store("profile",body);
+      msg = state.canWrite===false ? "Saved on this device. Only you can see your card until the site owner invites you to post." : "Couldn't post right now, so your card is saved on this device. Try again from Post my profile."; }
+    finally{ btn.disabled=false; btn.textContent="Enter the lobby"; }
+  } else {
+    state.local=body; store("profile",body);
+    msg="Saved on this device. Only you can see your card until profile posting goes live.";
+  }
+  state.filter.game="mine"; $("#f-game").value="mine";
+  location.hash="squads"; renderCards(); $("#status").textContent=msg+" Showing players from your games.";
+};
+
+/* ---------- Routing ---------- */
+function route(){
+  const h=location.hash, v = h==="#intel"?"intel" : h==="#menu"?"menu" : "squads";
+  ["menu","squads","intel"].forEach(x=>{
+    $("#view-"+x).hidden = x!==v;
+    if(x===v) $("#nav-"+x).setAttribute("aria-current","page"); else $("#nav-"+x).removeAttribute("aria-current");
+  });
+  if(v==="menu") prefillMenu();
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange",route);
+
+/* ---------- Shared data ---------- */
+async function connect(){
+  const status=$("#status");
+  if(!(window.claude&&typeof claude.use==="function")){ status.textContent="Showing example profiles while Party Up is in beta. Your own card is saved on this device."; return; }
+  try{
+    const [db,user]=await Promise.all([claude.use("db"),claude.use("user")]);
+    if(!db){ status.textContent="Sign in to see and post real profiles. Example profiles are shown below."; return; }
+    state.db=db;
+    if(user){ state.myId=await user.id(); try{ const c=await user.can("data.write"); if(c===false) state.canWrite=false; }catch(e){} }
+    const timer=setTimeout(()=>{ status.textContent="Can't reach the profile list yet. Examples are shown in the meantime."; },10000);
+    db.collection("squads").onSnapshot(snap=>{
+      if(!snap.metadata.fromCache) clearTimeout(timer);
+      state.real=snap.docs.filter(d=>d.exists).map(d=>({id:d.id,...d.data()}));
+      const mineDoc=state.real.find(p=>p.id===state.myId);
+      if(mineDoc && !state.myGames.length){ setMyGames(mineDoc.games); state.filter.game="mine"; $("#f-game").value="mine"; }
+      const n=state.real.length;
+      status.textContent = n ? `${n} real profile${n===1?"":"s"} posted.` : "No real profiles yet. Be the first to post one.";
+      renderCards();
+    }, err=>{ clearTimeout(timer); status.textContent="Profiles couldn't load. Example profiles are shown below."; });
+  }catch(e){ status.textContent="Showing example profiles."; }
+}
+
+state.myGames = load("games") || [];
+state.local = load("profile");
+if(state.myGames.length){ state.filter.game="mine"; }
+buildFilters(); $("#f-game").value=state.filter.game;
+if(!location.hash && !state.myGames.length){ location.hash="menu"; }
+renderCards(); renderTabs(); renderIntel(); route(); connect();
+</script>
+</body>
+</html>
