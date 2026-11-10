@@ -4,222 +4,270 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Party Up</title>
-<meta name="description" content="Party Up is a free squad finder for gamers. Find teammates by game, platform, mic and play style, plus boss breakdowns and squad tips for Elden Ring, Monster Hunter Wilds, Helldivers 2 and Valorant.">
+<meta name="description" content="Party Up is a free squad finder for gamers. Find teammates by game, platform, mic and play style, plus boss guides, rare item locations and season intel for 30 games.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Layout: translucent sticky header, generous whitespace, soft layered surfaces; one warm accent, one cool accent for mic/info */
-  --bg:#0a0c12; --surface:#11141c; --surface-2:#171b26; --raise:#1d2230;
-  --line:rgba(255,255,255,.07); --line-2:rgba(255,255,255,.12);
-  --ink:#eef0f6; --muted:#8b91a7; --faint:#5d6378;
-  --accent:#ff6a3d; --accent-2:#ff9a5c; --accent-ink:#1b0c05;
-  --cyan:#5fd4e8; --gold:#f2c35b;
-  --display:"Sora","Segoe UI",system-ui,sans-serif;
-  --body:"Manrope","Segoe UI",system-ui,sans-serif;
-  --r:16px; --r-sm:10px;
-  --shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 10px 30px -12px rgba(0,0,0,.6);
+  /* Layout: sticky glass header; dark base with bright neon accents (coral, pink, cyan, lime, sun) used by role:
+     coral = primary actions, pink = boss guides, cyan = multiplayer/mic, sun = fighting/examples, lime = success */
+  --bg:#08090f; --surface:#10121b; --surface-2:#161926; --raise:#1d2131;
+  --line:rgba(255,255,255,.07); --line-2:rgba(255,255,255,.13);
+  --ink:#f1f2f8; --soft:#c9cddb; --muted:#8b91a7; --faint:#5d6378;
+  --coral:#ff5f3a; --coral-2:#ff9152; --pink:#ff4fb8; --cyan:#38e1f5; --lime:#a6f25c; --sun:#ffd23f;
+  --ink-dark:#140904;
+  --display:"Sora","Segoe UI",system-ui,sans-serif; --body:"Manrope","Segoe UI",system-ui,sans-serif;
+  --r:18px; --r-sm:11px;
+  --shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 12px 32px -14px rgba(0,0,0,.7);
   color-scheme:dark;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--body);-webkit-font-smoothing:antialiased;
-  background-image:radial-gradient(900px 500px at 85% -10%,rgba(255,106,61,.10),transparent 60%),radial-gradient(700px 400px at -10% 10%,rgba(95,212,232,.06),transparent 60%);background-attachment:fixed}
+  background-image:radial-gradient(800px 480px at 90% -8%,rgba(255,79,184,.13),transparent 60%),radial-gradient(700px 420px at -8% 6%,rgba(56,225,245,.10),transparent 60%),radial-gradient(600px 400px at 50% 110%,rgba(255,95,58,.08),transparent 60%);background-attachment:fixed}
 h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-.02em}
 button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--cyan)}
 :focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
-.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
 @media (max-width:480px){.wrap{padding:0 16px}}
+.beta{text-align:center;font-size:12.5px;font-weight:700;padding:7px 16px;color:var(--ink-dark);background:linear-gradient(90deg,var(--sun),var(--coral-2),var(--pink))}
 
-.beta{text-align:center;font-size:12.5px;font-weight:600;padding:7px 16px;color:var(--accent-2);background:rgba(255,106,61,.08);border-bottom:1px solid rgba(255,106,61,.18)}
-
-/* Header */
-header{position:sticky;top:0;z-index:5;background:rgba(10,12,18,.72);backdrop-filter:saturate(140%) blur(14px);-webkit-backdrop-filter:saturate(140%) blur(14px);border-bottom:1px solid var(--line)}
+header{position:sticky;top:0;z-index:5;background:rgba(8,9,15,.72);backdrop-filter:saturate(150%) blur(14px);-webkit-backdrop-filter:saturate(150%) blur(14px);border-bottom:1px solid var(--line)}
 .bar{display:flex;align-items:center;gap:20px;padding-top:14px;padding-bottom:14px;flex-wrap:wrap}
-.logo{font-family:var(--display);font-weight:700;font-size:20px;display:flex;align-items:center;gap:10px;letter-spacing:-.02em}
-.logo i{display:inline-block;width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 6px 18px -6px rgba(255,106,61,.7)}
-.tagline{display:none}
+.logo{font-family:var(--display);font-weight:800;font-size:20px;display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.logo i{width:28px;height:28px;border-radius:9px;background:conic-gradient(from 210deg,var(--coral),var(--pink),var(--cyan),var(--lime),var(--sun),var(--coral));box-shadow:0 6px 20px -6px rgba(255,79,184,.7)}
 nav{display:flex;gap:4px;margin-left:auto;background:var(--surface);border:1px solid var(--line);padding:4px;border-radius:999px}
-nav a{font-weight:600;font-size:14px;text-decoration:none;color:var(--muted);padding:7px 16px;border-radius:999px;transition:color .15s,background .15s}
+nav a{font-weight:700;font-size:14px;text-decoration:none;color:var(--muted);padding:7px 15px;border-radius:999px;transition:color .15s,background .15s}
 nav a:hover{color:var(--ink)}
-nav a[aria-current="page"]{color:var(--ink);background:var(--raise);box-shadow:0 1px 0 rgba(255,255,255,.06) inset}
-@media (max-width:560px){nav{margin-left:0;width:100%;justify-content:space-between}nav a{flex:1;text-align:center;padding:7px 8px}}
+nav a[aria-current="page"]{color:var(--ink-dark);background:linear-gradient(135deg,var(--coral),var(--coral-2))}
+@media (max-width:620px){nav{margin-left:0;width:100%;justify-content:space-between}nav a{flex:1;text-align:center;padding:7px 4px;font-size:13px}}
 
-main{padding:40px 0 72px}
+main{padding:36px 0 72px}
 .view[hidden]{display:none}
 .lede{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:24px}
-.lede h1{font-size:clamp(28px,4vw,38px);font-weight:700}
-.lede p{color:var(--muted);margin:8px 0 0;max-width:60ch}
-.btn{cursor:pointer;border:0;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-ink);font-weight:700;font-size:14px;padding:11px 20px;border-radius:999px;box-shadow:0 8px 24px -10px rgba(255,106,61,.8);transition:transform .15s,box-shadow .15s}
-.btn:hover{transform:translateY(-1px);box-shadow:0 12px 28px -10px rgba(255,106,61,.9)}
+.lede h1{font-size:clamp(28px,4vw,40px);font-weight:800}
+.lede p{color:var(--muted);margin:8px 0 0;max-width:62ch}
+.grad{background:linear-gradient(135deg,var(--coral),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn{cursor:pointer;border:0;background:linear-gradient(135deg,var(--coral),var(--coral-2));color:var(--ink-dark);font-weight:800;font-size:14px;padding:11px 20px;border-radius:999px;box-shadow:0 8px 24px -10px rgba(255,95,58,.85);transition:transform .15s,box-shadow .15s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{transform:translateY(-1px)}
 .btn.ghost{background:var(--surface-2);color:var(--ink);box-shadow:none;border:1px solid var(--line-2)}
 .btn.ghost:hover{background:var(--raise)}
+.btn.sm{padding:6px 12px;font-size:12.5px}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 
-/* Filters */
-.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:22px;box-shadow:var(--shadow)}
-.filters label,.field label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:7px}
-select,input[type=text],textarea{width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;transition:border-color .15s,background .15s}
-select:hover,input[type=text]:hover,textarea:hover{border-color:var(--line-2)}
-select:focus,input[type=text]:focus,textarea:focus{outline:none;border-color:rgba(255,106,61,.6);background:var(--raise)}
+/* Inputs & chips */
+.field label,.flabel{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:7px}
+select,input[type=text],input[type=search],textarea{width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;transition:border-color .15s,background .15s}
+select:hover,input:hover,textarea:hover{border-color:var(--line-2)}
+select:focus,input:focus,textarea:focus{outline:none;border-color:rgba(56,225,245,.6);background:var(--raise)}
 input::placeholder,textarea::placeholder{color:var(--faint)}
-.vibes{grid-column:1/-1}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{cursor:pointer;border:1px solid var(--line);background:var(--surface-2);color:var(--muted);border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;transition:all .15s}
+.chip{cursor:pointer;border:1px solid var(--line);background:var(--surface-2);color:var(--muted);border-radius:999px;padding:6px 14px;font-size:13px;font-weight:700;transition:all .15s}
 .chip:hover{color:var(--ink);border-color:var(--line-2)}
-.chip[aria-pressed="true"]{border-color:transparent;background:rgba(95,212,232,.14);color:var(--cyan)}
-.check{display:flex;align-items:center;gap:10px;font-size:14px;padding-top:26px}
-.check label{margin:0!important;color:var(--ink)!important;font-size:14px!important;font-weight:500}
-.check input{accent-color:var(--accent);width:17px;height:17px}
+.chip[aria-pressed="true"]{border-color:transparent;background:rgba(56,225,245,.15);color:var(--cyan)}
+.chip.pinkc[aria-pressed="true"]{background:rgba(255,79,184,.15);color:var(--pink)}
+.check{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600}
+.check input{accent-color:var(--coral);width:17px;height:17px}
+.err{color:#ff8f85;font-size:13px;min-height:1em}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:520px){.row2{grid-template-columns:1fr}}
 
-/* Profile cards */
-.status{color:var(--muted);font-size:13px;margin:-6px 0 16px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow);transition:transform .18s,border-color .18s}
-.card:hover{transform:translateY(-2px);border-color:var(--line-2)}
-.card.mine{border-color:rgba(255,106,61,.45)}
+/* Squads */
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px 16px;align-items:end;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:18px;box-shadow:var(--shadow)}
+.filters .wide{grid-column:1/-1}
+.you-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:linear-gradient(135deg,rgba(255,95,58,.12),rgba(255,79,184,.10));border:1px solid rgba(255,95,58,.25);border-radius:var(--r);padding:14px 16px;margin-bottom:18px}
+.you-bar b{font-family:var(--display)}
+.you-bar .meta{flex:1;min-width:200px}
+.status{color:var(--muted);font-size:13px;margin:0 0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:16px}
+.card{cursor:pointer;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow);transition:transform .18s,border-color .18s}
+.card:hover{transform:translateY(-3px);border-color:rgba(56,225,245,.35)}
+.card.mine{border-color:rgba(255,95,58,.5)}
 .card-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .who{display:flex;align-items:center;gap:12px;min-width:0}
-.avatar{flex:none;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:17px;color:#0b0d14}
-.tag{font-family:var(--display);font-weight:600;font-size:16.5px;letter-spacing:-.01em;word-break:break-word;line-height:1.25}
+.avatar{flex:none;width:44px;height:44px;border-radius:13px;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:18px;color:#0b0d14}
+.avatar.lg{width:64px;height:64px;font-size:26px;border-radius:18px}
+.tag{font-family:var(--display);font-weight:700;font-size:16.5px;word-break:break-word;line-height:1.25}
 .meta{color:var(--muted);font-size:13px}
-.match{flex:none;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--accent) calc(var(--p)*1%),var(--raise) 0)}
-.match span{width:42px;height:42px;border-radius:50%;background:var(--surface);display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:12.5px;font-variant-numeric:tabular-nums}
+.match{flex:none;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--ring,var(--lime)) calc(var(--p)*1%),var(--raise) 0)}
+.match span{width:44px;height:44px;border-radius:50%;background:var(--surface);display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:12.5px;font-variant-numeric:tabular-nums}
 .pills{display:flex;flex-wrap:wrap;gap:6px}
-.pill{font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--surface-2);color:var(--muted)}
-.pill.mic{color:var(--cyan);background:rgba(95,212,232,.1)}
+.pill{font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--surface-2);color:var(--muted)}
+.pill.mic{color:var(--cyan);background:rgba(56,225,245,.12)}
 .pill.nomic{color:var(--faint)}
-.pill.ex{color:var(--gold);background:rgba(242,195,91,.1)}
-.pill.you{color:var(--accent-2);background:rgba(255,106,61,.12)}
-.bio{margin:0;font-size:14px;color:#c9cddb}
-.contact{margin-top:auto;border-top:1px solid var(--line);padding-top:12px;font-size:13px;display:flex;justify-content:space-between;gap:8px;align-items:center}
-.contact code{font-family:ui-monospace,"SF Mono",Menlo,monospace;color:var(--ink);word-break:break-all;font-size:12.5px}
+.pill.ex{color:var(--sun);background:rgba(255,210,63,.12)}
+.pill.you{color:var(--coral-2);background:rgba(255,95,58,.14)}
+.pill.shared{color:var(--lime);background:rgba(166,242,92,.12)}
+.bio{margin:0;font-size:14px;color:var(--soft)}
+.card-foot{margin-top:auto;border-top:1px solid var(--line);padding-top:12px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted)}
+.card-foot b{color:var(--cyan);font-weight:700}
 .empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:48px;border:1px dashed var(--line-2);border-radius:var(--r)}
 
-/* Profile form dialog */
-.overlay{position:fixed;inset:0;background:rgba(4,5,9,.66);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:flex-start;justify-content:center;padding:48px 16px;overflow:auto;z-index:10}
+/* Modal */
+.overlay{position:fixed;inset:0;background:rgba(3,4,8,.7);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:flex-start;justify-content:center;padding:48px 16px;overflow:auto;z-index:10}
 .overlay[hidden]{display:none}
-.dialog{background:var(--surface);border:1px solid var(--line-2);border-radius:20px;padding:26px;width:100%;max-width:580px;display:grid;gap:16px;box-shadow:0 30px 80px -20px rgba(0,0,0,.8)}
-.dialog h2{font-size:22px}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media (max-width:480px){.row2{grid-template-columns:1fr}}
-.hint{font-size:12px;color:var(--faint);margin-top:6px}
-.err{color:#ff8f85;font-size:13px;min-height:1em}
-.actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.dialog{position:relative;background:var(--surface);border:1px solid var(--line-2);border-radius:22px;padding:26px;width:100%;max-width:560px;display:grid;gap:16px;box-shadow:0 30px 80px -20px rgba(0,0,0,.85)}
+.x{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line-2);background:var(--surface-2);cursor:pointer;font-size:18px;line-height:1}
+.prof-head{display:flex;gap:16px;align-items:center}
+.prof-head h2{font-size:24px}
+.handle-list{display:grid;gap:8px}
+.handle-row{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--surface-2);border-radius:12px;padding:10px 12px}
+.handle-row span{color:var(--muted);font-size:12px;font-weight:700;min-width:58px}
+.handle-row code{flex:1;font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:13px;word-break:break-all}
+.kv{display:grid;grid-template-columns:120px 1fr;gap:6px 12px;font-size:14px}
+.kv dt{color:var(--muted)} .kv dd{margin:0}
 
 /* Intel */
-.game-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
-.game-tab{cursor:pointer;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 16px;font-family:var(--display);font-weight:600;font-size:15px;text-align:left;transition:all .15s}
-.game-tab:hover{border-color:var(--line-2)}
-.game-tab small{display:block;font-family:var(--body);font-weight:500;color:var(--muted);font-size:12px;margin-top:2px}
-.game-tab[aria-selected="true"]{background:var(--raise);border-color:rgba(255,106,61,.5);box-shadow:0 0 0 3px rgba(255,106,61,.12)}
-.intel{display:grid;grid-template-columns:330px 1fr;gap:18px}
-@media (max-width:820px){.intel{grid-template-columns:1fr}}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:var(--shadow)}
-.panel h3{font-family:var(--body);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
-.stat{background:var(--surface-2);border-radius:12px;padding:12px}
-.stat b{display:block;font-family:var(--display);font-size:20px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.intel-layout{display:grid;grid-template-columns:260px 1fr;gap:20px;align-items:start}
+@media (max-width:860px){.intel-layout{grid-template-columns:1fr}}
+.game-list{position:sticky;top:90px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;max-height:calc(100vh - 120px);overflow:auto}
+@media (max-width:860px){.game-list{position:static;max-height:none}}
+.game-list input{margin-bottom:10px}
+.gl-group{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin:12px 6px 6px}
+.gl-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;cursor:pointer;background:none;border:0;border-radius:10px;padding:8px;color:var(--soft);font-weight:600;font-size:14px}
+.gl-item:hover{background:var(--surface-2);color:var(--ink)}
+.gl-item[aria-current="true"]{background:var(--raise);color:var(--ink)}
+.gl-dot{flex:none;width:10px;height:10px;border-radius:3px}
+@media (max-width:860px){.gl-items{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px}.gl-group{display:none}.gl-item{flex:none;width:auto;background:var(--surface-2);border-radius:999px;padding:7px 12px}}
+.g-hero{border-radius:var(--r);padding:26px;margin-bottom:18px;position:relative;overflow:hidden;border:1px solid var(--line-2)}
+.g-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,9,15,.85),rgba(8,9,15,.35));pointer-events:none}
+.g-hero>*{position:relative;z-index:1}
+.g-hero h2{font-size:clamp(26px,4vw,38px);font-weight:800}
+.g-hero .meta{color:rgba(255,255,255,.8);font-size:14px;margin-top:4px}
+.type-badge{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-bottom:10px;color:var(--ink-dark)}
+.t-boss{background:var(--pink)} .t-multi{background:var(--cyan)} .t-fight{background:var(--sun)}
+.g-hero .actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:var(--shadow);margin-bottom:18px}
+.panel>h3{font-family:var(--body);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:14px}
+.sheet{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.stat{background:var(--surface-2);border-radius:13px;padding:12px 14px}
+.stat b{display:block;font-family:var(--display);font-size:16px;line-height:1.3}
 .stat span{font-size:12px;color:var(--muted)}
-.meter{display:grid;grid-template-columns:118px 1fr;align-items:center;gap:12px;font-size:13px;margin:10px 0;color:#c9cddb}
-.pips{display:flex;gap:4px}
+.pips{display:flex;gap:4px;margin-top:8px}
 .pips i{flex:1;height:6px;border-radius:999px;background:var(--raise)}
-.pips i.on{background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+.pips i.on{background:linear-gradient(90deg,var(--coral),var(--pink))}
 .pips.cyan i.on{background:var(--cyan)}
-.roles{list-style:none;padding:0;margin:0;display:grid;gap:8px}
-.roles li{background:var(--surface-2);border-radius:12px;padding:10px 12px;font-size:14px;color:#c9cddb}
-.roles b{font-family:var(--display);font-weight:600;color:var(--ink)}
-.boss-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:4px}
-.boss-head h2{font-size:clamp(22px,3vw,28px)}
-.boss-sub{color:var(--muted);margin:0 0 20px}
-.timeline{display:flex;gap:6px;margin-bottom:8px}
+.roles{list-style:none;padding:0;margin:14px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
+.roles li{background:var(--surface-2);border-radius:12px;padding:10px 12px;font-size:14px;color:var(--soft)}
+.roles b{font-family:var(--display);font-weight:700;color:var(--ink)}
+.boss-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.boss-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.boss-head h2{font-size:clamp(21px,3vw,27px)}
+.locate{display:grid;grid-template-columns:auto 1fr;gap:12px;background:rgba(255,79,184,.07);border:1px solid rgba(255,79,184,.2);border-radius:14px;padding:14px;margin:14px 0 18px}
+.locate .pin{width:34px;height:34px;border-radius:10px;background:var(--pink);display:grid;place-items:center;color:var(--ink-dark);font-weight:800}
+.locate b{display:block;font-family:var(--display)}
+.locate p{margin:2px 0 0;color:var(--soft);font-size:14px}
+.weak{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.weak .pill{font-size:12.5px}
+.pill.good{color:var(--lime);background:rgba(166,242,92,.12)}
+.pill.bad{color:#ff8f85;background:rgba(255,143,133,.1)}
+.timeline{display:flex;gap:6px;margin-bottom:20px}
 .seg{border-radius:12px;padding:12px;min-width:0;background:var(--surface-2);position:relative;overflow:hidden}
-.seg::before{content:"";position:absolute;left:0;top:0;right:0;height:3px;background:var(--accent)}
-.seg:nth-child(2)::before{background:var(--gold)}
-.seg:nth-child(3)::before{background:var(--cyan)}
-.seg b{display:block;font-family:var(--display);font-weight:600;font-size:14px;margin-bottom:2px}
+.seg::before{content:"";position:absolute;left:0;top:0;right:0;height:3px;background:var(--pink)}
+.seg:nth-child(2)::before{background:var(--sun)} .seg:nth-child(3)::before{background:var(--cyan)}
+.seg b{display:block;font-family:var(--display);font-size:14px}
 .seg span{font-size:13px;color:var(--muted)}
-.tl-cap{font-size:12px;color:var(--faint);margin-bottom:22px}
+@media (max-width:600px){.timeline{flex-direction:column}}
+.tbl-wrap{overflow-x:auto;margin-bottom:20px}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
+th{text-align:left;font-size:12px;color:var(--faint);font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:0 12px 8px}
+td{padding:12px;border-top:1px solid var(--line);vertical-align:top;color:var(--soft)}
+td:first-child{color:var(--ink);font-weight:700;white-space:nowrap}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-@media (max-width:600px){.two{grid-template-columns:1fr}.timeline{flex-direction:column}}
-.tips{margin:0;padding-left:18px;display:grid;gap:8px;font-size:14px;color:#c9cddb}
-.tips li::marker{color:var(--accent)}
-.squad-tip{margin-top:20px;background:rgba(95,212,232,.07);border:1px solid rgba(95,212,232,.18);padding:12px 16px;border-radius:12px;font-size:14px;color:#c9cddb}
-.squad-tip b{color:var(--cyan)}
-.cta{margin-top:18px;display:flex;justify-content:flex-end}
+@media (max-width:640px){.two{grid-template-columns:1fr}}
+.tips{margin:0;padding-left:18px;display:grid;gap:8px;font-size:14px;color:var(--soft)}
+.tips li::marker{color:var(--coral)}
+.items{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.item{background:var(--surface-2);border-radius:14px;padding:14px;border-left:3px solid var(--sun)}
+.item b{font-family:var(--display);display:block}
+.item .what{color:var(--muted);font-size:13px;margin:2px 0 8px}
+.item .where{font-size:14px;color:var(--soft)}
+.item .where::before{content:"Where: ";color:var(--sun);font-weight:700}
+.season{background:linear-gradient(135deg,rgba(56,225,245,.10),rgba(255,79,184,.08));border:1px solid rgba(56,225,245,.22)}
+.season h2{font-size:22px;margin-bottom:4px}
+.asof{font-size:12px;color:var(--muted);margin-bottom:12px}
+.ess{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.ess div{background:var(--surface-2);border-radius:13px;padding:12px 14px;font-size:14px;color:var(--soft)}
+.ess b{display:block;font-family:var(--display);color:var(--ink);margin-bottom:2px}
+.soon{text-align:center;padding:30px;color:var(--muted)}
+.soon b{display:block;font-family:var(--display);color:var(--ink);font-size:18px;margin-bottom:6px}
 
-/* Main menu */
-.menu{max-width:880px;margin:0 auto;text-align:left}
-.title-block{text-align:center;padding:8px 0 30px}
-.title-block .kicker{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.18em;color:var(--cyan);text-transform:uppercase;background:rgba(95,212,232,.08);border:1px solid rgba(95,212,232,.2);padding:5px 12px;border-radius:999px}
-.title-block h1{font-size:clamp(44px,8vw,76px);font-weight:800;line-height:1;margin:18px 0 14px;letter-spacing:-.04em}
-.title-block h1 span{background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.title-block p{color:var(--muted);margin:0 auto;max-width:48ch;font-size:16px}
+/* Menu */
+.menu{max-width:920px;margin:0 auto}
+.title-block{text-align:center;padding:4px 0 28px}
+.kicker{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.18em;color:var(--cyan);text-transform:uppercase;background:rgba(56,225,245,.08);border:1px solid rgba(56,225,245,.25);padding:5px 12px;border-radius:999px}
+.title-block h1{font-size:clamp(46px,8vw,80px);font-weight:800;line-height:1;margin:18px 0 14px;letter-spacing:-.04em}
+.title-block h1 span{background:linear-gradient(135deg,var(--coral),var(--pink) 55%,var(--sun));-webkit-background-clip:text;background-clip:text;color:transparent}
+.title-block p{color:var(--muted);margin:0 auto;max-width:50ch;font-size:16px}
 .steps{display:flex;gap:6px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
-.step-dot{font-size:13px;font-weight:600;padding:6px 14px;border-radius:999px;color:var(--faint);background:var(--surface);border:1px solid var(--line)}
-.step-dot.active{color:var(--ink);border-color:rgba(255,106,61,.5);background:rgba(255,106,61,.1)}
-.step-dot.done{color:var(--cyan);border-color:rgba(95,212,232,.3)}
-.menu-panel{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:var(--shadow)}
-@media (max-width:480px){.menu-panel{padding:20px}}
+.step-dot{font-size:13px;font-weight:700;padding:6px 14px;border-radius:999px;color:var(--faint);background:var(--surface);border:1px solid var(--line)}
+.step-dot.active{color:var(--ink-dark);border-color:transparent;background:linear-gradient(135deg,var(--coral),var(--coral-2))}
+.step-dot.done{color:var(--lime);border-color:rgba(166,242,92,.35)}
+.menu-panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:var(--shadow)}
+@media (max-width:480px){.menu-panel{padding:18px}}
 .menu-panel h2{font-size:24px;margin-bottom:6px}
-.menu-panel .sub{color:var(--muted);margin:0 0 22px;font-size:14.5px}
-.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
-.tile{cursor:pointer;position:relative;text-align:left;border:1px solid var(--line-2);border-radius:16px;padding:16px;min-height:140px;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;background:var(--tile,var(--surface-2));overflow:hidden;transition:transform .18s,box-shadow .18s,border-color .18s}
+.menu-panel .sub{color:var(--muted);margin:0 0 18px;font-size:14.5px}
+.tile-tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+.tile-tools input{flex:1;min-width:200px}
+.picked{font-size:13px;color:var(--lime);font-weight:700}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+.tile{cursor:pointer;position:relative;text-align:left;border:1px solid var(--line-2);border-radius:16px;padding:14px;min-height:118px;display:flex;flex-direction:column;justify-content:flex-end;gap:3px;background:var(--tile);overflow:hidden;transition:transform .18s,box-shadow .18s,border-color .18s}
 .tile:hover{transform:translateY(-3px)}
-.tile::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 25%,rgba(8,9,14,.88));pointer-events:none}
-.tile::after{content:"";position:absolute;width:160px;height:160px;right:-50px;top:-60px;border-radius:50%;background:rgba(255,255,255,.08);pointer-events:none}
+.tile::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 15%,rgba(6,7,12,.9));pointer-events:none}
+.tile::after{content:"";position:absolute;width:140px;height:140px;right:-46px;top:-56px;border-radius:50%;background:rgba(255,255,255,.12);pointer-events:none}
 .tile>*{position:relative;z-index:1}
-.tile b{font-family:var(--display);font-weight:700;font-size:17px;line-height:1.2;letter-spacing:-.01em}
-.tile small{color:rgba(255,255,255,.72);font-size:12px;font-weight:500}
-.tile .tick{position:absolute;top:12px;right:12px;width:24px;height:24px;border-radius:50%;border:1.5px solid rgba(255,255,255,.55);display:grid;place-items:center;font-size:13px;font-weight:800}
-.tile[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,106,61,.3),0 14px 30px -14px rgba(255,106,61,.6)}
-.tile[aria-pressed="true"] .tick{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.tile b{font-family:var(--display);font-weight:700;font-size:15.5px;line-height:1.2}
+.tile small{color:rgba(255,255,255,.75);font-size:11.5px;font-weight:600}
+.tick{position:absolute;top:10px;right:10px;width:24px;height:24px;border-radius:50%;border:1.5px solid rgba(255,255,255,.6);display:grid;place-items:center;font-size:13px;font-weight:800}
+.tile[aria-pressed="true"]{border-color:var(--lime);box-shadow:0 0 0 3px rgba(166,242,92,.35),0 14px 30px -14px rgba(166,242,92,.5)}
+.tile[aria-pressed="true"] .tick{background:var(--lime);border-color:var(--lime);color:#10200a}
 .handles{display:grid;gap:12px}
 .handle{display:grid;grid-template-columns:120px 1fr;align-items:center;gap:14px}
-.handle label{font-weight:600;font-size:14px;color:var(--ink);margin:0}
+.handle label{font-weight:700;font-size:14px}
 @media (max-width:480px){.handle{grid-template-columns:1fr;gap:6px}}
 .menu-nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:24px;flex-wrap:wrap}
 .menu-nav a.meta{text-decoration:none}
-.menu-nav a.meta:hover{color:var(--ink)}
-.handle-list{display:grid;gap:6px;width:100%}
-.handle-row{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.handle-row span{color:var(--faint);font-size:12px;font-weight:600;min-width:54px}
-.handle-row code{flex:1}
+
+/* Profile page */
+.profile-wrap{max-width:760px}
+.note{font-size:13px;color:var(--muted);background:var(--surface-2);border-radius:12px;padding:12px 14px;margin-top:14px}
 footer{color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padding:22px 0}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}.card:hover,.tile:hover,.btn:hover{transform:none}}
 </style>
 </head>
 <body>
-<div class="beta">Beta · Party Up is still being built. Profile posting for everyone is coming soon.</div>
+<div class="beta">Beta · Party Up is still being built. New games and features are added often.</div>
 <header>
   <div class="wrap bar">
-    <div class="logo"><i aria-hidden="true"></i>Party Up</div>
-    <div class="tagline">Find teammates who play the way you do, and learn the fight before you queue.</div>
+    <a class="logo" href="#squads"><i aria-hidden="true"></i>Party Up</a>
     <nav aria-label="Sections">
-      <a href="#menu" id="nav-menu">Main menu</a>
       <a href="#squads" id="nav-squads">Squads</a>
       <a href="#intel" id="nav-intel">Game Intel</a>
+      <a href="#profile" id="nav-profile">Profile</a>
     </nav>
   </div>
 </header>
 
 <main class="wrap">
-  <!-- MAIN MENU -->
+  <!-- MENU -->
   <section class="view" id="view-menu" hidden>
     <div class="menu">
       <div class="title-block">
-        <div class="kicker">Press start</div>
+        <span class="kicker">Press start</span>
         <h1>PARTY <span>UP</span></h1>
-        <p>Three quick steps and you're in the lobby with players who match you.</p>
+        <p>Pick your games, add your handles, set your vibe. We'll line you up with players who match.</p>
       </div>
-      <div class="steps" id="step-dots">
-        <span class="step-dot">1 · Games</span><span class="step-dot">2 · Handles</span><span class="step-dot">3 · Play style</span>
-      </div>
+      <div class="steps" id="step-dots"><span class="step-dot">1 · Games</span><span class="step-dot">2 · Handles</span><span class="step-dot">3 · Play style</span></div>
 
       <div class="menu-panel" data-step="1">
         <h2>What do you play?</h2>
-        <p class="sub">Pick every game you'd queue up for. You can change this later.</p>
+        <p class="sub">Pick every game you'd queue up for. You can change this any time from your profile.</p>
+        <div class="tile-tools">
+          <input type="search" id="m-search" placeholder="Search games" aria-label="Search games">
+          <span class="picked" id="m-picked"></span>
+        </div>
         <div class="tiles" id="m-games"></div>
         <div class="err" id="m-err-1" role="alert"></div>
         <div class="menu-nav"><a href="#squads" class="meta">Skip and just browse</a><button class="btn" data-next="2">Next</button></div>
@@ -234,7 +282,7 @@ footer{color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padd
           <div class="handle"><label for="m-psn">PSN</label><input type="text" id="m-psn" maxlength="40" placeholder="Your PSN ID"></div>
           <div class="handle"><label for="m-xbox">Xbox</label><input type="text" id="m-xbox" maxlength="40" placeholder="Your Xbox gamertag"></div>
           <div class="handle"><label for="m-platform">Main platform</label>
-            <select id="m-platform"><option>PC</option><option>PS5</option><option>Xbox</option></select></div>
+            <select id="m-platform"><option>PC</option><option>PS5</option><option>Xbox</option><option>Switch</option><option>Mobile</option></select></div>
         </div>
         <div class="err" id="m-err-2" role="alert"></div>
         <div class="menu-nav"><button class="btn ghost" data-next="1">Back</button><button class="btn" data-next="3">Next</button></div>
@@ -242,14 +290,16 @@ footer{color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padd
 
       <div class="menu-panel" data-step="3" hidden>
         <h2>How do you play?</h2>
-        <p class="sub">This is what the match % uses to rank you against other players.</p>
+        <p class="sub">We use this to find players who are most like you.</p>
         <div class="row2" style="margin-bottom:14px">
-          <div class="field"><label for="m-mic">Mic</label>
-            <select id="m-mic"><option value="yes">Mic on</option><option value="no">No mic / text only</option></select></div>
-          <div class="field"><label for="m-skill">Skill level</label>
-            <select id="m-skill"><option>New</option><option selected>Casual</option><option>Experienced</option><option>Competitive</option></select></div>
+          <div class="field"><label for="m-mic">Mic</label><select id="m-mic"><option value="yes">Mic on</option><option value="no">No mic / text only</option></select></div>
+          <div class="field"><label for="m-skill">Skill level</label><select id="m-skill"><option>New</option><option selected>Casual</option><option>Experienced</option><option>Competitive</option></select></div>
         </div>
-        <div class="field"><label>Your vibe</label><div class="chips" id="m-vibes"></div></div>
+        <div class="field" style="margin-bottom:14px"><label>Your vibe</label><div class="chips" id="m-vibes"></div></div>
+        <div class="row2">
+          <div class="field"><label for="m-times">When you play</label><input type="text" id="m-times" maxlength="60" placeholder="Weeknights after 9"></div>
+          <div class="field"><label for="m-bio">Short bio</label><input type="text" id="m-bio" maxlength="140" placeholder="What you're grinding right now"></div>
+        </div>
         <div class="err" id="m-err-3" role="alert"></div>
         <div class="menu-nav"><button class="btn ghost" data-next="2">Back</button><button class="btn" id="m-finish">Enter the lobby</button></div>
       </div>
@@ -259,407 +309,496 @@ footer{color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padd
   <!-- SQUADS -->
   <section class="view" id="view-squads">
     <div class="lede">
-      <div>
-        <h1>Find your squad</h1>
-        <p>Filter by game, platform, mic and play style. Cards are ranked by how well they match what you picked.</p>
-      </div>
-      <button class="btn" id="open-form">Post my profile</button>
+      <div><h1>Find your <span class="grad">squad</span></h1>
+        <p>Players are ranked by how much they have in common with you: games, platform, mic, play style and skill. Click anyone to see their profile and handles.</p></div>
     </div>
-
+    <div class="you-bar" id="you-bar"></div>
     <div class="filters">
-      <div><label for="f-game">Game</label><select id="f-game"></select></div>
-      <div><label for="f-platform">Platform</label>
-        <select id="f-platform"><option value="">Any</option><option>PC</option><option>PS5</option><option>Xbox</option></select></div>
-      <div class="check"><input type="checkbox" id="f-mic"><label for="f-mic">Mic required</label></div>
-      <div class="check"><input type="checkbox" id="f-examples" checked><label for="f-examples">Show example profiles</label></div>
-      <div class="vibes"><label>Vibe I'm looking for</label><div class="chips" id="f-vibes"></div></div>
+      <div class="field"><label for="f-game">Game</label><select id="f-game"></select></div>
+      <div class="field"><label for="f-platform">Platform</label><select id="f-platform"><option value="">Any</option><option>PC</option><option>PS5</option><option>Xbox</option><option>Switch</option><option>Mobile</option></select></div>
+      <label class="check"><input type="checkbox" id="f-mic">Mic required</label>
+      <label class="check"><input type="checkbox" id="f-examples" checked>Show example profiles</label>
+      <div class="wide"><span class="flabel">Only show these vibes</span><div class="chips" id="f-vibes"></div></div>
     </div>
-    <p class="status" id="status">Loading profiles…</p>
+    <p class="status" id="status" role="status"></p>
     <div class="grid" id="cards"></div>
   </section>
 
   <!-- INTEL -->
   <section class="view" id="view-intel" hidden>
-    <div class="lede">
-      <div>
-        <h1>Game intel</h1>
-        <p>Squad size, how much comms matter, which roles to fill, and a breakdown of one fight worth learning before you queue up.</p>
-      </div>
+    <div class="lede"><div><h1>Game <span class="grad">intel</span></h1>
+      <p>Boss guides with locations, weaknesses, attack patterns and drops. Season news, essentials and patch notes for multiplayer games.</p></div></div>
+    <div class="intel-layout">
+      <aside class="game-list" aria-label="Games">
+        <input type="search" id="gl-search" placeholder="Search games" aria-label="Search games">
+        <div id="gl-items" class="gl-items"></div>
+      </aside>
+      <div id="intel-body"></div>
     </div>
-    <div class="game-tabs" role="tablist" id="game-tabs"></div>
-    <div id="intel-body"></div>
   </section>
+
+  <!-- PROFILE -->
+  <section class="view profile-wrap" id="view-profile" hidden></section>
 </main>
 
-<footer>
-  <div class="wrap">Party Up · a student passion project. Game info reflects common community knowledge and can change with patches. Only share a gaming handle here, never a phone number or address.</div>
-</footer>
+<footer><div class="wrap">Party Up · a student passion project. Game info comes from community knowledge and can change with patches. Season info is dated. Only share gaming handles here, never a phone number or address.</div></footer>
 
-<!-- Profile form -->
-<div class="overlay" id="overlay" hidden>
-  <form class="dialog" id="form" aria-labelledby="form-title">
-    <h2 id="form-title">Your squad profile</h2>
-    <div class="row2">
-      <div class="field"><label for="p-tag">Gamertag</label><input type="text" id="p-tag" maxlength="32" required></div>
-      <div class="field"><label for="p-platform">Main platform</label>
-        <select id="p-platform"><option>PC</option><option>PS5</option><option>Xbox</option></select></div>
-    </div>
-    <div class="field"><label>Games you play</label><div class="chips" id="p-games"></div></div>
-    <div class="row2">
-      <div class="field"><label for="p-mic">Mic</label>
-        <select id="p-mic"><option value="yes">Mic on</option><option value="no">No mic / text only</option></select></div>
-      <div class="field"><label for="p-skill">Skill level</label>
-        <select id="p-skill"><option>New</option><option>Casual</option><option>Experienced</option><option>Competitive</option></select></div>
-    </div>
-    <div class="field"><label>Your vibe</label><div class="chips" id="p-vibes"></div></div>
-    <div class="field"><label for="p-times">When you play</label><input type="text" id="p-times" maxlength="60" placeholder="Weeknights after 9, weekend afternoons"></div>
-    <div class="field"><label for="p-bio">Short bio</label><textarea id="p-bio" rows="2" maxlength="160" placeholder="What you're grinding right now, what you want in a teammate"></textarea></div>
-    <div class="row2">
-      <div class="field"><label for="p-discord">Discord</label><input type="text" id="p-discord" maxlength="40"></div>
-      <div class="field"><label for="p-psn">PSN</label><input type="text" id="p-psn" maxlength="40"></div>
-    </div>
-    <div class="field"><label for="p-xbox">Xbox</label><input type="text" id="p-xbox" maxlength="40">
-      <div class="hint">Gaming handles only. Everyone who can open this site will see them.</div></div>
-    <div class="err" id="form-err" role="alert"></div>
-    <div class="actions">
-      <button type="button" class="btn ghost" id="delete-profile" hidden>Remove my profile</button>
-      <button type="button" class="btn ghost" id="cancel">Cancel</button>
-      <button type="submit" class="btn" id="save">Save profile</button>
-    </div>
-  </form>
-</div>
+<div class="overlay" id="overlay" hidden><div class="dialog" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dlg-title"></div></div>
 
 <script>
-/* ---------- Content ---------- */
+/* ---------- Games ----------
+ type: "boss" (boss-focused guide), "multi" (multiplayer intel), "fight" (fighting game)
+ Every game has a squad sheet. Guides are filled in where they've been written; others show "guide coming soon". */
 const VIBES = ["Funny","Chill","Competitive","Tryhard","Newbie-friendly","Strategic","Night owl","No toxicity"];
 
 const GAMES = [
-  { id:"elden", name:"Elden Ring", short:"Co-op souls-like",
-    squad:"Up to 3", platforms:"PC · PS · Xbox", mic:2, difficulty:5,
-    roles:[["Aggro holder","Blocks or dodges up close so others get free hits."],["Caster / ranged","Sorceries or incantations from range; heals the team."],["Status DPS","Bleed or frost builds that burst bosses down."]],
-    boss:{ name:"Malenia, Blade of Miquella", where:"Optional boss, Haligtree",
+/* ===== Boss-focused ===== */
+{ id:"elden", name:"Elden Ring", genre:"Souls-like action RPG", type:"boss", color:["#f2c35b","#7a5a12"],
+  squad:"Solo or co-op up to 3", platforms:["PC","PS","Xbox"], mic:2, difficulty:5,
+  roles:[["Aggro holder","Blocks or dodges up close so others get free hits."],["Caster","Sorceries or incantations from range; heals the team."],["Status DPS","Bleed or frost builds that melt bosses."]],
+  bosses:[
+    { name:"Margit, the Fell Omen", where:"Stormveil Castle gate, Limgrave", how:"Follow the road north from Gatefront Ruins up to Castleward Tunnel. His fog gate is right before the castle.",
+      weak:["Bleed","Jump attacks","Margit's Shackle"], resist:["Holy"],
+      phases:[["Phase 1","Staff and dagger combos",55],["Phase 2","Adds a holy hammer and sword at half HP",45]],
+      attacks:[["Delayed staff slam","He holds the staff up, then swings late","Wait for it to drop; don't panic-roll early"],["Golden daggers","Throws 1–3 glowing daggers","Roll toward him or sideways at the last moment"],["Holy hammer","Summons a giant hammer overhead (phase 2)","Roll forward under it, then punish the long recovery"]],
+      drops:["Talisman Pouch","12,000 runes"],
+      tips:["Buy Margit's Shackle from Patches in Murkwater Cave. Using it pins him down twice.","Summon a spirit ash to split his attention.","Level up to around 25–30 before trying."] },
+    { name:"Malenia, Blade of Miquella", where:"Haligtree Roots, Elphael (Miquella's Haligtree)", how:"Optional. Reach the Haligtree through the Consecrated Snowfield using both halves of the Haligtree Secret Medallion, then go to the bottom of Elphael.",
+      weak:["Frost","Bleed","Jump attacks"], resist:["Scarlet Rot"],
       phases:[["Phase 1","Blade of Miquella",55],["Phase 2","Goddess of Rot: opens with Scarlet Aeonia",45]],
-      threat:{Damage:4,Speed:5,"Punishes greed":5},
-      tips:["Every hit she lands heals her, even on your shield. Don't trade hits.","Waterfowl Dance: sprint away from the first flurry, then dodge through the rest.","Frost and bleed both work well on her.","Bring Preserving Boluses to cure Scarlet Rot in phase 2."],
-      squad:"Spread out so Scarlet Aeonia can't catch everyone, and have one player keep her attention so the others can recover." }},
-  { id:"mhw", name:"Monster Hunter Wilds", short:"4-player hunts",
-    squad:"Up to 4", platforms:"PC · PS5 · Xbox", mic:3, difficulty:3,
-    roles:[["Support","Hunting Horn buffs or a healing setup keep everyone alive."],["Ranged","Bowguns and Bow for steady damage and status ammo."],["Knockout","Hammer or Hunting Horn aims for the head to stun."],["Cutter","Blade weapons to sever the tail."]],
-    boss:{ name:"Rathalos", where:"The classic fire wyvern",
+      attacks:[["Waterfowl Dance","Leaps into the air and does three flurries of slashes","Sprint away from the first flurry, then roll through the next two"],["Lifesteal","Every hit she lands heals her, even on your shield","Don't trade hits or block; dodge instead"],["Scarlet Aeonia","Flies up and slams down a giant rot flower (phase 2)","Run away from where she lands; the bloom spreads wide"]],
+      drops:["Remembrance of the Rot Goddess","Malenia's Great Rune","480,000 runes"],
+      tips:["Bring Preserving Boluses to cure Scarlet Rot.","Frost and bleed both proc well on her.","One of the hardest bosses in the game. Practice the Waterfowl dodge."] }
+  ],
+  items:[
+    ["Moonveil","Katana with a magic sword wave","Drops from the Magma Wyrm in Gael Tunnel, Caelid"],
+    ["Rivers of Blood","Bleed katana with a blood-wave skill","Dropped by the invader Bloody Finger Okina at the Church of Repose, Mountaintops of the Giants"],
+    ["Golden Seeds","Add more Flask of Crimson/Cerulean Tears charges","Found under small golden saplings across the map; use them at a Site of Grace"]
+  ] },
+{ id:"nightreign", name:"Elden Ring Nightreign", genre:"Co-op roguelike", type:"boss", color:["#c7a4ff","#3b2370"],
+  squad:"Trios (also solo/duo)", platforms:["PC","PS","Xbox"], mic:4, difficulty:4,
+  roles:[["Tank","Wylder or Guardian hold the boss's attention."],["Ranged","Recluse or Ironeye deal damage from a distance."],["Revive duty","Someone always ready to pick up downed teammates."]] },
+{ id:"souls3", name:"Dark Souls III", genre:"Souls-like action RPG", type:"boss", color:["#ff8a4c","#5a2410"],
+  squad:"Solo or co-op", platforms:["PC","PS","Xbox"], mic:2, difficulty:5,
+  roles:[["Host","The player whose world you're in."],["Phantoms","Summoned helpers using the White Sign Soapstone."]],
+  bosses:[
+    { name:"Iudex Gundyr", where:"Cemetery of Ash", how:"The first real boss. Walk up the path from the start to the courtyard and pull the Coiled Sword out of his chest to start the fight.",
+      weak:["Fire (phase 2)","Strikes from behind"], resist:[],
+      phases:[["Phase 1","Halberd fighter",50],["Phase 2","Turns into a black slime beast at half HP",50]],
+      attacks:[["Halberd sweep","Wide horizontal swing","Roll through it toward him"],["Shoulder charge & kick","Close-range shove that breaks your guard","Dodge sideways, not backward"],["Beast lunge","Leaps at you with the slime arm (phase 2)","Roll to the side and hit the head and arm"]],
+      drops:["Coiled Sword (lights the Firelink Shrine bonfire)","3,000 souls"],
+      tips:["Throw firebombs once he transforms.","Stay close and to his left in phase 1.","You can hit the slime early, while it's still forming, for free damage."] }
+  ] },
+{ id:"bloodborne", name:"Bloodborne", genre:"Gothic action RPG", type:"boss", color:["#ff4f6d","#4a0f1c"],
+  squad:"Solo or co-op up to 3", platforms:["PS"], mic:1, difficulty:5,
+  roles:[["Hunter","Aggressive player who keeps up pressure."],["Helper","Summoned with the Beckoning Bell."]],
+  bosses:[
+    { name:"Father Gascoigne", where:"Tomb of Oedon, Central Yharnam", how:"Go through Central Yharnam toward the Tomb of Oedon area. He's waiting in the graveyard.",
+      weak:["Fire","Tiny Music Box","Gun parries"], resist:[],
+      phases:[["Phase 1","Axe and blunderbuss",40],["Phase 2","Extends his axe for wider swings",25],["Phase 3","Turns into a beast below half HP",35]],
+      attacks:[["Axe combo","Fast chain of axe swings","Dodge to his side and counter"],["Blunderbuss shot","Shoots you mid-attack to interrupt","Keep moving sideways; time your own gun to parry him"],["Beast frenzy","Fast leaping slashes in beast form","Dodge through and hit with fire paper or Molotovs"]],
+      drops:["Oedon Tomb Key"],
+      tips:["Get the Tiny Music Box from the little girl at the red-lit window in Central Yharnam. Using it stuns him.","Use the gravestones to block his gunshots.","Parry with your gun, then hit him with a visceral attack."] }
+  ],
+  items:[["Tiny Music Box","Stuns Father Gascoigne briefly","Talk to the little girl at the red-lit window in Central Yharnam"]] },
+{ id:"sekiro", name:"Sekiro: Shadows Die Twice", genre:"Action adventure", type:"boss", color:["#ff6a3d","#511b0c"],
+  squad:"Single-player", platforms:["PC","PS","Xbox"], mic:0, difficulty:5, roles:[],
+  bosses:[
+    { name:"Genichiro, Way of Tomoe", where:"Top of Ashina Castle", how:"Story boss. Climb Ashina Castle to the top floor, past the Castle Tower Lookout.",
+      weak:["Deflects (posture damage)","Mikiri Counter","Lightning Reversal"], resist:[],
+      phases:[["Phase 1","Genichiro Ashina",35],["Phase 2","Way of Tomoe",35],["Phase 3","Adds Lightning of Tomoe",30]],
+      attacks:[["Sword flurry","Fast chain of slashes","Hold block and tap deflect on each hit"],["Perilous thrust","Red symbol, then a stab","Step into it with Mikiri Counter"],["Perilous sweep","Red symbol, low sweep","Jump, then jump-kick his head"],["Lightning of Tomoe","Leaps and throws lightning (phase 3)","Jump, get hit in the air, and attack before landing to send it back"]],
+      drops:["Memory: Genichiro","Lightning Reversal skill"],
+      tips:["Learn Mikiri Counter first. It's in the Shinobi Arts skill tree.","Deflecting builds his posture bar. Fill it to land a deathblow.","Never use Lightning Reversal on the ground. Stay in the air."] }
+  ],
+  items:[["Prayer Beads","Every 4 make a Prayer Necklace for more health and posture","Dropped by mini-bosses and found in hidden spots"],["Gourd Seeds","Add a use to your Healing Gourd","Bought from merchants or found in the world"]] },
+{ id:"hollow", name:"Hollow Knight", genre:"Metroidvania", type:"boss", color:["#8fd7ff","#16324a"],
+  squad:"Single-player", platforms:["PC","PS","Xbox","Switch"], mic:0, difficulty:4, roles:[],
+  bosses:[
+    { name:"Hornet (Protector)", where:"Greenpath", how:"Follow Greenpath to its far end. You'll meet her in the arena before the Mothwing Cloak.",
+      weak:["Nail hits after her dashes","Spells"], resist:[],
+      attacks:[["Needle throw","Throws her needle across the room; it comes back","Jump over it, then hit her while she pulls it back"],["Lunge","Dashes along the ground","Jump over her or step back"],["Thread storm","Spins with silk threads around her","Back off and wait for it to end"]],
+      drops:["Mothwing Cloak (unlocks dashing)"],
+      tips:["Hit her once or twice, then back off. Don't get greedy.","Heal (Focus) only when she's far away or stunned.","Upgrade your nail at the Nailsmith if she's too tanky."] }
+  ],
+  items:[
+    ["Mantis Claw","Lets you wall-jump","Mantis Village, deep in the Fungal Wastes"],
+    ["Monarch Wings","Double jump","Defeat Broken Vessel in the Ancient Basin"],
+    ["Crystal Heart","Super dash across gaps","Crystal Peak"]
+  ] },
+{ id:"mhw", name:"Monster Hunter Wilds", genre:"Co-op hunting", type:"boss", color:["#ffb347","#5a3005"],
+  squad:"Up to 4", platforms:["PC","PS","Xbox"], mic:3, difficulty:3,
+  roles:[["Support","Hunting Horn buffs or a healing setup."],["Ranged","Bowguns and Bow for steady damage and status ammo."],["Knockout","Hammer aims for the head to stun."],["Cutter","Blade weapons to sever the tail."]],
+  bosses:[
+    { name:"Rathalos", where:"Appears in several regions as you progress", how:"Shows up in the main story, then in optional hunts. Check the quest board or the map for sightings.",
+      weak:["Dragon","Thunder","Flash pods"], resist:["Fire"],
       phases:[["Grounded","Charges, bites, tail swipes",40],["Airborne","Fireballs and poison talon dives",35],["Enraged","Faster, hits harder",25]],
-      threat:{Damage:3,Speed:3,"Punishes greed":3},
-      tips:["Throw a flash pod while it's flying to bring it down.","Carry antidotes: the talon dive poisons you.","Blunt weapons on the head can stun it.","Cut the tail off for extra materials."],
-      squad:"Call out flash pods before throwing them so nobody wastes one, and split up: one player on the head, the rest on legs and tail." }},
-  { id:"hd2", name:"Helldivers 2", short:"Chaotic squad shooter",
-    squad:"Up to 4", platforms:"PC · PS5 · Xbox", mic:4, difficulty:4,
-    roles:[["Anti-tank","Recoilless, Quasar or EAT for the big targets."],["Crowd clear","Machine guns and orbitals for swarms."],["Support","Supply pack and resupply calls."],["Objective runner","Moves the mission forward while others cover."]],
-    boss:{ name:"Bile Titan", where:"Terminid heavy unit",
-      phases:[["Approach","Stomps through anything in its path",35],["Bile spray","Acid from the head at mid range",40],["Close range","Stomps and bites if you stick around",25]],
-      threat:{Damage:5,Speed:2,"Punishes greed":4},
-      tips:["Aim anti-tank weapons at the head.","Orbital Railcannon and 500kg bombs can drop it fast.","Keep moving sideways; standing still invites a stomp.","Friendly fire is always on, so watch your stratagem throws."],
-      squad:"Pick one anti-tank player to focus the Titan while the others clear the bugs around it." }},
-  { id:"val", name:"Valorant", short:"5v5 tactical shooter",
-    squad:"5 per team", platforms:"PC · PS5 · Xbox", mic:5, difficulty:4,
-    roles:[["Duelist","Entry fragger, first through the door."],["Initiator","Gathers info and sets up fights."],["Controller","Smokes to block sight lines."],["Sentinel","Holds a site and watches flanks."]],
-    boss:{ name:"Anatomy of a round", where:"No bosses here, so this breaks down a round instead",
-      phases:[["Buy phase","Buy weapons and plan",20],["Combat","1:40 to plant or win the fight",50],["Spike down","45 seconds to defuse",30]],
-      threat:{"Comms needed":5,"Aim needed":4,"Strategy":5},
-      tips:["First team to 13 rounds wins.","Use callouts so teammates know exactly where enemies are.","Trade kills: if a teammate peeks, be ready to follow.","Save credits on rounds you can't win so the next buy is full."],
-      squad:"Agree on roles before queueing. A team with no Controller leaves sight lines open all game." }}
+      attacks:[["Fireball","Shoots fireballs from the ground or the air","Dodge sideways at the last second"],["Talon dive","Dives at you claws-first and poisons you","Roll away; carry antidotes"],["Tail spin","Spins around and hits everything near the tail","Stay at the head or back off"]],
+      drops:["Rathalos Scale","Rathalos Plate (rare)","Rathalos Ruby (very rare)"],
+      tips:["Flash pods knock it out of the sky.","Blunt weapons on the head can stun it.","Cut the tail for extra materials."] }
+  ] },
+{ id:"wukong", name:"Black Myth: Wukong", genre:"Action RPG", type:"boss", color:["#ffcf4d","#5e3b06"],
+  squad:"Single-player", platforms:["PC","PS"], mic:0, difficulty:4, roles:[] },
+{ id:"liesofp", name:"Lies of P", genre:"Souls-like action RPG", type:"boss", color:["#d6c2a0","#3e3120"],
+  squad:"Single-player", platforms:["PC","PS","Xbox"], mic:0, difficulty:4, roles:[] },
+{ id:"gowr", name:"God of War Ragnarök", genre:"Action adventure", type:"boss", color:["#7ad0ff","#123b55"],
+  squad:"Single-player", platforms:["PC","PS"], mic:0, difficulty:3, roles:[] },
+{ id:"cuphead", name:"Cuphead", genre:"Run-and-gun boss rush", type:"boss", color:["#ff5d5d","#5a1414"],
+  squad:"Solo or local co-op 2", platforms:["PC","PS","Xbox","Switch"], mic:1, difficulty:5, roles:[["Partner","Revive each other by parrying the ghost."]] },
+
+/* ===== Multiplayer ===== */
+{ id:"fortnite", name:"Fortnite", genre:"Battle royale", type:"multi", color:["#4fd1ff","#5b2ad6"],
+  squad:"Solo, duo, trio or squads of 4", platforms:["PC","PS","Xbox","Switch","Mobile"], mic:4, difficulty:3,
+  roles:[["Fragger","Takes fights and pushes."],["Builder / support","Boxes up teammates and builds cover."],["IGL","Calls rotations and drop spots."]],
+  season:{ title:"Treasure Hunters mini-season", asof:"November 9, 2026", source:"https://www.fortnite.com/news",
+    points:["Live since November 1, 2026 (update v43.00). It's a One Piece crossover.","New map: Crossbones Isle, a skull-and-crossbones island with 12 new POIs and 80-player lobbies.","Devil Fruit Mythics like Luffy's Gum-Gum Fruit and Ace's Flame-Flame Fruit, plus Zoro's Three Sword Style.","New pirate crews and Mythics rotate in each week.","Chapter 8 is rumored for late November or early December. Not confirmed by Epic yet."] },
+  essentials:[["Drop smart","Pick a quieter POI if your squad is new; hot drops are high risk, high loot."],["Rotate early","Move toward the next storm circle before it closes so you're not caught in fights at the edge."],["Mythics first","Mythic items change fights. Know which ones are in this season's loot pool."],["Revive fast","Downed teammates can be reboot-carded back if you grab their card in time."]],
+  news:"https://www.fortnite.com/news" },
+{ id:"val", name:"Valorant", genre:"5v5 tactical shooter", type:"multi", color:["#ff4f6d","#3a0f1a"],
+  squad:"5 per team", platforms:["PC","PS","Xbox"], mic:5, difficulty:4,
+  roles:[["Duelist","Entry fragger, first onto site."],["Initiator","Gathers info and sets up fights."],["Controller","Smokes to block sight lines."],["Sentinel","Holds a site and watches flanks."]],
+  essentials:[["Round timer","1:40 to plant or win. Once the spike is down, defenders get 45 seconds to defuse."],["First to 13","Win 13 rounds to take the match; overtime at 12–12."],["Economy","Save on rounds you can't win so the next buy is full."],["Trade kills","If a teammate peeks, be ready to swing right after."]],
+  news:"https://playvalorant.com/en-us/news/" },
+{ id:"apex", name:"Apex Legends", genre:"Hero battle royale", type:"multi", color:["#ff5a3d","#4a1206"],
+  squad:"Trios (also duos)", platforms:["PC","PS","Xbox","Switch"], mic:3, difficulty:4,
+  roles:[["Assault","Frontline fighters who start pushes."],["Skirmisher","Fast movement to reposition."],["Recon","Scans for enemies and finds the next ring."],["Support","Revives and supplies the squad."],["Controller","Locks down areas."]],
+  essentials:[["Ping everything","Ping system is good enough to play without a mic."],["Banners","Grab a dead teammate's banner and take it to a Respawn Beacon."],["Ring","The ring closes in rounds; Recon legends can scan to see where it goes next."]],
+  news:"https://www.ea.com/games/apex-legends/apex-legends/news" },
+{ id:"warzone", name:"Call of Duty: Warzone", genre:"Battle royale", type:"multi", color:["#9be15d","#1f3a0e"],
+  squad:"Up to 4", platforms:["PC","PS","Xbox"], mic:4, difficulty:4,
+  roles:[["Sniper","Holds long sight lines."],["Entry","Pushes first with SMG/shotgun."],["Support","Buys back teammates and drops UAVs."]],
+  essentials:[["Gulag","Die early and you fight 1v1 in the Gulag to get back in."],["Buy stations","Spend cash on loadout drops, UAVs and buybacks."],["Loadout drop","Get your custom weapons as soon as your squad can afford it."]],
+  news:"https://www.callofduty.com/patchnotes" },
+{ id:"overwatch", name:"Overwatch", genre:"5v5 hero shooter", type:"multi", color:["#ff9c1a","#4a2a03"],
+  squad:"5 per team", platforms:["PC","PS","Xbox","Switch"], mic:4, difficulty:3,
+  roles:[["Tank","Takes space and protects the team."],["Damage","Gets eliminations."],["Support","Heals and buffs."]],
+  essentials:[["Group up","Fights are won by the team that arrives together."],["Ult tracking","Call out when your ultimate is ready and combo them."],["Counter-swap","You can switch heroes mid-match to counter the enemy."]],
+  news:"https://overwatch.blizzard.com/en-us/news/patch-notes/" },
+{ id:"rivals", name:"Marvel Rivals", genre:"6v6 hero shooter", type:"multi", color:["#ff3d6e","#3c0a1b"],
+  squad:"6 per team", platforms:["PC","PS","Xbox"], mic:4, difficulty:3,
+  roles:[["Vanguard","Tanks who absorb damage."],["Duelist","Damage dealers."],["Strategist","Healers and support."]],
+  essentials:[["Team-Ups","Certain hero pairs unlock bonus abilities. Plan picks together."],["Destructible maps","Walls and cover can break; don't rely on one spot."],["Balanced comp","Two of each role is a solid default."]] },
+{ id:"lol", name:"League of Legends", genre:"5v5 MOBA", type:"multi", color:["#4fc3ff","#0f2a4a"],
+  squad:"5 per team", platforms:["PC"], mic:3, difficulty:5,
+  roles:[["Top","Solo lane, usually tanks or bruisers."],["Jungle","Roams and takes objectives."],["Mid","Solo lane, mages and assassins."],["Bot (ADC)","Main ranged damage."],["Support","Protects the ADC and wards the map."]],
+  essentials:[["Objectives","Dragons, Rift Herald/Grubs and Baron Nashor win games."],["Vision","Wards show enemy movement; supports carry most of them."],["Push towers","Towers and inhibitors are how you actually win."]],
+  news:"https://www.leagueoflegends.com/en-us/news/tags/patch-notes/" },
+{ id:"cs2", name:"Counter-Strike 2", genre:"5v5 tactical shooter", type:"multi", color:["#ffc14d","#4a3303"],
+  squad:"5 per team", platforms:["PC"], mic:5, difficulty:5,
+  roles:[["Entry","First into the site."],["AWPer","Sniper holding key angles."],["Support","Flashes and smokes for the team."],["Lurker","Plays alone to catch rotations."],["IGL","Calls the strategy."]],
+  essentials:[["First to 13","Matches are best of 24 rounds (MR12)."],["Economy","Buy, force or save together as a team."],["Utility","Smokes, flashes and molotovs win more rounds than aim alone."]],
+  news:"https://www.counter-strike.net/news" },
+{ id:"rl", name:"Rocket League", genre:"Car soccer", type:"multi", color:["#3fa9ff","#ff7a1a"],
+  squad:"1v1, 2v2 or 3v3", platforms:["PC","PS","Xbox","Switch"], mic:3, difficulty:4,
+  roles:[["First man","Challenges the ball."],["Second man","Follows up and passes."],["Third man","Stays back on defense."]],
+  essentials:[["Rotate","Cycle positions so no one double-commits."],["Boost pads","Grab small pads constantly instead of only big ones."],["Quick chat","Use 'I got it!' and 'Take the shot!' if you don't have a mic."]],
+  news:"https://www.rocketleague.com/en/news" },
+{ id:"hd2", name:"Helldivers 2", genre:"Co-op shooter", type:"multi", color:["#ffe14d","#3a3300"],
+  squad:"Up to 4", platforms:["PC","PS","Xbox"], mic:4, difficulty:4,
+  roles:[["Anti-tank","Recoilless, Quasar or EAT for big targets."],["Crowd clear","Machine guns and orbitals for swarms."],["Support","Supply pack and resupplies."],["Objective runner","Moves the mission forward."]],
+  bosses:[
+    { name:"Bile Titan", where:"Terminid missions on higher difficulties", how:"Shows up on Terminid planets once you play mid to high difficulties, often at bug breaches.",
+      weak:["Anti-tank to the head","Orbital Railcannon","500kg bomb"], resist:["Small arms"],
+      attacks:[["Bile spray","Sprays acid from its head at mid range","Dive sideways out of the stream"],["Stomp","Steps on anything under it","Never stand under it; keep moving"],["Bite","Grabs players who get close","Stay at range"]],
+      drops:["Clears the area for objectives"],
+      tips:["Pick one anti-tank player to focus the Titan.","Friendly fire is always on. Watch your stratagem throws."] }
+  ],
+  essentials:[["Friendly fire","Always on. Communicate before throwing orbitals."],["Reinforce","Call teammates back in with the reinforce stratagem."],["Samples","Extract with samples to upgrade your ship."]] },
+{ id:"destiny2", name:"Destiny 2", genre:"Looter shooter", type:"multi", color:["#7ad6ff","#1c2f4f"],
+  squad:"Fireteams of 3, raids of 6", platforms:["PC","PS","Xbox"], mic:5, difficulty:4,
+  roles:[["Titan","Barriers and tanky."],["Hunter","Mobility and precision."],["Warlock","Healing rifts and support."]],
+  essentials:[["Raids need comms","Six-player raids have mechanics; a mic is basically required."],["Fireteam finder","Use the in-game finder or bring your own squad."],["Builds","Subclass and armor mods matter more than gun choice."]],
+  news:"https://www.bungie.net/7/en/News" },
+{ id:"drg", name:"Deep Rock Galactic", genre:"Co-op mining shooter", type:"multi", color:["#ffb000","#3a2500"],
+  squad:"Up to 4", platforms:["PC","PS","Xbox"], mic:2, difficulty:3,
+  roles:[["Driller","Digs tunnels through rock."],["Engineer","Platforms and turrets."],["Gunner","Heavy firepower and ziplines."],["Scout","Lights up caves and grapples around."]],
+  essentials:[["Stick together","Swarms come fast; don't wander off solo."],["Mine the gold","Secondary objectives earn more rewards."],["Rock and Stone!","The community is famously friendly. Newbie-friendly squads are easy to find."]] },
+{ id:"lethal", name:"Lethal Company", genre:"Co-op horror", type:"multi", color:["#c6ff4d","#2a3a05"],
+  squad:"Up to 4", platforms:["PC"], mic:5, difficulty:3,
+  roles:[["Scavenger","Goes inside to grab scrap."],["Ship operator","Stays on the ship watching the monitor."]],
+  essentials:[["Proximity chat","Voice chat fades with distance. Half the fun is hearing teammates scream."],["Hit quota","Sell enough scrap before the deadline or it's game over."],["Use the terminal","The ship operator can open doors and spot monsters."]] },
+{ id:"minecraft", name:"Minecraft", genre:"Sandbox survival", type:"multi", color:["#7ed957","#2a4a14"],
+  squad:"Any size", platforms:["PC","PS","Xbox","Switch","Mobile"], mic:2, difficulty:2,
+  roles:[["Builder","Designs the base."],["Miner","Gets resources."],["Explorer","Finds villages, strongholds and loot."]],
+  bosses:[
+    { name:"Ender Dragon", where:"The End dimension", how:"Craft Eyes of Ender, throw them to find a stronghold, fill the End Portal frame, and jump in.",
+      weak:["Destroy End Crystals first","Arrows","Hits to the head while it perches"], resist:[],
+      attacks:[["Charge","Swoops at players","Strafe sideways or block with a shield"],["Dragon's breath","Leaves a purple cloud on the ground","Step out of the cloud right away"],["Fireball","Shoots acid fireballs","Keep moving; don't stand still"]],
+      drops:["Dragon Egg","A lot of XP","Exit portal back home"],
+      tips:["Shoot the End Crystals on top of the obsidian pillars. Some are inside cages you'll need to climb to.","Bring water buckets, blocks and a bow.","Don't look at Endermen."] }
+  ],
+  essentials:[["Shared world","Use a Realm or server so friends can play without the host online."],["Start a base together","Pick roles early so you're not all mining the same cave."]],
+  news:"https://www.minecraft.net/en-us/articles" },
+{ id:"genshin", name:"Genshin Impact", genre:"Anime open-world RPG", type:"multi", color:["#ffd36e","#2e6fa8"],
+  squad:"Co-op up to 4", platforms:["PC","PS","Mobile"], mic:2, difficulty:2,
+  roles:[["DPS","Main damage dealer."],["Sub-DPS","Applies elements for reactions."],["Support / healer","Keeps the team alive."]],
+  essentials:[["Elemental reactions","Combine elements like Hydro + Pyro (Vaporize) for big damage."],["Co-op bosses","World bosses and domains are faster with friends."],["Resin","Daily resin limits rewards; plan your farming."]],
+  news:"https://genshin.hoyoverse.com/en/news" },
+
+/* ===== Fighting ===== */
+{ id:"sf6", name:"Street Fighter 6", genre:"Fighting", type:"fight", color:["#ff7a3d","#ffdc4d"],
+  squad:"1v1", platforms:["PC","PS","Xbox"], mic:1, difficulty:4, roles:[["Sparring partner","Long sets to practice matchups."]],
+  essentials:[["Drive gauge","Manage your Drive meter. Running out leaves you in Burnout."],["Modern controls","Simpler inputs make it easy for new players to start."]] },
+{ id:"tekken8", name:"Tekken 8", genre:"3D fighting", type:"fight", color:["#ff4f4f","#4f8bff"],
+  squad:"1v1", platforms:["PC","PS","Xbox"], mic:1, difficulty:5, roles:[["Sparring partner","Long sets to practice matchups."]],
+  essentials:[["Heat system","Activate Heat to power up and keep pressure."],["Learn punishes","Know which moves you can punish when blocked."]] },
+{ id:"dbsz", name:"Dragon Ball: Sparking! Zero", genre:"Anime arena fighter", type:"fight", color:["#ffb01f","#2a6bff"],
+  squad:"1v1", platforms:["PC","PS","Xbox"], mic:1, difficulty:2, roles:[["Rival","Someone to run custom battles with."]],
+  essentials:[["Huge roster","Lots of characters and forms to pick from."],["Ki management","Charge ki for Blasts and Ultimates."]] },
+{ id:"smash", name:"Super Smash Bros. Ultimate", genre:"Platform fighter", type:"fight", color:["#ff5d8f","#ffd84d"],
+  squad:"Up to 8 players", platforms:["Switch"], mic:1, difficulty:3, roles:[["Doubles partner","2v2 teams are a whole different game."]],
+  essentials:[["Ledge play","Recovering to the ledge safely is half the game."],["Arenas","Online arenas let a group rotate who plays."]] }
 ];
 
-const TILE_COLORS = { elden:"linear-gradient(135deg,#6b5a2e,#2a2416)", mhw:"linear-gradient(135deg,#8a3b1f,#2b1a12)", hd2:"linear-gradient(135deg,#a88a12,#2a2610)", val:"linear-gradient(135deg,#9c2a3a,#26121a)" };
+const TYPE_LABEL = { boss:"Boss guide", multi:"Multiplayer", fight:"Fighting" };
 
 const EXAMPLES = [
-  {id:"ex1",tag:"TarnishedTom",platform:"PC",games:["elden"],mic:true,skill:"Experienced",vibes:["Chill","Newbie-friendly"],times:"Weeknights after 9",bio:"Happy to help with Malenia. I've died to her more times than I can count.",handles:{discord:"tarnishedtom"}},
+  {id:"ex1",tag:"TarnishedTom",platform:"PC",games:["elden","nightreign","souls3"],mic:true,skill:"Experienced",vibes:["Chill","Newbie-friendly"],times:"Weeknights after 9",bio:"Happy to help with Malenia. I've died to her more times than I can count.",handles:{discord:"tarnishedtom"}},
   {id:"ex2",tag:"FlashPodQueen",platform:"PS5",games:["mhw","elden"],mic:true,skill:"Casual",vibes:["Funny","Strategic"],times:"Weekend afternoons",bio:"Hunting Horn main. I'll keep you buffed.",handles:{psn:"flashpodqueen",discord:"flashpodqueen"}},
-  {id:"ex3",tag:"DemocracyDan",platform:"PC",games:["hd2"],mic:true,skill:"Competitive",vibes:["Tryhard","Funny"],times:"Late nights",bio:"Anti-tank only. Point me at the Bile Titan.",handles:{discord:"democracydan"}},
-  {id:"ex4",tag:"QuietSmokes",platform:"PC",games:["val"],mic:false,skill:"Experienced",vibes:["Strategic","No toxicity"],times:"Evenings",bio:"Controller main. I type callouts fast if you don't mind no mic.",handles:{discord:"quietsmokes"}},
-  {id:"ex5",tag:"NewbieNova",platform:"Xbox",games:["hd2","mhw"],mic:true,skill:"New",vibes:["Chill","Newbie-friendly","Night owl"],times:"After midnight",bio:"Just started, looking for patient people to learn with.",handles:{xbox:"NewbieNova"}},
-  {id:"ex6",tag:"EcoRoundEnjoyer",platform:"PS5",games:["val","hd2"],mic:true,skill:"Competitive",vibes:["Competitive","No toxicity"],times:"Weeknights 7–11",bio:"Grinding ranked. Looking for a consistent duo.",handles:{psn:"EcoRoundEnjoyer",discord:"ecoround"}}
+  {id:"ex3",tag:"DemocracyDan",platform:"PC",games:["hd2","drg"],mic:true,skill:"Competitive",vibes:["Tryhard","Funny"],times:"Late nights",bio:"Anti-tank only. Point me at the Bile Titan.",handles:{discord:"democracydan"}},
+  {id:"ex4",tag:"QuietSmokes",platform:"PC",games:["val","cs2"],mic:false,skill:"Experienced",vibes:["Strategic","No toxicity"],times:"Evenings",bio:"Controller main. I type callouts fast if you don't mind no mic.",handles:{discord:"quietsmokes"}},
+  {id:"ex5",tag:"NewbieNova",platform:"Xbox",games:["fortnite","minecraft","hd2"],mic:true,skill:"New",vibes:["Chill","Newbie-friendly","Night owl"],times:"After midnight",bio:"Just started, looking for patient people to learn with.",handles:{xbox:"NewbieNova"}},
+  {id:"ex6",tag:"EcoRoundEnjoyer",platform:"PS5",games:["val","apex"],mic:true,skill:"Competitive",vibes:["Competitive","No toxicity"],times:"Weeknights 7–11",bio:"Grinding ranked. Looking for a consistent duo.",handles:{psn:"EcoRoundEnjoyer",discord:"ecoround"}},
+  {id:"ex7",tag:"CrossbonesCaptain",platform:"PC",games:["fortnite","warzone"],mic:true,skill:"Experienced",vibes:["Funny","Competitive"],times:"Every night 8–12",bio:"Need a squad for the new Crossbones Isle map. I call drops.",handles:{discord:"crossbonescap",psn:"CrossbonesCap"}},
+  {id:"ex8",tag:"SupportSoraka",platform:"PC",games:["lol","overwatch","rivals"],mic:true,skill:"Casual",vibes:["Chill","No toxicity"],times:"Weekends",bio:"Support main in every game. You do damage, I keep you alive.",handles:{discord:"supportsoraka"}},
+  {id:"ex9",tag:"AerialAce",platform:"Switch",games:["rl","smash","minecraft"],mic:false,skill:"Experienced",vibes:["Strategic","Chill"],times:"After class",bio:"Diamond in 2s. I play third man so you can go for the flashy goals.",handles:{discord:"aerialace"}},
+  {id:"ex10",tag:"KameKameHa",platform:"PS5",games:["dbsz","tekken8","sf6"],mic:true,skill:"Casual",vibes:["Funny","Newbie-friendly"],times:"Late nights",bio:"Anime fighter fan. Down for long casual sets.",handles:{psn:"KameKameHa"}},
+  {id:"ex11",tag:"ScrapGoblin",platform:"PC",games:["lethal","drg"],mic:true,skill:"Casual",vibes:["Funny","Night owl"],times:"Fridays",bio:"I will absolutely die first and scream on mic.",handles:{discord:"scrapgoblin"}},
+  {id:"ex12",tag:"ResinHoarder",platform:"PC",games:["genshin","hollow"],mic:false,skill:"Experienced",vibes:["Chill","No toxicity"],times:"Mornings",bio:"Happy to help with world bosses and domains.",handles:{discord:"resinhoarder"}}
 ];
-const HANDLE_LABELS = {discord:"Discord",psn:"PSN",xbox:"Xbox"};
 EXAMPLES.forEach(e=>e.example=true);
+const HANDLE_LABELS = {discord:"Discord",psn:"PSN",xbox:"Xbox"};
+
+</script>
+<script>
+const $=s=>document.querySelector(s);
+const gameById=id=>GAMES.find(g=>g.id===id);
+const gameName=id=>(gameById(id)||{}).name||id;
+function el(tag,attrs={},...kids){const n=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(v==null)continue;if(k==="class")n.className=v;else if(k==="text")n.textContent=v;else if(k.startsWith("on"))n[k]=v;else n.setAttribute(k,v);}kids.flat().forEach(k=>k!=null&&k!==false&&n.append(k));return n;}
+function store(k,v){try{localStorage.setItem("partyup."+k,JSON.stringify(v));}catch(e){}}
+function load(k){try{return JSON.parse(localStorage.getItem("partyup."+k));}catch(e){return null;}}
+const tileBg=g=>`linear-gradient(135deg,${g.color[0]},${g.color[1]})`;
+const SKILLS=["New","Casual","Experienced","Competitive"];
 
 /* ---------- State ---------- */
-const state = { real:[], myId:null, db:null, canWrite:null, myGames:[], local:null, filter:{game:"",platform:"",mic:false,examples:true,vibes:new Set()} };
-const $ = s=>document.querySelector(s);
-const gameName = id => (GAMES.find(g=>g.id===id)||{}).name || id;
+const state={ me:load("profile"), real:[], myId:null, db:null, canWrite:null,
+  filter:{game:"",platform:"",mic:false,examples:true,vibes:new Set()}, intelGame:"elden", boss:0 };
 
-function el(tag, attrs={}, ...kids){
-  const n=document.createElement(tag);
-  for(const [k,v] of Object.entries(attrs)){
-    if(k==="class") n.className=v; else if(k==="text") n.textContent=v; else n.setAttribute(k,v);
-  }
-  kids.flat().forEach(k=>k!=null&&n.append(k)); return n;
+/* ---------- Matching ---------- */
+function similarity(p,me){
+  if(!me) return null;
+  const mg=me.games||[], pg=p.games||[];
+  const shared=pg.filter(g=>mg.includes(g)).length;
+  const gameScore = mg.length? Math.min(1, shared/Math.min(mg.length,3)) : 0;
+  const plat = p.platform===me.platform?1:0;
+  const mic = (!!p.mic)===(!!me.mic)?1:0;
+  const mv=me.vibes||[], pv=p.vibes||[];
+  const vib = mv.length? pv.filter(v=>mv.includes(v)).length/mv.length : .5;
+  const sk = 1-Math.abs(SKILLS.indexOf(p.skill)-SKILLS.indexOf(me.skill))/3;
+  return Math.round((gameScore*.45+plat*.15+mic*.12+vib*.18+(isNaN(sk)?.5:sk)*.10)*100);
 }
 
-/* ---------- Filters ---------- */
+/* ---------- Squads ---------- */
 function buildFilters(){
-  const gs=$("#f-game"); gs.append(el("option",{value:"",text:"All games"}), el("option",{value:"mine",text:"My games"}));
-  GAMES.forEach(g=>gs.append(el("option",{value:g.id,text:g.name})));
-  const fv=$("#f-vibes");
-  VIBES.forEach(v=>{
-    const b=el("button",{type:"button",class:"chip","aria-pressed":"false",text:v});
-    b.onclick=()=>{const on=state.filter.vibes.has(v); on?state.filter.vibes.delete(v):state.filter.vibes.add(v); b.setAttribute("aria-pressed",String(!on)); renderCards();};
-    fv.append(b);
-  });
+  const gs=$("#f-game"); gs.append(el("option",{value:"",text:"All games"}),el("option",{value:"mine",text:"My games"}));
+  for(const t of ["boss","multi","fight"]){const og=el("optgroup",{label:TYPE_LABEL[t]});GAMES.filter(g=>g.type===t).forEach(g=>og.append(el("option",{value:g.id,text:g.name})));gs.append(og);}
+  VIBES.forEach(v=>{const b=el("button",{type:"button",class:"chip","aria-pressed":"false",text:v});b.onclick=()=>{state.filter.vibes.has(v)?state.filter.vibes.delete(v):state.filter.vibes.add(v);b.setAttribute("aria-pressed",String(state.filter.vibes.has(v)));renderCards();};$("#f-vibes").append(b);});
   gs.onchange=e=>{state.filter.game=e.target.value;renderCards();};
   $("#f-platform").onchange=e=>{state.filter.platform=e.target.value;renderCards();};
   $("#f-mic").onchange=e=>{state.filter.mic=e.target.checked;renderCards();};
   $("#f-examples").onchange=e=>{state.filter.examples=e.target.checked;renderCards();};
 }
-
-function matchScore(p){
-  const f=state.filter; let have=0,want=0;
-  if(f.vibes.size){ want+=f.vibes.size; f.vibes.forEach(v=>{ if((p.vibes||[]).includes(v)) have++; }); }
-  if(f.mic){ want++; if(p.mic) have++; }
-  if(f.platform){ want++; if(p.platform===f.platform) have++; }
-  return want? Math.round(have/want*100) : null;
+function avatar(p,lg){const hue=[...(p.tag||"?")].reduce((a,c)=>a+c.charCodeAt(0),0)%360;return el("div",{class:"avatar"+(lg?" lg":""),"aria-hidden":"true",style:`background:linear-gradient(135deg,hsl(${hue} 90% 70%),hsl(${(hue+50)%360} 85% 58%))`,text:(p.tag||"?").trim().charAt(0).toUpperCase()});}
+function allProfiles(){
+  const me=state.me, mineReal=state.myId&&state.real.find(p=>p.id===state.myId);
+  const list=[...state.real.map(p=>({...p,mine:p.id===state.myId}))];
+  if(me && !mineReal) list.unshift({...me,id:"local",mine:true,localOnly:true});
+  if(state.filter.examples) list.push(...EXAMPLES);
+  return list;
 }
-
+function renderYouBar(){
+  const bar=$("#you-bar"); bar.replaceChildren(); const me=state.me;
+  if(!me){ bar.append(el("div",{class:"meta"},el("b",{text:"Get matched with players like you. "}),"Set up your profile in three quick steps."),el("a",{class:"btn",href:"#menu",text:"Set up my profile"})); return; }
+  bar.append(avatar(me),el("div",{class:"meta"},el("b",{text:"Matching you as "+me.tag+". "}),(me.games||[]).map(gameName).slice(0,4).join(", ")+((me.games||[]).length>4?" +"+((me.games.length)-4)+" more":"")),el("a",{class:"btn ghost sm",href:"#profile",text:"Edit preferences"}));
+}
 function renderCards(){
-  const f=state.filter, box=$("#cards"); box.replaceChildren();
-  const hasReal = state.myId && state.real.some(p=>p.id===state.myId);
-  const localCard = (!hasReal && state.local) ? [{...state.local, id:"local", localOnly:true}] : [];
-  let list=[...localCard, ...state.real, ...(f.examples?EXAMPLES:[])];
-  const gameOk = p => !f.game || (f.game==="mine" ? (!state.myGames.length || (p.games||[]).some(g=>state.myGames.includes(g))) : (p.games||[]).includes(f.game));
-  list=list.filter(p=>gameOk(p) && (!f.mic||p.mic));
-  list.forEach(p=>p._score=matchScore(p));
-  list.sort((a,b)=>(b._score??0)-(a._score??0) || (a.example?1:0)-(b.example?1:0));
-  if(!list.length){ box.append(el("div",{class:"empty",text:"No one matches those filters yet. Try loosening them, or post your own profile so others can find you."})); return; }
+  renderYouBar();
+  const f=state.filter, me=state.me, box=$("#cards"); box.replaceChildren();
+  let list=allProfiles();
+  list=list.filter(p=>{
+    if(f.game==="mine"){ if(me&&me.games?.length&&!(p.games||[]).some(g=>me.games.includes(g))) return false; }
+    else if(f.game && !(p.games||[]).includes(f.game)) return false;
+    if(f.platform && p.platform!==f.platform) return false;
+    if(f.mic && !p.mic) return false;
+    if(f.vibes.size && !(p.vibes||[]).some(v=>f.vibes.has(v))) return false;
+    return true;
+  });
+  list.forEach(p=>p._score=p.mine?null:similarity(p,me));
+  list.sort((a,b)=>(b.mine?1:0)-(a.mine?1:0)||(b._score??-1)-(a._score??-1)||(a.example?1:0)-(b.example?1:0));
+  if(!list.length){box.append(el("div",{class:"empty",text:"No one matches those filters yet. Try loosening them."}));return;}
   list.forEach(p=>box.append(card(p)));
 }
-
 function card(p){
-  const mine = p.localOnly || (!p.example && p.id===state.myId);
-  const pills=el("div",{class:"pills"},
-    el("span",{class:"pill "+(p.mic?"mic":"nomic"),text:p.mic?"Mic on":"No mic"}),
-    el("span",{class:"pill",text:p.skill||""}),
-    ...(p.vibes||[]).map(v=>el("span",{class:"pill",text:v})));
+  const me=state.me; const shared=me?(p.games||[]).filter(g=>(me.games||[]).includes(g)):[];
+  const ring = p._score==null?null:el("div",{class:"match",style:`--p:${p._score};--ring:${p._score>=70?"var(--lime)":p._score>=45?"var(--sun)":"var(--coral)"}`,title:p._score+"% similar to you"},el("span",{text:p._score+"%"}));
   const flags=el("div",{class:"pills"});
   if(p.example) flags.append(el("span",{class:"pill ex",text:"Example"}));
-  if(mine) flags.append(el("span",{class:"pill you",text:"You"}));
-  if(p.localOnly) flags.append(el("span",{class:"pill nomic",text:"Only you see this"}));
-  const scoreBox = p._score==null ? null : el("div",{class:"match",style:"--p:"+p._score,title:p._score+"% match"}, el("span",{text:p._score+"%"}));
-  const hue=[...(p.tag||"?")].reduce((a,c)=>a+c.charCodeAt(0),0)%360;
-  const avatar=el("div",{class:"avatar","aria-hidden":"true",style:`background:linear-gradient(135deg,hsl(${hue} 80% 68%),hsl(${(hue+40)%360} 75% 55%))`,text:(p.tag||"?").trim().charAt(0).toUpperCase()});
-  const h = p.handles || {};
-  const rows = Object.keys(HANDLE_LABELS).filter(k=>h[k]).map(k=>{
-    const b=el("button",{type:"button",class:"btn ghost",style:"padding:4px 11px;font-size:12px",text:"Copy","aria-label":"Copy "+HANDLE_LABELS[k]+" handle"});
-    b.onclick=async()=>{ try{ await navigator.clipboard.writeText(h[k]); b.textContent="Copied"; }catch(e){ b.textContent="Select it"; } setTimeout(()=>b.textContent="Copy",1500); };
-    return el("div",{class:"handle-row"}, el("span",{text:HANDLE_LABELS[k]}), el("code",{text:h[k]}), b);
-  });
-  if(!rows.length && p.contact) rows.push(el("div",{class:"handle-row"}, el("code",{text:p.contact})));
-  return el("article",{class:"card"+(mine?" mine":"")},
-    el("div",{class:"card-top"},
-      el("div",{class:"who"}, avatar, el("div",{style:"min-width:0"}, el("div",{class:"tag",text:p.tag||"Unnamed"}), el("div",{class:"meta",text:[p.platform,(p.games||[]).map(gameName).join(", ")].filter(Boolean).join(" · ")}))),
-      scoreBox),
+  if(p.mine) flags.append(el("span",{class:"pill you",text:"You"}));
+  if(p.localOnly) flags.append(el("span",{class:"pill nomic",text:"Saved on this device"}));
+  shared.slice(0,3).forEach(g=>flags.append(el("span",{class:"pill shared",text:gameName(g)})));
+  const n=Object.keys(p.handles||{}).filter(k=>p.handles[k]).length;
+  return el("button",{type:"button",class:"card"+(p.mine?" mine":""),onclick:()=>openProfile(p),"aria-label":"View "+(p.tag||"player")+"'s profile"},
+    el("div",{class:"card-top"},el("div",{class:"who"},avatar(p),el("div",{style:"min-width:0"},el("div",{class:"tag",text:p.tag||"Unnamed"}),el("div",{class:"meta",text:[p.platform,p.skill].filter(Boolean).join(" · ")}))),ring),
     flags.childElementCount?flags:null,
-    pills,
+    el("div",{class:"pills"},el("span",{class:"pill "+(p.mic?"mic":"nomic"),text:p.mic?"Mic on":"No mic"}),...(p.vibes||[]).slice(0,3).map(v=>el("span",{class:"pill",text:v}))),
     p.bio?el("p",{class:"bio",text:p.bio}):null,
-    p.times?el("div",{class:"meta",text:"Plays: "+p.times}):null,
-    rows.length?el("div",{class:"contact"}, el("div",{class:"handle-list"}, rows)):null
-  );
+    el("div",{class:"card-foot"},el("span",{text:(p.games||[]).length+" game"+((p.games||[]).length===1?"":"s")+" · "+n+" handle"+(n===1?"":"s")}),el("b",{text:"View profile →"})));
 }
 
-/* ---------- Profile form ---------- */
-const formSel={games:new Set(),vibes:new Set()};
-function chipGroup(container, items, set, labelOf=x=>x, keyOf=x=>x){
-  container.replaceChildren();
-  items.forEach(it=>{
-    const k=keyOf(it), b=el("button",{type:"button",class:"chip","aria-pressed":String(set.has(k)),text:labelOf(it)});
-    b.onclick=()=>{ set.has(k)?set.delete(k):set.add(k); b.setAttribute("aria-pressed",String(set.has(k))); };
-    container.append(b);
-  });
+/* ---------- Modal ---------- */
+let lastFocus=null;
+function openModal(build){lastFocus=document.activeElement;const d=$("#dialog");d.replaceChildren(el("button",{class:"x",type:"button","aria-label":"Close",onclick:closeModal,text:"×"}),...build());$("#overlay").hidden=false;d.querySelector(".x").focus();}
+function closeModal(){$("#overlay").hidden=true;if(lastFocus)lastFocus.focus();}
+$("#overlay").addEventListener("click",e=>{if(e.target.id==="overlay")closeModal();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#overlay").hidden)closeModal();});
+function copyBtn(text,label){const b=el("button",{type:"button",class:"btn ghost sm",text:"Copy","aria-label":"Copy "+label});b.onclick=async()=>{try{await navigator.clipboard.writeText(text);b.textContent="Copied!";}catch(e){b.textContent="Select it";}setTimeout(()=>b.textContent="Copy",1500);};return b;}
+function openProfile(p){
+  const h=p.handles||{}; const me=state.me;
+  const rows=Object.keys(HANDLE_LABELS).filter(k=>h[k]).map(k=>el("div",{class:"handle-row"},el("span",{text:HANDLE_LABELS[k]}),el("code",{text:h[k]}),copyBtn(h[k],HANDLE_LABELS[k])));
+  openModal(()=>[
+    el("div",{class:"prof-head"},avatar(p,true),el("div",{},el("h2",{id:"dlg-title",text:p.tag||"Player"}),el("div",{class:"meta",text:[p.platform,p.skill,p.mic?"Mic on":"No mic"].filter(Boolean).join(" · ")}),p._score!=null?el("div",{class:"meta",style:"color:var(--lime);font-weight:700",text:p._score+"% similar to you"}):null)),
+    p.example?el("div",{class:"note",text:"This is an example profile to show how Party Up works. These handles aren't real people."}):null,
+    p.bio?el("p",{class:"bio",text:p.bio}):null,
+    el("div",{},el("span",{class:"flabel",text:"Add them on"}),rows.length?el("div",{class:"handle-list"},rows):el("div",{class:"meta",text:"No handles listed."})),
+    el("dl",{class:"kv"},el("dt",{text:"Plays"}),el("dd",{},el("div",{class:"pills"},(p.games||[]).map(g=>el("span",{class:"pill"+(me&&(me.games||[]).includes(g)?" shared":""),text:gameName(g)})))),
+      p.vibes?.length?el("dt",{text:"Vibe"}):null,p.vibes?.length?el("dd",{text:p.vibes.join(", ")}):null,
+      p.times?el("dt",{text:"Usually on"}):null,p.times?el("dd",{text:p.times}):null)
+  ]);
 }
-function openForm(){
-  const mine=state.real.find(p=>p.id===state.myId);
-  $("#p-tag").value=mine?.tag||""; $("#p-platform").value=mine?.platform||"PC";
-  $("#p-mic").value=mine?(mine.mic?"yes":"no"):"yes"; $("#p-skill").value=mine?.skill||"Casual";
-  $("#p-times").value=mine?.times||""; $("#p-bio").value=mine?.bio||"";
-  const mh=mine?.handles||{}; $("#p-discord").value=mh.discord||""; $("#p-psn").value=mh.psn||""; $("#p-xbox").value=mh.xbox||"";
-  formSel.games=new Set(mine?.games||[]); formSel.vibes=new Set(mine?.vibes||[]);
-  chipGroup($("#p-games"),GAMES,formSel.games,g=>g.name,g=>g.id);
-  chipGroup($("#p-vibes"),VIBES,formSel.vibes);
-  $("#delete-profile").hidden=!mine; $("#form-err").textContent="";
-  $("#overlay").hidden=false; $("#p-tag").focus();
-}
-function closeForm(){ $("#overlay").hidden=true; }
-$("#open-form").onclick=()=>{
-  if(!state.db||!state.myId||state.canWrite===false){ location.hash="menu"; return; }
-  openForm();
-};
-$("#cancel").onclick=closeForm;
-$("#overlay").addEventListener("click",e=>{ if(e.target.id==="overlay") closeForm(); });
-document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&!$("#overlay").hidden) closeForm(); });
-
-$("#form").addEventListener("submit",async e=>{
-  e.preventDefault();
-  const tag=$("#p-tag").value.trim();
-  if(!tag){ $("#form-err").textContent="Add a gamertag so people know who you are."; return; }
-  if(!formSel.games.size){ $("#form-err").textContent="Pick at least one game you play."; return; }
-  const handles=readHandles("p");
-  if(!Object.keys(handles).length){ $("#form-err").textContent="Add at least one handle so people can reach you."; return; }
-  const body={ tag, platform:$("#p-platform").value, games:[...formSel.games], mic:$("#p-mic").value==="yes",
-    skill:$("#p-skill").value, vibes:[...formSel.vibes], times:$("#p-times").value.trim(), bio:$("#p-bio").value.trim(),
-    handles, updated:new Date().toISOString() };
-  const btn=$("#save"); btn.disabled=true; btn.textContent="Saving…";
-  try{ await state.db.doc("squads/"+state.myId).set(body); setMyGames(body.games); closeForm(); }
-  catch(err){
-    if(err&&err.code==="invalid_argument"){ state.canWrite=false; $("#form-err").textContent="You don't have permission to post here yet. Ask the site owner to invite you."; }
-    else if(err&&err.code==="quota_exceeded"){ $("#form-err").textContent="The site is full right now. Ask the site owner to clear out old profiles."; }
-    else { $("#form-err").textContent="Couldn't save right now. Check your connection and try again."; }
-  }
-  finally{ btn.disabled=false; btn.textContent="Save profile"; }
-});
-$("#delete-profile").onclick=async()=>{
-  try{ await state.db.doc("squads/"+state.myId).delete(); closeForm(); }
-  catch(e){ $("#form-err").textContent="Couldn't remove it right now. Try again in a moment."; }
-};
 
 /* ---------- Intel ---------- */
-let currentGame=GAMES[0].id;
-function pips(n,cls=""){ const d=el("div",{class:"pips "+cls}); for(let i=1;i<=5;i++) d.append(el("i",{class:i<=n?"on":""})); return d; }
-function renderTabs(){
-  const t=$("#game-tabs"); t.replaceChildren();
-  GAMES.forEach(g=>{
-    const b=el("button",{class:"game-tab",role:"tab","aria-selected":String(g.id===currentGame)}, g.name, el("small",{text:g.short}));
-    b.onclick=()=>{currentGame=g.id;renderTabs();renderIntel();}; t.append(b);
-  });
-}
-function renderIntel(){
-  const g=GAMES.find(x=>x.id===currentGame), b=g.boss, body=$("#intel-body"); body.replaceChildren();
-  const left=el("div",{class:"panel"},
-    el("h3",{text:"Squad sheet"}),
-    el("div",{class:"stats"},
-      el("div",{class:"stat"},el("b",{text:g.squad}),el("span",{text:"Squad size"})),
-      el("div",{class:"stat"},el("b",{text:g.platforms,style:"font-size:15px;padding-top:6px"}),el("span",{text:"Platforms"}))),
-    el("div",{class:"meter"},el("span",{text:"Mic importance"}),pips(g.mic,"cyan")),
-    el("div",{class:"meter"},el("span",{text:"Difficulty"}),pips(g.difficulty)),
-    el("h3",{text:"Roles to fill",style:"margin-top:18px"}),
-    el("ul",{class:"roles"},g.roles.map(([r,d])=>el("li",{},el("b",{text:r+". "}),d))));
-  const timeline=el("div",{class:"timeline"},b.phases.map(([n,d,w])=>el("div",{class:"seg",style:`flex:${w}`},el("b",{text:n}),el("span",{text:d}))));
-  const threat=el("div",{},Object.entries(b.threat).map(([k,v])=>el("div",{class:"meter"},el("span",{text:k}),pips(v))));
-  const findBtn=el("button",{class:"btn",text:`Find a ${g.name} squad`});
-  findBtn.onclick=()=>{ state.filter.game=g.id; $("#f-game").value=g.id; location.hash="squads"; renderCards(); };
-  const right=el("div",{class:"panel"},
-    el("div",{class:"boss-head"},el("h2",{text:b.name}),el("span",{class:"pill ex",text:g.id==="val"?"Breakdown":"Boss breakdown"})),
-    el("p",{class:"boss-sub",text:b.where}),
-    el("h3",{text:"How the fight flows"}), timeline,
-    el("div",{class:"tl-cap",text:"Bar widths show roughly how much of the fight each part takes up."}),
-    el("div",{class:"two"},
-      el("div",{},el("h3",{text:"Threat profile"}),threat),
-      el("div",{},el("h3",{text:"How to beat it"}),el("ul",{class:"tips"},b.tips.map(t=>el("li",{text:t}))))),
-    el("div",{class:"squad-tip"},el("b",{text:"Squad tip: "}),b.squad),
-    el("div",{class:"cta"},findBtn));
-  body.append(el("div",{class:"intel"},left,right));
-}
-
-/* ---------- Main menu ---------- */
-const menuSel={games:new Set(),vibes:new Set()};
-function store(k,v){ try{ localStorage.setItem("partyup."+k,JSON.stringify(v)); }catch(e){} }
-function load(k){ try{ return JSON.parse(localStorage.getItem("partyup."+k)); }catch(e){ return null; } }
-function readHandles(prefix){ const o={}; ["discord","psn","xbox"].forEach(k=>{ const v=$("#"+prefix+"-"+k).value.trim(); if(v) o[k]=v; }); return o; }
-function setMyGames(g){ state.myGames=g||[]; store("games",state.myGames); }
-
-function buildTiles(){
-  const box=$("#m-games"); box.replaceChildren();
-  GAMES.forEach(g=>{
-    const on=menuSel.games.has(g.id);
-    const t=el("button",{type:"button",class:"tile","aria-pressed":String(on),style:"--tile:"+(TILE_COLORS[g.id]||"var(--panel-2)")},
-      el("span",{class:"tick","aria-hidden":"true",text:on?"✓":""}), el("b",{text:g.name}), el("small",{text:g.short+" · "+g.squad}));
-    t.onclick=()=>{ menuSel.games.has(g.id)?menuSel.games.delete(g.id):menuSel.games.add(g.id); buildTiles(); };
-    box.append(t);
-  });
-}
-function showStep(n){
-  document.querySelectorAll(".menu-panel").forEach(p=>p.hidden=p.dataset.step!==String(n));
-  document.querySelectorAll("#step-dots .step-dot").forEach((d,i)=>{ d.className="step-dot"+(i+1===n?" active":i+1<n?" done":""); });
-  [1,2,3].forEach(i=>$("#m-err-"+i).textContent="");
-}
-function validStep(n){
-  if(n===1 && !menuSel.games.size){ $("#m-err-1").textContent="Pick at least one game."; return false; }
-  if(n===2){
-    if(!$("#m-tag").value.trim()){ $("#m-err-2").textContent="Add a gamertag so people know who you are."; return false; }
-    if(!Object.keys(readHandles("m")).length){ $("#m-err-2").textContent="Add at least one of Discord, PSN or Xbox."; return false; }
+function renderGameList(){
+  const q=($("#gl-search").value||"").toLowerCase(), box=$("#gl-items"); box.replaceChildren();
+  const colors={boss:"var(--pink)",multi:"var(--cyan)",fight:"var(--sun)"};
+  for(const t of ["boss","multi","fight"]){
+    const gs=GAMES.filter(g=>g.type===t&&g.name.toLowerCase().includes(q)); if(!gs.length) continue;
+    box.append(el("div",{class:"gl-group",style:"color:"+colors[t],text:{boss:"Boss guides",multi:"Multiplayer",fight:"Fighting games"}[t]}));
+    gs.forEach(g=>box.append(el("button",{type:"button",class:"gl-item","aria-current":String(g.id===state.intelGame),onclick:()=>{location.hash="intel-"+g.id;}},el("span",{class:"gl-dot",style:"background:"+tileBg(g)}),g.name)));
   }
+}
+function pips(n,cls){const d=el("div",{class:"pips "+(cls||"")});for(let i=1;i<=5;i++)d.append(el("i",{class:i<=n?"on":""}));return d;}
+function renderIntel(){
+  const g=gameById(state.intelGame)||GAMES[0], body=$("#intel-body"); body.replaceChildren();
+  const findBtn=el("button",{class:"btn",type:"button",text:"Find "+g.name+" teammates",onclick:()=>{state.filter.game=g.id;$("#f-game").value=g.id;location.hash="squads";}});
+  body.append(el("div",{class:"g-hero",style:"background:"+tileBg(g)},el("span",{class:"type-badge t-"+g.type,text:TYPE_LABEL[g.type]}),el("h2",{text:g.name}),el("div",{class:"meta",text:g.genre+" · "+g.platforms.join(" · ")}),el("div",{class:"actions"},g.squad!=="Single-player"?findBtn:null,g.news?el("a",{class:"btn ghost",href:g.news,target:"_blank",rel:"noopener",text:"Official patch notes ↗"}):null)));
+  // squad sheet
+  const sheet=el("div",{class:"panel"},el("h3",{text:"Squad sheet"}),el("div",{class:"sheet"},
+    el("div",{class:"stat"},el("b",{text:g.squad}),el("span",{text:"Squad size"})),
+    el("div",{class:"stat"},el("b",{text:g.genre}),el("span",{text:"Genre"})),
+    el("div",{class:"stat"},el("span",{text:"Mic importance"}),pips(g.mic,"cyan")),
+    el("div",{class:"stat"},el("span",{text:"Difficulty"}),pips(g.difficulty))),
+    g.roles?.length?el("ul",{class:"roles"},g.roles.map(([r,d])=>el("li",{},el("b",{text:r+". "}),d))):null);
+  body.append(sheet);
+  // season
+  if(g.season){const s=g.season;body.append(el("div",{class:"panel season"},el("h3",{text:"This season"}),el("h2",{text:s.title}),el("div",{class:"asof",text:"Updated "+s.asof+" · Seasons change fast, so check the official news for the latest"}),el("ul",{class:"tips"},s.points.map(t=>el("li",{text:t}))),el("div",{style:"margin-top:14px"},el("a",{href:s.source,target:"_blank",rel:"noopener",text:"Official news ↗"}))));}
+  // bosses
+  if(g.bosses?.length){
+    if(state.boss>=g.bosses.length) state.boss=0;
+    const b=g.bosses[state.boss];
+    const tabs=g.bosses.length>1?el("div",{class:"boss-tabs"},g.bosses.map((x,i)=>el("button",{type:"button",class:"chip pinkc","aria-pressed":String(i===state.boss),text:x.name,onclick:()=>{state.boss=i;renderIntel();}}))):null;
+    body.append(el("div",{class:"panel"},el("h3",{text:g.type==="boss"?"Boss guide":"Boss & big-threat guide"}),tabs,
+      el("div",{class:"boss-head"},el("h2",{text:b.name})),
+      el("div",{class:"locate"},el("div",{class:"pin",text:"⌖","aria-hidden":"true"}),el("div",{},el("b",{text:b.where}),el("p",{text:b.how}))),
+      el("span",{class:"flabel",text:"Weak to"}),el("div",{class:"weak"},b.weak.map(w=>el("span",{class:"pill good",text:w})),...(b.resist||[]).map(w=>el("span",{class:"pill bad",text:"Resists "+w}))),
+      b.phases?el("span",{class:"flabel",text:"How the fight flows"}):null,
+      b.phases?el("div",{class:"timeline"},b.phases.map(([n,d,w])=>el("div",{class:"seg",style:"flex:"+w},el("b",{text:n}),el("span",{text:d})))):null,
+      el("span",{class:"flabel",text:"Attack patterns"}),
+      el("div",{class:"tbl-wrap"},el("table",{},el("thead",{},el("tr",{},el("th",{text:"Attack"}),el("th",{text:"What it looks like"}),el("th",{text:"How to beat it"}))),el("tbody",{},b.attacks.map(a=>el("tr",{},a.map(c=>el("td",{text:c}))))))),
+      el("div",{class:"two"},el("div",{},el("span",{class:"flabel",text:"Drops & rewards"}),el("ul",{class:"tips"},b.drops.map(d=>el("li",{text:d})))),el("div",{},el("span",{class:"flabel",text:"Tips"}),el("ul",{class:"tips"},b.tips.map(t=>el("li",{text:t})))))
+    ));
+  }
+  if(g.items?.length){body.append(el("div",{class:"panel"},el("h3",{text:"Rare items & where to find them"}),el("div",{class:"items"},g.items.map(([n,w,where])=>el("div",{class:"item"},el("b",{text:n}),el("div",{class:"what",text:w}),el("div",{class:"where",text:where}))))));}
+  if(g.essentials?.length){body.append(el("div",{class:"panel"},el("h3",{text:"Essentials"}),el("div",{class:"ess"},g.essentials.map(([t,d])=>el("div",{},el("b",{text:t}),d)))));}
+  if(!g.bosses&&!g.essentials&&!g.season){body.append(el("div",{class:"panel soon"},el("b",{text:"Full guide coming soon"}),g.type==="boss"?"Boss locations, attack patterns, weaknesses and rare drops for "+g.name+" are on the way.":"More intel for "+g.name+" is on the way."));}
+  renderGameList();
+}
+
+/* ---------- Menu ---------- */
+const menuSel={games:new Set(),vibes:new Set()};
+function readHandles(){const o={};["discord","psn","xbox"].forEach(k=>{const v=$("#m-"+k).value.trim();if(v)o[k]=v;});return o;}
+function buildTiles(){
+  const q=($("#m-search").value||"").toLowerCase(), box=$("#m-games"); box.replaceChildren();
+  GAMES.filter(g=>g.name.toLowerCase().includes(q)).forEach(g=>{
+    const on=menuSel.games.has(g.id);
+    box.append(el("button",{type:"button",class:"tile","aria-pressed":String(on),style:"--tile:"+tileBg(g),onclick:()=>{menuSel.games.has(g.id)?menuSel.games.delete(g.id):menuSel.games.add(g.id);buildTiles();}},
+      el("span",{class:"tick","aria-hidden":"true",text:on?"✓":""}),el("b",{text:g.name}),el("small",{text:g.genre})));
+  });
+  $("#m-picked").textContent=menuSel.games.size?menuSel.games.size+" picked":"";
+}
+function chipGroup(c,items,set){c.replaceChildren();items.forEach(it=>{const b=el("button",{type:"button",class:"chip","aria-pressed":String(set.has(it)),text:it});b.onclick=()=>{set.has(it)?set.delete(it):set.add(it);b.setAttribute("aria-pressed",String(set.has(it)));};c.append(b);});}
+function showStep(n){document.querySelectorAll(".menu-panel").forEach(p=>p.hidden=p.dataset.step!==String(n));document.querySelectorAll("#step-dots .step-dot").forEach((d,i)=>d.className="step-dot"+(i+1===n?" active":i+1<n?" done":""));[1,2,3].forEach(i=>$("#m-err-"+i).textContent="");}
+function validStep(n){
+  if(n===1&&!menuSel.games.size){$("#m-err-1").textContent="Pick at least one game.";return false;}
+  if(n===2){if(!$("#m-tag").value.trim()){$("#m-err-2").textContent="Add a gamertag so people know who you are.";return false;}if(!Object.keys(readHandles()).length){$("#m-err-2").textContent="Add at least one of Discord, PSN or Xbox.";return false;}}
   return true;
 }
 function prefillMenu(){
-  const p = state.real.find(x=>x.id===state.myId) || state.local || {};
-  menuSel.games=new Set(p.games||state.myGames||[]); menuSel.vibes=new Set(p.vibes||[]);
-  const h=p.handles||{};
-  $("#m-tag").value=p.tag||""; $("#m-discord").value=h.discord||""; $("#m-psn").value=h.psn||""; $("#m-xbox").value=h.xbox||"";
-  $("#m-platform").value=p.platform||"PC"; $("#m-mic").value=p.mic===false?"no":"yes"; $("#m-skill").value=p.skill||"Casual";
-  buildTiles(); chipGroup($("#m-vibes"),VIBES,menuSel.vibes); showStep(1);
+  const p=state.me||{}; menuSel.games=new Set(p.games||[]); menuSel.vibes=new Set(p.vibes||[]); const h=p.handles||{};
+  $("#m-tag").value=p.tag||"";$("#m-discord").value=h.discord||"";$("#m-psn").value=h.psn||"";$("#m-xbox").value=h.xbox||"";
+  $("#m-platform").value=p.platform||"PC";$("#m-mic").value=p.mic===false?"no":"yes";$("#m-skill").value=p.skill||"Casual";$("#m-times").value=p.times||"";$("#m-bio").value=p.bio||"";
+  $("#m-search").value="";buildTiles();chipGroup($("#m-vibes"),VIBES,menuSel.vibes);showStep(1);
 }
-document.querySelectorAll("[data-next]").forEach(b=>b.addEventListener("click",()=>{
-  const to=+b.dataset.next, from=+b.closest(".menu-panel").dataset.step;
-  if(to>from && !validStep(from)) return;
-  showStep(to);
-}));
+$("#m-search").addEventListener("input",buildTiles);
+document.querySelectorAll("[data-next]").forEach(b=>b.addEventListener("click",()=>{const to=+b.dataset.next,from=+b.closest(".menu-panel").dataset.step;if(to>from&&!validStep(from))return;showStep(to);window.scrollTo(0,0);}));
 $("#m-finish").onclick=async()=>{
-  const btn=$("#m-finish");
-  const prev = state.real.find(x=>x.id===state.myId) || state.local || {};
-  const body={ tag:$("#m-tag").value.trim(), platform:$("#m-platform").value, games:[...menuSel.games], mic:$("#m-mic").value==="yes",
-    skill:$("#m-skill").value, vibes:[...menuSel.vibes], handles:readHandles("m"), times:prev.times||"", bio:prev.bio||"", updated:new Date().toISOString() };
-  setMyGames(body.games);
-  let msg;
-  if(state.db && state.myId && state.canWrite!==false){
-    btn.disabled=true; btn.textContent="Joining…";
-    try{ await state.db.doc("squads/"+state.myId).set(body); state.local=null; store("profile",null); msg="You're in. Your profile is live for other players."; }
-    catch(e){ state.canWrite = e&&e.code==="invalid_argument" ? false : state.canWrite; state.local=body; store("profile",body);
-      msg = state.canWrite===false ? "Saved on this device. Only you can see your card until the site owner invites you to post." : "Couldn't post right now, so your card is saved on this device. Try again from Post my profile."; }
-    finally{ btn.disabled=false; btn.textContent="Enter the lobby"; }
-  } else {
-    state.local=body; store("profile",body);
-    msg="Saved on this device. Only you can see your card until profile posting goes live.";
-  }
-  state.filter.game="mine"; $("#f-game").value="mine";
-  location.hash="squads"; renderCards(); $("#status").textContent=msg+" Showing players from your games.";
+  const body={tag:$("#m-tag").value.trim(),platform:$("#m-platform").value,games:[...menuSel.games],mic:$("#m-mic").value==="yes",skill:$("#m-skill").value,vibes:[...menuSel.vibes],handles:readHandles(),times:$("#m-times").value.trim(),bio:$("#m-bio").value.trim(),updated:new Date().toISOString()};
+  state.me=body; store("profile",body);
+  let msg="Saved! Your preferences are remembered on this device, so you won't have to set them up again.";
+  if(state.db&&state.myId&&state.canWrite!==false){try{await state.db.doc("squads/"+state.myId).set(body);msg="Saved and posted! Other players can now find you.";}catch(e){if(e&&e.code==="invalid_argument")state.canWrite=false;}}
+  state.filter.game="";$("#f-game").value="";location.hash="squads";$("#status").textContent=msg;
 };
+
+/* ---------- Profile page ---------- */
+function renderProfile(){
+  const v=$("#view-profile"); v.replaceChildren(); const me=state.me;
+  v.append(el("div",{class:"lede"},el("div",{},el("h1",{},"Your ",el("span",{class:"grad",text:"profile"})),el("p",{text:"This is what other players see when they click your card."}))));
+  if(!me){v.append(el("div",{class:"panel soon"},el("b",{text:"You haven't set up a profile yet"}),el("p",{text:"It takes about a minute."}),el("a",{class:"btn",href:"#menu",text:"Set up my profile"})));return;}
+  const h=me.handles||{};
+  v.append(el("div",{class:"panel"},
+    el("div",{class:"prof-head"},avatar(me,true),el("div",{},el("h2",{text:me.tag}),el("div",{class:"meta",text:[me.platform,me.skill,me.mic?"Mic on":"No mic"].join(" · ")}))),
+    me.bio?el("p",{class:"bio",style:"margin-top:14px",text:me.bio}):null,
+    el("dl",{class:"kv",style:"margin-top:16px"},
+      el("dt",{text:"Games"}),el("dd",{},el("div",{class:"pills"},(me.games||[]).map(g=>el("span",{class:"pill",text:gameName(g)})))),
+      el("dt",{text:"Vibe"}),el("dd",{text:(me.vibes||[]).join(", ")||"Not set"}),
+      el("dt",{text:"Usually on"}),el("dd",{text:me.times||"Not set"}),
+      ...Object.keys(HANDLE_LABELS).filter(k=>h[k]).flatMap(k=>[el("dt",{text:HANDLE_LABELS[k]}),el("dd",{text:h[k]})])),
+    el("div",{style:"display:flex;gap:10px;margin-top:18px;flex-wrap:wrap"},el("a",{class:"btn",href:"#menu",text:"Edit preferences"}),el("button",{type:"button",class:"btn ghost",text:"Clear my profile",onclick:()=>{state.me=null;store("profile",null);renderProfile();}})),
+    el("div",{class:"note",text:"Your profile is saved in this browser, so it's remembered every time you come back on this device. Logging in with an account (so it follows you to any device and other players can see you) is coming soon."})));
+}
 
 /* ---------- Routing ---------- */
 function route(){
-  const h=location.hash, v = h==="#intel"?"intel" : h==="#menu"?"menu" : "squads";
-  ["menu","squads","intel"].forEach(x=>{
-    $("#view-"+x).hidden = x!==v;
-    if(x===v) $("#nav-"+x).setAttribute("aria-current","page"); else $("#nav-"+x).removeAttribute("aria-current");
-  });
-  if(v==="menu") prefillMenu();
+  const h=location.hash.slice(1); let v="squads";
+  if(h==="menu")v="menu"; else if(h==="profile")v="profile"; else if(h.startsWith("intel")){v="intel";const id=h.slice(6);if(id&&gameById(id)&&id!==state.intelGame){state.intelGame=id;state.boss=0;}}
+  ["menu","squads","intel","profile"].forEach(x=>{$("#view-"+x).hidden=x!==v;const n=$("#nav-"+x);if(n){if(x===v)n.setAttribute("aria-current","page");else n.removeAttribute("aria-current");}});
+  if(v==="menu")prefillMenu(); if(v==="intel")renderIntel(); if(v==="profile")renderProfile(); if(v==="squads")renderCards();
   window.scrollTo(0,0);
 }
 window.addEventListener("hashchange",route);
+$("#gl-search").addEventListener("input",renderGameList);
 
-/* ---------- Shared data ---------- */
+/* ---------- Optional shared data (only inside Claude preview) ---------- */
 async function connect(){
-  const status=$("#status");
-  if(!(window.claude&&typeof claude.use==="function")){ status.textContent="Showing example profiles while Party Up is in beta. Your own card is saved on this device."; return; }
-  try{
-    const [db,user]=await Promise.all([claude.use("db"),claude.use("user")]);
-    if(!db){ status.textContent="Sign in to see and post real profiles. Example profiles are shown below."; return; }
-    state.db=db;
-    if(user){ state.myId=await user.id(); try{ const c=await user.can("data.write"); if(c===false) state.canWrite=false; }catch(e){} }
-    const timer=setTimeout(()=>{ status.textContent="Can't reach the profile list yet. Examples are shown in the meantime."; },10000);
-    db.collection("squads").onSnapshot(snap=>{
-      if(!snap.metadata.fromCache) clearTimeout(timer);
-      state.real=snap.docs.filter(d=>d.exists).map(d=>({id:d.id,...d.data()}));
-      const mineDoc=state.real.find(p=>p.id===state.myId);
-      if(mineDoc && !state.myGames.length){ setMyGames(mineDoc.games); state.filter.game="mine"; $("#f-game").value="mine"; }
-      const n=state.real.length;
-      status.textContent = n ? `${n} real profile${n===1?"":"s"} posted.` : "No real profiles yet. Be the first to post one.";
-      renderCards();
-    }, err=>{ clearTimeout(timer); status.textContent="Profiles couldn't load. Example profiles are shown below."; });
-  }catch(e){ status.textContent="Showing example profiles."; }
+  if(!(window.claude&&typeof claude.use==="function"))return;
+  try{const[db,user]=await Promise.all([claude.use("db"),claude.use("user")]);if(!db)return;state.db=db;
+    if(user){state.myId=await user.id();try{if(await user.can("data.write")===false)state.canWrite=false;}catch(e){}}
+    db.collection("squads").onSnapshot(s=>{state.real=s.docs.filter(d=>d.exists).map(d=>({id:d.id,...d.data()}));if(!$("#view-squads").hidden)renderCards();},()=>{});
+  }catch(e){}
 }
 
-state.myGames = load("games") || [];
-state.local = load("profile");
-if(state.myGames.length){ state.filter.game="mine"; }
-buildFilters(); $("#f-game").value=state.filter.game;
-if(!location.hash && !state.myGames.length){ location.hash="menu"; }
-renderCards(); renderTabs(); renderIntel(); route(); connect();
+buildFilters();
+if(!location.hash&&!state.me){location.hash="menu";}
+route(); connect();
 </script>
 </body>
 </html>
