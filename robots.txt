@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://partyup-squads.netlify.app/sitemap.xml
