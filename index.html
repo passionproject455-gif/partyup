@@ -44,7 +44,7 @@ nav a:hover{color:var(--ink)}
 nav a[aria-current="page"]{color:var(--ink-dark);background:linear-gradient(135deg,var(--coral),var(--coral-2))}
 @media (max-width:620px){nav{margin-left:0;width:100%;justify-content:space-between}nav a{flex:1;text-align:center;padding:7px 4px;font-size:13px}}
 
-main{padding:36px 0 72px}
+main{padding:40px 0 72px}
 .view[hidden]{display:none}
 .lede{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:24px}
 .lede h1{font-size:clamp(28px,4vw,40px);font-weight:800}
@@ -233,6 +233,20 @@ td:first-child{color:var(--ink);font-weight:700;white-space:nowrap}
 /* Profile page */
 .profile-wrap{max-width:760px}
 .note{font-size:13px;color:var(--muted);background:var(--surface-2);border-radius:12px;padding:12px 14px;margin-top:14px}
+/* Hot poster */
+.hot{position:relative;overflow:hidden;display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin:22px 0 0;padding:20px 24px;border-radius:var(--r);color:#1a1300;
+  background:linear-gradient(120deg,#ffe14a 0%,#ffd23f 45%,#ffb627 100%);box-shadow:0 18px 40px -18px rgba(255,200,40,.6)}
+.hot::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(-45deg,rgba(0,0,0,.05) 0 14px,transparent 14px 28px);pointer-events:none}
+.hot>*{position:relative}
+.hot-stamp{flex:none;font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:.12em;background:#1a1300;color:#ffd23f;padding:8px 14px;border-radius:10px;transform:rotate(-4deg);box-shadow:3px 3px 0 rgba(0,0,0,.18)}
+.hot-copy{flex:1;min-width:220px}
+.hot-copy small{display:block;font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;opacity:.7}
+.hot-copy b{display:block;font-family:var(--display);font-weight:800;font-size:clamp(20px,3vw,28px);letter-spacing:-.02em;line-height:1.15}
+.hot-copy p{margin:4px 0 0;font-size:14.5px;font-weight:600;opacity:.85;max-width:60ch}
+.hot-actions{display:flex;gap:8px;flex-wrap:wrap}
+.hot .btn{background:#1a1300;color:#ffd23f;box-shadow:none}
+.hot .btn.ghost{background:rgba(26,19,0,.08);color:#1a1300;border:1.5px solid rgba(26,19,0,.4)}
+.hot[hidden]{display:none}
 footer{color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padding:22px 0}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}.card:hover,.tile:hover,.btn:hover{transform:none}}
 </style>
@@ -250,6 +264,7 @@ footer{color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padd
   </div>
 </header>
 
+<div class="wrap"><aside class="hot" id="hot" hidden aria-label="Hot right now"></aside></div>
 <main class="wrap">
   <!-- MENU -->
   <section class="view" id="view-menu" hidden>
@@ -346,6 +361,11 @@ footer{color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padd
 <div class="overlay" id="overlay" hidden><div class="dialog" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dlg-title"></div></div>
 
 <script>
+/* ---------- Hot right now ----------
+ Change this to feature a different game in the yellow poster at the top. Set to null to hide it. */
+const HOT = { game:"fortnite", title:"Fortnite: Treasure Hunters",
+  text:"Everyone's squadding up to hunt treasure on Crossbones Isle. Find a crew before the mini-season ends." };
+
 /* ---------- Games ----------
  type: "boss" (boss-focused guide), "multi" (multiplayer intel), "fight" (fighting game)
  Every game has a squad sheet. Guides are filled in where they've been written; others show "guide coming soon". */
@@ -776,11 +796,24 @@ function renderProfile(){
     el("div",{class:"note",text:"Your profile is saved in this browser, so it's remembered every time you come back on this device. Logging in with an account (so it follows you to any device and other players can see you) is coming soon."})));
 }
 
+/* ---------- Hot poster ---------- */
+function renderHot(view){
+  const box=$("#hot"); const g=HOT&&gameById(HOT.game);
+  if(!g||view==="menu"){box.hidden=true;return;}
+  box.replaceChildren(el("div",{class:"hot-stamp",text:"HOT"}),
+    el("div",{class:"hot-copy"},el("small",{text:"Hot right now"}),el("b",{text:HOT.title}),el("p",{text:HOT.text})),
+    el("div",{class:"hot-actions"},
+      el("button",{type:"button",class:"btn",text:"Find a squad",onclick:()=>{state.filter.game=g.id;$("#f-game").value=g.id;if(location.hash==="#squads"){renderCards();document.getElementById("cards").scrollIntoView({behavior:"smooth"});}else location.hash="squads";}}),
+      el("a",{class:"btn ghost",href:"#intel-"+g.id,text:"See the intel"})));
+  box.hidden=false;
+}
+
 /* ---------- Routing ---------- */
 function route(){
   const h=location.hash.slice(1); let v="squads";
   if(h==="menu")v="menu"; else if(h==="profile")v="profile"; else if(h.startsWith("intel")){v="intel";const id=h.slice(6);if(id&&gameById(id)&&id!==state.intelGame){state.intelGame=id;state.boss=0;}}
   ["menu","squads","intel","profile"].forEach(x=>{$("#view-"+x).hidden=x!==v;const n=$("#nav-"+x);if(n){if(x===v)n.setAttribute("aria-current","page");else n.removeAttribute("aria-current");}});
+  renderHot(v);
   if(v==="menu")prefillMenu(); if(v==="intel")renderIntel(); if(v==="profile")renderProfile(); if(v==="squads")renderCards();
   window.scrollTo(0,0);
 }
